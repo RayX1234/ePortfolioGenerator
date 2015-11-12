@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This XML file allows us to easily customize the look and language used
+    in our program's user interface. Note that this is for customizing settings
+    for the Course Schedule Builder interface, NOT the Web page that we're building. 
+-->
+<properties>
+    <property_list>    
+        <property name="TITLE_WINDOW"		value="ePortfolio Generator"></property>  
+        
+        <!-- PROGRAM ICON FILES -->
+	
+        <!-- TOOLTIPS FOR BUTTONS -->
+        <property name="TOOLTIP_NEW_PORTFOLIO"	   value="Create a New ePortfolio"></property>
+        <property name="TOOLTIP_LOAD_PORTFOLIO"    value="Load an Existing ePortfolio"></property>
+        <property name="TOOLTIP_SAVE_PORTFOLIO"    value="Save this ePortfolio"></property>
+        <property name="TOOLTIP_SAVE_AS_PORTFOLIO" value="Save As ePortfolio"></property>
+        <property name="TOOLTIP_EXPORT_PORTFOLIO"  value="Export this ePortfolio"></property>
+        <property name="TOOLTIP_EXIT"              value="Exit the Application"></property>
+        
+        
+        
+    </property_list>
+    <property_options_list>
+    </property_options_list>
+</properties>
