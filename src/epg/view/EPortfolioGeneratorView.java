@@ -12,9 +12,11 @@ import static epg.PropertyType.TOOLTIP_EXIT;
 import static epg.PropertyType.TOOLTIP_EXPORT_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_LOAD_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_NEW_PORTFOLIO;
+import static epg.PropertyType.TOOLTIP_PAGE_EDIT_WORKSPACE;
 import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
+import static epg.PropertyType.TOOLTIP_SITE_VIEWER_WORKSPACE;
 import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
@@ -23,6 +25,7 @@ import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
+import static epg.StartupConstants.CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE;
 import static epg.StartupConstants.ICON_ADD_SITE;
 import static epg.StartupConstants.ICON_CHANGE_SITE_NAME;
 import static epg.StartupConstants.ICON_EXIT;
@@ -30,9 +33,11 @@ import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.ICON_LOAD_PORTFOLIO;
 import static epg.StartupConstants.ICON_NEW_PORTFOLIO;
+import static epg.StartupConstants.ICON_PAGE_EDIT_WORKSPACE;
 import static epg.StartupConstants.ICON_REMOVE_SITE;
 import static epg.StartupConstants.ICON_SAVE_AS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
+import static epg.StartupConstants.ICON_SITE_VIEWER_WORKSPACE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.controller.FileController;
@@ -156,6 +161,14 @@ public class EPortfolioGeneratorView {
         pageEditScene.getStylesheets().add(STYLE_SHEET_UI);
         primaryStage.setScene(pageEditScene);
     }
+    
+    private void initWorkspaceModeToolbar(){
+        workspaceModeToolbar = new FlowPane();
+        workspaceModeToolbar.getStyleClass().add(CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE);
+        pageEditWorkSpaceButton = initChildButton(workspaceModeToolbar, ICON_PAGE_EDIT_WORKSPACE, TOOLTIP_PAGE_EDIT_WORKSPACE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        siteViewerWorkspaceButton = initChildButton(workspaceModeToolbar, ICON_SITE_VIEWER_WORKSPACE, TOOLTIP_SITE_VIEWER_WORKSPACE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        pageEditWorkspace.setBottom(workspaceModeToolbar);
+    }
 
     private void initWindow(String windowTitle) {
         setWindowIcon(ICON_FIRE, primaryStage);
@@ -198,6 +211,7 @@ public class EPortfolioGeneratorView {
 
         addSitePageButton.setOnAction(e -> {
             pageEditController.processAddSiteRequest();
+            initWorkspaceModeToolbar();
         });
 
         removeSitePageButton.setOnAction(e -> {
