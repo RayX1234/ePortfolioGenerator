@@ -6,34 +6,47 @@
 package epg.view;
 
 import epg.PropertyType;
+import static epg.PropertyType.TOOLTIP_ADD_SITE;
 import static epg.PropertyType.TOOLTIP_EXIT;
 import static epg.PropertyType.TOOLTIP_EXPORT_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_LOAD_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_NEW_PORTFOLIO;
+import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
+import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
+import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
+import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
+import static epg.StartupConstants.ICON_ADD_SITE;
 import static epg.StartupConstants.ICON_EXIT;
 import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.ICON_LOAD_PORTFOLIO;
 import static epg.StartupConstants.ICON_NEW_PORTFOLIO;
+import static epg.StartupConstants.ICON_REMOVE_SITE;
 import static epg.StartupConstants.ICON_SAVE_AS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.controller.FileController;
 import epg.file.ePortfolioFileManager;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -48,6 +61,10 @@ public class ePortfolioGeneratorView {
     Stage primaryStage;
     Scene primaryScene;
 
+    //General Uses
+    Button okButton;
+    Button cancelButton;
+
     //The main pane for the GUI
     BorderPane epgPane;
 
@@ -59,6 +76,24 @@ public class ePortfolioGeneratorView {
     Button saveAsPortfolioButton;
     Button exportPortfolioButton;
     Button exitButton;
+
+    //For the pageEditWorkspace
+    BorderPane pageEditWorkspace;
+    TabPane sitesTabPane;
+    Scene pageEditScene;
+
+    //For the workspaceModeToolbar
+    FlowPane workspaceModeToolbar;
+    Button pageEditWorkSpaceButton;
+    Button siteViewerWorkspaceButton;
+
+    //For the site toolbar controls
+    VBox siteToolbarPane;
+    Button addSitePageButton;
+    Button removeSitePageButton;
+
+    FileController fileController;
+    ePortfolioFileManager fileManager;
 
     //Default Constructor
     public ePortfolioGeneratorView(ePortfolioFileManager initFileManager) {
@@ -78,6 +113,31 @@ public class ePortfolioGeneratorView {
         saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_PORTFOLIO, TOOLTIP_SAVE_AS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+    }
+
+    //initalizing the sitetoolbar
+    private void initSiteToolbar() {
+        siteToolbarPane = new VBox();
+        siteToolbarPane.getStyleClass().add(CSS_CLASS_SITES_TOOL_BAR_PANE);
+        addSitePageButton = initChildButton(siteToolbarPane, ICON_ADD_SITE, TOOLTIP_ADD_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        removeSitePageButton = initChildButton(siteToolbarPane, ICON_REMOVE_SITE, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+    }
+
+    //initalizing the pageEditWorkspace
+    private void initPageEditWorkspace() {
+        pageEditWorkspace = new BorderPane();
+        pageEditWorkspace.getStyleClass().add(CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE);
+        sitesTabPane = new TabPane();
+        Tab tab = new Tab();
+        tab.setText("new tab");
+        tab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
+        sitesTabPane.getTabs().add(tab);
+        pageEditWorkspace.setTop(fileToolbarPane);
+        pageEditWorkspace.setLeft(siteToolbarPane);
+        pageEditWorkspace.setCenter(sitesTabPane);
+        pageEditScene = new Scene(pageEditWorkspace);
+        pageEditScene.getStylesheets().add(STYLE_SHEET_UI);
+        primaryStage.setScene(pageEditScene);
     }
 
     private void initWindow(String windowTitle) {
@@ -110,9 +170,23 @@ public class ePortfolioGeneratorView {
 
     }
 
+    public void initEventHandlers() {
+        fileController = new FileController(this, fileManager);
+
+        newPortfolioButton.setOnAction(e -> {
+            initPageEditWorkspace();
+        });
+    }
+
     public void startUI(Stage initPrimaryStage, String windowTitle) {
         // THE TOOLBAR ALONG THE NORTH
         initFileToolbar();
+
+        // THE TOOLBAR ALONG THE LEFT
+        initSiteToolbar();
+        
+        // INIT EVENT HANDLERS
+        initEventHandlers();
 
         // AND FINALLY START UP THE WINDOW (WITHOUT THE WORKSPACE)
         // KEEP THE WINDOW FOR LATER

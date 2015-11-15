@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 
 .file_toolbar_pane {
-    -fx-hgap: 3px;
+    -fx-hgap: 10px;
 }
 
 .horizontal_toolbar_button {
@@ -18,7 +18,21 @@ and open the template in the editor.
 
 }
 
+.vertical_toolbar_button {
+    -fx-background-color: transparent;
+    -fx-padding: 20px 20px 20px 20px;
+}
+
+.sites_toolbar_pane{
+    -fx-alignment: center;
+    -fx-spacing: 100px;
+}
+
 .epg_pane {
     -fx-background-color: azure;
 
+}
+
+.page_edit_workspace_pane{
+    -fx-background-color: aliceblue;
 }

@@ -17,6 +17,8 @@
         <property name="TOOLTIP_SAVE_AS_PORTFOLIO" value="Save As ePortfolio"></property>
         <property name="TOOLTIP_EXPORT_PORTFOLIO"  value="Export this ePortfolio"></property>
         <property name="TOOLTIP_EXIT"              value="Exit the Application"></property>
+        <property name="TOOLTIP_ADD_SITE"          value="Add a Site"></property>
+        <property name="TOOLTIP_REMOVE_SITE"       value="Remove a Site"></property>
         
         
         
