@@ -19,6 +19,7 @@
         <property name="TOOLTIP_EXIT"              value="Exit the Application"></property>
         <property name="TOOLTIP_ADD_SITE"          value="Add a Site"></property>
         <property name="TOOLTIP_REMOVE_SITE"       value="Remove a Site"></property>
+        <property name="TOOLTIP_CHANGE_SITE_NAME"  value="Change Site Name"></property>
         
         
         

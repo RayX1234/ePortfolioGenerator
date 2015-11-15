@@ -17,7 +17,7 @@ public class StartupConstants {
     public static String PATH_IMAGES = "./images/";
     public static String PATH_ICONS = PATH_IMAGES + "icons/";
     public static String PATH_CSS = "epg/style/";
-    public static String STYLE_SHEET_UI = PATH_CSS + "ePortfolioGeneratorStyle.css";
+    public static String STYLE_SHEET_UI = PATH_CSS + "EPortfolioGeneratorStyle.css";
 
     //For the fileToolbar
     public static String ICON_NEW_PORTFOLIO = "newPortfolio.png";
@@ -30,6 +30,7 @@ public class StartupConstants {
     //For the siteToolbar
     public static String ICON_ADD_SITE = "Add.png";
     public static String ICON_REMOVE_SITE = "Remove.png";
+    public static String ICON_CHANGE_SITE_NAME = "EditSiteName.png";
 
     //WINDOW ICON
     public static String ICON_FIRE = "fire.png";

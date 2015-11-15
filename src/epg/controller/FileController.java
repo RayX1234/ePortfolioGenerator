@@ -5,8 +5,8 @@
  */
 package epg.controller;
 
-import epg.file.ePortfolioFileManager;
-import epg.view.ePortfolioGeneratorView;
+import epg.file.EPortfolioFileManager;
+import epg.view.EPortfolioGeneratorView;
 
 /**
  *
@@ -19,13 +19,13 @@ public class FileController {
     private boolean saved;
 
     // THE APP UI
-    private ePortfolioGeneratorView ui;
+    private EPortfolioGeneratorView ui;
 
     // THIS GUY KNOWS HOW TO READ AND WRITE SLIDE SHOW DATA
-    private ePortfolioFileManager portfolioIO;
+    private EPortfolioFileManager portfolioIO;
 
     //Default constructor
-    public FileController(ePortfolioGeneratorView initUI, ePortfolioFileManager initPortfolioIO) {
+    public FileController(EPortfolioGeneratorView initUI, EPortfolioFileManager initPortfolioIO) {
         // NOTHING YET
         saved = true;
         ui = initUI;
@@ -34,6 +34,31 @@ public class FileController {
     
     //Create a new ePortfolio
     public void handleNewPortfolioRequest(){
+        
+    }
+    
+    //Load a ePortfolio
+    public void handleLoadPortfolioRequest(){
+        
+    }
+    
+    //Save a ePortfolio
+    public void handleSavePortfolioRequest(){
+        
+    }
+    
+    //Save as ePortfolio
+    public void handleSaveAsPortfolioRequest(){
+        
+    }
+    
+    //Export ePortfolio
+    public void handleExportPortfolioRequest(){
+        
+    }
+    
+    //Exit ePortfolio
+    public void handleExitRequest(){
         
     }
 }
