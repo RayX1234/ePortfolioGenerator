@@ -7,6 +7,7 @@ package epg.view;
 
 import epg.PropertyType;
 import static epg.PropertyType.TOOLTIP_ADD_SITE;
+import static epg.PropertyType.TOOLTIP_CHANGE_SITE_NAME;
 import static epg.PropertyType.TOOLTIP_EXIT;
 import static epg.PropertyType.TOOLTIP_EXPORT_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_LOAD_PORTFOLIO;
@@ -14,13 +15,16 @@ import static epg.PropertyType.TOOLTIP_NEW_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
+import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
+import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.ICON_ADD_SITE;
+import static epg.StartupConstants.ICON_CHANGE_SITE_NAME;
 import static epg.StartupConstants.ICON_EXIT;
 import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
 import static epg.StartupConstants.ICON_FIRE;
@@ -32,17 +36,21 @@ import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.controller.FileController;
-import epg.file.ePortfolioFileManager;
+import epg.controller.PageEditController;
+import epg.file.EPortfolioFileManager;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -55,7 +63,7 @@ import properties_manager.PropertiesManager;
  *
  * @author Ray
  */
-public class ePortfolioGeneratorView {
+public class EPortfolioGeneratorView {
 
     //Main application UI window and scene graph
     Stage primaryStage;
@@ -91,12 +99,22 @@ public class ePortfolioGeneratorView {
     VBox siteToolbarPane;
     Button addSitePageButton;
     Button removeSitePageButton;
+    Button changeSiteNameButton;
+
+    //For the changeSiteName dialog
+    GridPane siteNameGridPane;
+    Stage siteNameStage;
+    Scene siteNameScene;
+    TextField siteNameTextField;
+    Label siteNameLabel;
+    String siteName;
 
     FileController fileController;
-    ePortfolioFileManager fileManager;
+    EPortfolioFileManager fileManager;
+    PageEditController pageEditController;
 
     //Default Constructor
-    public ePortfolioGeneratorView(ePortfolioFileManager initFileManager) {
+    public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
 
     }
 
@@ -121,6 +139,7 @@ public class ePortfolioGeneratorView {
         siteToolbarPane.getStyleClass().add(CSS_CLASS_SITES_TOOL_BAR_PANE);
         addSitePageButton = initChildButton(siteToolbarPane, ICON_ADD_SITE, TOOLTIP_ADD_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         removeSitePageButton = initChildButton(siteToolbarPane, ICON_REMOVE_SITE, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        changeSiteNameButton = initChildButton(siteToolbarPane, ICON_CHANGE_SITE_NAME, TOOLTIP_CHANGE_SITE_NAME, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true);
     }
 
     //initalizing the pageEditWorkspace
@@ -128,10 +147,8 @@ public class ePortfolioGeneratorView {
         pageEditWorkspace = new BorderPane();
         pageEditWorkspace.getStyleClass().add(CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE);
         sitesTabPane = new TabPane();
+        sitesTabPane.getStyleClass().add(CSS_CLASS_SITES_TAB_PANE);
         Tab tab = new Tab();
-        tab.setText("new tab");
-        tab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
-        sitesTabPane.getTabs().add(tab);
         pageEditWorkspace.setTop(fileToolbarPane);
         pageEditWorkspace.setLeft(siteToolbarPane);
         pageEditWorkspace.setCenter(sitesTabPane);
@@ -176,6 +193,71 @@ public class ePortfolioGeneratorView {
         newPortfolioButton.setOnAction(e -> {
             initPageEditWorkspace();
         });
+
+        pageEditController = new PageEditController(this);
+
+        addSitePageButton.setOnAction(e -> {
+            pageEditController.processAddSiteRequest();
+        });
+
+        removeSitePageButton.setOnAction(e -> {
+            pageEditController.processRemoveSiteRequest();
+        });
+
+        changeSiteNameButton.setOnAction(e -> {
+            pageEditController.processChangeNameSiteRequest();
+        });
+    }
+
+    //Create site page
+    public void createSitePage() {
+        Tab tab = new Tab();
+        tab.setText("new tab");
+        tab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
+        sitesTabPane.getTabs().add(tab);
+        changeSiteNameButton.setDisable(false);
+    }
+
+    //Remove site page
+    public void removeSitePage() {
+        Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
+        sitesTabPane.getTabs().remove(selectedTab);
+        if (sitesTabPane.getTabs().isEmpty()) {
+            changeSiteNameButton.setDisable(true);
+        }
+
+    }
+
+    //Change site name
+    public void updateSiteNameDialog() {
+        siteNameGridPane = new GridPane();
+        siteNameGridPane.getStyleClass().add(CSS_CLASS_CSN_GRID_PANE);
+        siteNameLabel = new Label("Enter a Site Name:");
+        okButton = new Button("Ok");
+        cancelButton = new Button("Cancel");
+        siteNameTextField = new TextField();
+        siteNameStage = new Stage();
+        setWindowIcon(ICON_FIRE, siteNameStage);
+        siteNameScene = new Scene(siteNameGridPane, 400, 200);
+        siteNameScene.getStylesheets().add(STYLE_SHEET_UI);
+        siteNameGridPane.add(siteNameLabel, 0, 0, 4, 1);
+        siteNameGridPane.add(siteNameTextField, 0, 1, 4, 1);
+        siteNameGridPane.add(okButton, 0, 2, 1, 1);
+        siteNameGridPane.add(cancelButton, 1, 2, 1, 1);
+        siteNameTextField.setOnAction(e -> {
+            siteName = siteNameTextField.getText();
+        });
+        okButton.setOnAction(e -> {
+            Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
+            selectedTab.setText(siteName);
+            siteNameStage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            siteNameStage.close();
+        });
+        siteNameStage.setScene(siteNameScene);
+        siteNameStage.setTitle("Change Site Name");
+        siteNameStage.show();
     }
 
     public void startUI(Stage initPrimaryStage, String windowTitle) {
@@ -184,7 +266,7 @@ public class ePortfolioGeneratorView {
 
         // THE TOOLBAR ALONG THE LEFT
         initSiteToolbar();
-        
+
         // INIT EVENT HANDLERS
         initEventHandlers();
 
