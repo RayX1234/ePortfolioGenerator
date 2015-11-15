@@ -32,6 +32,10 @@ public class StartupConstants {
     public static String ICON_REMOVE_SITE = "Remove.png";
     public static String ICON_CHANGE_SITE_NAME = "EditSiteName.png";
 
+    //For the workspace mode toolbar
+    public static String ICON_PAGE_EDIT_WORKSPACE = "PageEdit.png";
+    public static String ICON_SITE_VIEWER_WORKSPACE = "SiteViewer.png";
+
     //WINDOW ICON
     public static String ICON_FIRE = "fire.png";
 
@@ -42,4 +46,7 @@ public class StartupConstants {
     public static String CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE = "page_edit_workspace_pane";
     public static String CSS_CLASS_FILE_TOOL_BAR_PANE = "file_toolbar_pane";
     public static String CSS_CLASS_SITES_TOOL_BAR_PANE = "sites_toolbar_pane";
+    public static String CSS_CLASS_CSN_GRID_PANE = "csn_grid_pane";
+    public static String CSS_CLASS_SITES_TAB_PANE = "tab-pane .tab-header-area .tab-header-background";
+    public static String CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE ="workspace_mode_toolbar_pane";
 }
