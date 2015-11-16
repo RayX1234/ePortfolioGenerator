@@ -54,5 +54,5 @@ and open the template in the editor.
 }
 
 .site_viewer_workspace_pane{
-    
+    -fx-background-color: snow;
 }

@@ -24,6 +24,7 @@ import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
+import static epg.StartupConstants.CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE;
 import static epg.StartupConstants.ICON_ADD_SITE;
@@ -179,6 +180,7 @@ public class EPortfolioGeneratorView {
         siteViewerWorkspace = new BorderPane();
         siteViewerScene = new Scene(siteViewerWorkspace);
         siteViewerScene.getStylesheets().add(STYLE_SHEET_UI);
+        siteViewerWorkspace.getStyleClass().add(CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE);
 
     }
 

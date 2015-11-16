@@ -49,4 +49,5 @@ public class StartupConstants {
     public static String CSS_CLASS_CSN_GRID_PANE = "csn_grid_pane";
     public static String CSS_CLASS_SITES_TAB_PANE = "tab-pane .tab-header-area .tab-header-background";
     public static String CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE ="workspace_mode_toolbar_pane";
+    public static String CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE = "site_viewer_workspace_pane";
 }
