@@ -14,7 +14,6 @@ import epg.view.EPortfolioGeneratorView;
 public class PageEditController {
 
     // APP UI
-
     private EPortfolioGeneratorView ui;
 
     /**
@@ -24,16 +23,16 @@ public class PageEditController {
         ui = initUI;
 
     }
-    
-    public void processAddSiteRequest(){
+
+    public void processAddSiteRequest() {
         ui.createSitePage();
     }
-    
-    public void processRemoveSiteRequest(){
+
+    public void processRemoveSiteRequest() {
         ui.removeSitePage();
     }
-    
-    public void processChangeNameSiteRequest(){
+
+    public void processChangeNameSiteRequest() {
         ui.updateSiteNameDialog();
     }
 }

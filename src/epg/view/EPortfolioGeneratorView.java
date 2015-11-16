@@ -94,6 +94,12 @@ public class EPortfolioGeneratorView {
     BorderPane pageEditWorkspace;
     TabPane sitesTabPane;
     Scene pageEditScene;
+    Boolean pageEditWorkspaceActivated;
+
+    //For the siteviewer workspace
+    BorderPane siteViewerWorkspace;
+    Scene siteViewerScene;
+    Boolean siteViewerWorkspaceActivated;
 
     //For the workspaceModeToolbar
     FlowPane workspaceModeToolbar;
@@ -154,20 +160,39 @@ public class EPortfolioGeneratorView {
         sitesTabPane = new TabPane();
         sitesTabPane.getStyleClass().add(CSS_CLASS_SITES_TAB_PANE);
         Tab tab = new Tab();
+        pageEditScene = new Scene(pageEditWorkspace);
+        pageEditScene.getStylesheets().add(STYLE_SHEET_UI);
+
+    }
+
+    //activate the pageEditWorkspace
+    private void activatePEW() {
         pageEditWorkspace.setTop(fileToolbarPane);
         pageEditWorkspace.setLeft(siteToolbarPane);
         pageEditWorkspace.setCenter(sitesTabPane);
-        pageEditScene = new Scene(pageEditWorkspace);
-        pageEditScene.getStylesheets().add(STYLE_SHEET_UI);
+        pageEditWorkspace.setBottom(workspaceModeToolbar);
         primaryStage.setScene(pageEditScene);
+
     }
-    
-    private void initWorkspaceModeToolbar(){
+
+    private void initSiteViewerWorkspace() {
+        siteViewerWorkspace = new BorderPane();
+        siteViewerScene = new Scene(siteViewerWorkspace);
+        siteViewerScene.getStylesheets().add(STYLE_SHEET_UI);
+
+    }
+
+    private void activateSVW() {
+        siteViewerWorkspace.setBottom(workspaceModeToolbar);
+        primaryStage.setScene(siteViewerScene);
+    }
+
+    public void initWorkspaceModeToolbar() {
         workspaceModeToolbar = new FlowPane();
         workspaceModeToolbar.getStyleClass().add(CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE);
         pageEditWorkSpaceButton = initChildButton(workspaceModeToolbar, ICON_PAGE_EDIT_WORKSPACE, TOOLTIP_PAGE_EDIT_WORKSPACE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         siteViewerWorkspaceButton = initChildButton(workspaceModeToolbar, ICON_SITE_VIEWER_WORKSPACE, TOOLTIP_SITE_VIEWER_WORKSPACE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        pageEditWorkspace.setBottom(workspaceModeToolbar);
+
     }
 
     private void initWindow(String windowTitle) {
@@ -200,26 +225,56 @@ public class EPortfolioGeneratorView {
 
     }
 
+    public void isPEWActivated() {
+        if (pageEditWorkspaceActivated == true) {
+            pageEditWorkSpaceButton.setDisable(true);
+            siteViewerWorkspaceButton.setDisable(false);
+        }
+    }
+
+    public void isSVWActivated() {
+        if (siteViewerWorkspaceActivated == true) {
+            siteViewerWorkspaceButton.setDisable(true);
+            pageEditWorkSpaceButton.setDisable(false);
+        }
+    }
+
     public void initEventHandlers() {
         fileController = new FileController(this, fileManager);
 
         newPortfolioButton.setOnAction(e -> {
-            initPageEditWorkspace();
+            activatePEW();
+            pageEditWorkspaceActivated = true;
+            isPEWActivated();
         });
 
         pageEditController = new PageEditController(this);
 
         addSitePageButton.setOnAction(e -> {
             pageEditController.processAddSiteRequest();
-            initWorkspaceModeToolbar();
+
         });
 
         removeSitePageButton.setOnAction(e -> {
             pageEditController.processRemoveSiteRequest();
+
         });
 
         changeSiteNameButton.setOnAction(e -> {
             pageEditController.processChangeNameSiteRequest();
+        });
+
+        ///For the workspace mode toolbar
+        pageEditWorkSpaceButton.setOnAction(e -> {
+            pageEditWorkspaceActivated = true;
+            isPEWActivated();
+            activatePEW();
+        });
+
+        siteViewerWorkspaceButton.setOnAction(e -> {
+            siteViewerWorkspaceActivated = true;
+            isSVWActivated();
+            activateSVW();
         });
     }
 
@@ -280,6 +335,15 @@ public class EPortfolioGeneratorView {
 
         // THE TOOLBAR ALONG THE LEFT
         initSiteToolbar();
+
+        // INIT THE PAGE EDIT WORKSPACE BUT DO NOT SHOW IT
+        initPageEditWorkspace();
+
+        // INIT THE SITE VIEWER WORKSPACE BUT DO NOT SHOW IT
+        initSiteViewerWorkspace();
+
+        // INIT THE WORKSPACE MODE TOOLBAR
+        initWorkspaceModeToolbar();
 
         // INIT EVENT HANDLERS
         initEventHandlers();
