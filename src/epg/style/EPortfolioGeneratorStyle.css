@@ -60,3 +60,8 @@ and open the template in the editor.
 .content_pane{
     -fx-background-color: #e5e5ff;
 }
+
+.ptsnbi_pane{
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+}
