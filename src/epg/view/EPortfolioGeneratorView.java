@@ -42,6 +42,7 @@ import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.ICON_SITE_VIEWER_WORKSPACE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.controller.BannerImageController;
 import epg.controller.FileController;
 import epg.controller.PageEditController;
 import epg.file.EPortfolioFileManager;
@@ -119,10 +120,10 @@ public class EPortfolioGeneratorView {
     TextField siteNameTextField;
     Label siteNameLabel;
     String siteName;
-    
+
     //For the main pane for the site pages
     BorderPane contentPane;
-    
+
     //For the top of the contentPane(Page Title, Student Name, Banner Image)
     FlowPane ptsnbiPane;
     Label pageTitleLabel;
@@ -130,11 +131,12 @@ public class EPortfolioGeneratorView {
     Label bannerImageLabel;
     TextField pageTitleTextField;
     TextField studentNameTextField;
-    
+    Button selectBIButton;
 
     FileController fileController;
     EPortfolioFileManager fileManager;
     PageEditController pageEditController;
+    BannerImageController bannerImageController;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
@@ -290,6 +292,7 @@ public class EPortfolioGeneratorView {
             isSVWActivated();
             activateSVW();
         });
+
     }
 
     //Create site page
@@ -301,37 +304,51 @@ public class EPortfolioGeneratorView {
         changeSiteNameButton.setDisable(false);
         removeSitePageButton.setDisable(false);
     }
-    
+
     //Pane for all the componeents of a sitepage
-    public Pane initContentPane(){
+    public Pane initContentPane() {
         contentPane = new BorderPane();
         contentPane.getStyleClass().add(CSS_CLASS_CONTENT_PANE);
         initPTSNBIPane();
         return contentPane;
     }
-    
+
     //For the pageTitle, studentName, bannerImage container
-    public void initPTSNBIPane(){
+    public void initPTSNBIPane() {
         ptsnbiPane = new FlowPane();
         initPageTitle();
         initStudentName();
+        initBannerImage();
         contentPane.setTop(ptsnbiPane);
     }
-    
+
     //For the navbar title
-    public void initPageTitle(){
+    public void initPageTitle() {
         pageTitleLabel = new Label("Enter a Page Title:");
         pageTitleTextField = new TextField();
-        ptsnbiPane.getChildren().addAll(pageTitleLabel,pageTitleTextField);
+        ptsnbiPane.getChildren().addAll(pageTitleLabel, pageTitleTextField);
     }
-    
+
     //For the studentName
-    public void initStudentName(){
+    public void initStudentName() {
         studentNameLabel = new Label("Enter a Student Name:");
         studentNameTextField = new TextField();
-        ptsnbiPane.getChildren().addAll(studentNameLabel,studentNameTextField);
+        ptsnbiPane.getChildren().addAll(studentNameLabel, studentNameTextField);
     }
-    
+
+    //For the bannerImage
+    public void initBannerImage() {
+
+        bannerImageLabel = new Label("Banner Image:");
+        selectBIButton = new Button("Select");
+        ptsnbiPane.getChildren().addAll(bannerImageLabel, selectBIButton);
+        bannerImageController = new BannerImageController();
+        selectBIButton.setOnAction(e -> {
+            bannerImageController.processSelectImage();
+        });
+
+    }
+
     //Remove site page
     public void removeSitePage() {
         Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
