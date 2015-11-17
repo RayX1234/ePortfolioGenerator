@@ -17,6 +17,7 @@ import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SITE_VIEWER_WORKSPACE;
+import static epg.StartupConstants.CSS_CLASS_CONTENT_PANE;
 import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
@@ -59,8 +60,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -120,6 +119,18 @@ public class EPortfolioGeneratorView {
     TextField siteNameTextField;
     Label siteNameLabel;
     String siteName;
+    
+    //For the main pane for the site pages
+    BorderPane contentPane;
+    
+    //For the top of the contentPane(Page Title, Student Name, Banner Image)
+    FlowPane ptsnbiPane;
+    Label pageTitleLabel;
+    Label studentNameLabel;
+    Label bannerImageLabel;
+    TextField pageTitleTextField;
+    TextField studentNameTextField;
+    
 
     FileController fileController;
     EPortfolioFileManager fileManager;
@@ -248,6 +259,7 @@ public class EPortfolioGeneratorView {
             activatePEW();
             pageEditWorkspaceActivated = true;
             isPEWActivated();
+            removeSitePageButton.setDisable(true);
         });
 
         pageEditController = new PageEditController(this);
@@ -284,17 +296,49 @@ public class EPortfolioGeneratorView {
     public void createSitePage() {
         Tab tab = new Tab();
         tab.setText("new tab");
-        tab.setContent(new Rectangle(200, 200, Color.LIGHTSTEELBLUE));
+        tab.setContent(initContentPane());
         sitesTabPane.getTabs().add(tab);
         changeSiteNameButton.setDisable(false);
+        removeSitePageButton.setDisable(false);
     }
-
+    
+    //Pane for all the componeents of a sitepage
+    public Pane initContentPane(){
+        contentPane = new BorderPane();
+        contentPane.getStyleClass().add(CSS_CLASS_CONTENT_PANE);
+        initPTSNBIPane();
+        return contentPane;
+    }
+    
+    //For the pageTitle, studentName, bannerImage container
+    public void initPTSNBIPane(){
+        ptsnbiPane = new FlowPane();
+        initPageTitle();
+        initStudentName();
+        contentPane.setTop(ptsnbiPane);
+    }
+    
+    //For the navbar title
+    public void initPageTitle(){
+        pageTitleLabel = new Label("Enter a Page Title:");
+        pageTitleTextField = new TextField();
+        ptsnbiPane.getChildren().addAll(pageTitleLabel,pageTitleTextField);
+    }
+    
+    //For the studentName
+    public void initStudentName(){
+        studentNameLabel = new Label("Enter a Student Name:");
+        studentNameTextField = new TextField();
+        ptsnbiPane.getChildren().addAll(studentNameLabel,studentNameTextField);
+    }
+    
     //Remove site page
     public void removeSitePage() {
         Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
         sitesTabPane.getTabs().remove(selectedTab);
         if (sitesTabPane.getTabs().isEmpty()) {
             changeSiteNameButton.setDisable(true);
+            removeSitePageButton.setDisable(true);
         }
 
     }

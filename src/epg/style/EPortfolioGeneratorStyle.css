@@ -56,3 +56,7 @@ and open the template in the editor.
 .site_viewer_workspace_pane{
     -fx-background-color: snow;
 }
+
+.content_pane{
+    -fx-background-color: #e5e5ff;
+}
