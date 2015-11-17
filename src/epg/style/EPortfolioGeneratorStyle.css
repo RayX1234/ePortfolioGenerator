@@ -62,6 +62,7 @@ and open the template in the editor.
 }
 
 .ptsnbi_pane{
-    -fx-hgap: 10px;
+    -fx-hgap: 20px;
     -fx-vgap: 10px;
+    -fx-alignment:center;
 }
