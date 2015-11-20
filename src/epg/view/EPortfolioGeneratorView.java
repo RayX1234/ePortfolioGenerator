@@ -22,7 +22,9 @@ import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
+import static epg.StartupConstants.CSS_CLASS_LCF_PANE;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
+import static epg.StartupConstants.CSS_CLASS_PTSNBI_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE;
@@ -49,6 +51,7 @@ import epg.file.EPortfolioFileManager;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -59,6 +62,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
@@ -90,6 +94,8 @@ public class EPortfolioGeneratorView {
     Button saveAsPortfolioButton;
     Button exportPortfolioButton;
     Button exitButton;
+    Label ePortfolioTitleLabel;
+    TextField ePortfolioTitleTF;
 
     //For the pageEditWorkspace
     BorderPane pageEditWorkspace;
@@ -125,13 +131,24 @@ public class EPortfolioGeneratorView {
     BorderPane contentPane;
 
     //For the top of the contentPane(Page Title, Student Name, Banner Image)
-    FlowPane ptsnbiPane;
+    VBox ptsnbiPane;
     Label pageTitleLabel;
     Label studentNameLabel;
     Label bannerImageLabel;
+    Label footerLabel;
     TextField pageTitleTextField;
     TextField studentNameTextField;
+    TextField footerTextField;
     Button selectBIButton;
+
+    //For selecting layout, color, and font
+    HBox lcfPane;
+    Label layoutLabel;
+    Label colorLabel;
+    Label fontLabel;
+    ComboBox layoutComboBox;
+    ComboBox colorComboBox;
+    ComboBox fontComboBox;
 
     FileController fileController;
     EPortfolioFileManager fileManager;
@@ -158,6 +175,22 @@ public class EPortfolioGeneratorView {
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
     }
 
+    private void reset() {
+        fileToolbarPane.getChildren().clear();
+        sitesTabPane.getTabs().clear();
+        newPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_PORTFOLIO, TOOLTIP_NEW_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        loadPortfolioButton = initChildButton(fileToolbarPane, ICON_LOAD_PORTFOLIO, TOOLTIP_LOAD_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_PORTFOLIO, TOOLTIP_SAVE_AS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        ePortfolioTitleLabel = new Label("Enter A Title:");
+        ePortfolioTitleTF = new TextField();
+        fileToolbarPane.getChildren().addAll(ePortfolioTitleLabel, ePortfolioTitleTF);
+        initEventHandlers();
+
+    }
+
     //initalizing the sitetoolbar
     private void initSiteToolbar() {
         siteToolbarPane = new VBox();
@@ -172,6 +205,7 @@ public class EPortfolioGeneratorView {
         pageEditWorkspace = new BorderPane();
         pageEditWorkspace.getStyleClass().add(CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE);
         sitesTabPane = new TabPane();
+        sitesTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         sitesTabPane.getStyleClass().add(CSS_CLASS_SITES_TAB_PANE);
         Tab tab = new Tab();
         pageEditScene = new Scene(pageEditWorkspace);
@@ -199,6 +233,7 @@ public class EPortfolioGeneratorView {
 
     private void activateSVW() {
         siteViewerWorkspace.setBottom(workspaceModeToolbar);
+        siteViewerWorkspace.setTop(fileToolbarPane);
         primaryStage.setScene(siteViewerScene);
     }
 
@@ -258,6 +293,7 @@ public class EPortfolioGeneratorView {
         fileController = new FileController(this, fileManager);
 
         newPortfolioButton.setOnAction(e -> {
+            reset();
             activatePEW();
             pageEditWorkspaceActivated = true;
             isPEWActivated();
@@ -309,17 +345,38 @@ public class EPortfolioGeneratorView {
     public Pane initContentPane() {
         contentPane = new BorderPane();
         contentPane.getStyleClass().add(CSS_CLASS_CONTENT_PANE);
-        initPTSNBIPane();
+        initTopAreaPane();
         return contentPane;
     }
 
-    //For the pageTitle, studentName, bannerImage container
-    public void initPTSNBIPane() {
-        ptsnbiPane = new FlowPane();
+    //For the pageTitle, studentName, bannerImage, layout, color, and page font
+    public void initTopAreaPane() {
+        ptsnbiPane = new VBox();
+        ptsnbiPane.getStyleClass().add(CSS_CLASS_PTSNBI_PANE);
         initPageTitle();
         initStudentName();
         initBannerImage();
+        initFooter();
+        initlcfPane();
         contentPane.setTop(ptsnbiPane);
+    }
+
+    //For selecting layout, color, and font
+    public void initlcfPane() {
+        lcfPane = new HBox();
+        lcfPane.getStyleClass().add(CSS_CLASS_LCF_PANE);
+        ptsnbiPane.getChildren().add(lcfPane);
+        layoutLabel = new Label("Select A Layout:");
+        colorLabel = new Label("Select A Color:");
+        fontLabel = new Label("Select A Font:");
+        layoutComboBox = new ComboBox();
+        layoutComboBox.getItems().addAll("Layout 1", "Layout 2", "Layout 3", "Layout 4", "Layout 5");
+        colorComboBox = new ComboBox();
+        colorComboBox.getItems().addAll("Color 1", "Color 2", "Color 3", "Color 4", "Color 5");
+        fontComboBox = new ComboBox();
+        fontComboBox.getItems().addAll("Font 1", "Font 2", "Font 3", "Font 4", "Font 5");
+        lcfPane.getChildren().addAll(layoutLabel, layoutComboBox, colorLabel, colorComboBox, fontLabel, fontComboBox);
+
     }
 
     //For the navbar title
@@ -346,7 +403,13 @@ public class EPortfolioGeneratorView {
         selectBIButton.setOnAction(e -> {
             bannerImageController.processSelectImage();
         });
+    }
 
+    //For the footer
+    public void initFooter() {
+        footerLabel = new Label("Enter a Footer:");
+        footerTextField = new TextField();
+        ptsnbiPane.getChildren().addAll(footerLabel, footerTextField);
     }
 
     //Remove site page
