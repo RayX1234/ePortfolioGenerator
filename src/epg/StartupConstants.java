@@ -59,5 +59,6 @@ public class StartupConstants {
     public static String CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE = "site_viewer_workspace_pane";
     public static String CSS_CLASS_CONTENT_PANE = "content_pane";
     public static String CSS_CLASS_PTSNBI_PANE = "ptsnbi_pane";
-    public static String CSS_CLASS_LCF_PANE = "lcf_pane";
+    public static String CSS_CLASS_LAYOUT_PANE = "layout_pane";
+    
 }

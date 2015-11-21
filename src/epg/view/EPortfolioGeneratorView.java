@@ -27,7 +27,7 @@ import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
-import static epg.StartupConstants.CSS_CLASS_LCF_PANE;
+import static epg.StartupConstants.CSS_CLASS_LAYOUT_PANE;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_PTSNBI_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
@@ -57,16 +57,18 @@ import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.controller.BannerImageController;
 import epg.controller.FileController;
 import epg.controller.PageEditController;
+import epg.controller.TextController;
 import epg.file.EPortfolioFileManager;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -153,14 +155,32 @@ public class EPortfolioGeneratorView {
     Button selectBIButton;
 
     //For selecting layout, color, and font
-    HBox lcfPane;
+    HBox layoutPane;
+    HBox colorPane;
+    HBox fontPane;
+    ToggleGroup layoutGroup;
+    ToggleGroup colorGroup;
+    ToggleGroup fontGroup;
+    RadioButton layout1Button;
+    RadioButton layout2Button;
+    RadioButton layout3Button;
+    RadioButton layout4Button;
+    RadioButton layout5Button;
+    RadioButton color1Button;
+    RadioButton color2Button;
+    RadioButton color3Button;
+    RadioButton color4Button;
+    RadioButton color5Button;
+    RadioButton font1Button;
+    RadioButton font21Button;
+    RadioButton font31Button;
+    RadioButton font4Button;
+    RadioButton font5Button;
+
     Label layoutLabel;
     Label colorLabel;
     Label fontLabel;
-    ComboBox layoutComboBox;
-    ComboBox colorComboBox;
-    ComboBox fontComboBox;
-    
+
     //CompoentPane
     FlowPane componentFlowPane;
     Button addTextButton;
@@ -168,7 +188,7 @@ public class EPortfolioGeneratorView {
     Button addSlideShowButton;
     Button addVideoButton;
     Button addTextHLButton;
-    
+
     // For placing the components
     ScrollPane componentScrollPane;
     VBox componentVBox;
@@ -177,6 +197,7 @@ public class EPortfolioGeneratorView {
     EPortfolioFileManager fileManager;
     PageEditController pageEditController;
     BannerImageController bannerImageController;
+    TextController textController;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
@@ -230,7 +251,6 @@ public class EPortfolioGeneratorView {
         sitesTabPane = new TabPane();
         sitesTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         sitesTabPane.getStyleClass().add(CSS_CLASS_SITES_TAB_PANE);
-        Tab tab = new Tab();
         pageEditScene = new Scene(pageEditWorkspace);
         pageEditScene.getStylesheets().add(STYLE_SHEET_UI);
 
@@ -352,6 +372,11 @@ public class EPortfolioGeneratorView {
             activateSVW();
         });
 
+        textController = new TextController(this);
+        addTextButton.setOnAction(e -> {
+            textController.displayAddTextDialog();
+        });
+
     }
 
     //Create site page
@@ -371,18 +396,17 @@ public class EPortfolioGeneratorView {
         initTopAreaPane();
         return contentPane;
     }
-    
+
     //For the buttons of video,image,slideshow,text annd hyperlink
-    public void initComponentToolbar(){
+    public void initComponentToolbar() {
         componentFlowPane = new FlowPane();
         addTextButton = initChildButton(componentFlowPane, ICON_ADD_TEXT, TOOLTIP_ADD_TEXT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addImageButton = initChildButton(componentFlowPane, ICON_ADD_IMAGE, TOOLTIP_ADD_IMAGE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addSlideShowButton = initChildButton(componentFlowPane, ICON_ADD_SLIDESHOW, TOOLTIP_ADD_SLIDESHOW, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addVideoButton = initChildButton(componentFlowPane, ICON_ADD_VIDEO, TOOLTIP_ADD_VIDEO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addTextHLButton = initChildButton(componentFlowPane, ICON_ADD_TEXT_HYPERLINK, TOOLTIP_ADD_TEXT_HYPERLINK, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        ptsnbiPane.getChildren().add(componentFlowPane);
-        
-    }   
+
+    }
 
     //For the pageTitle, studentName, bannerImage, layout, color, and page font
     public void initTopAreaPane() {
@@ -392,26 +416,31 @@ public class EPortfolioGeneratorView {
         initStudentName();
         initBannerImage();
         initFooter();
-        initlcfPane();
+        initlayoutPane();
         initComponentToolbar();
+        initEventHandlers();
+        ptsnbiPane.getChildren().add(componentFlowPane);
         contentPane.setTop(ptsnbiPane);
     }
 
     //For selecting layout, color, and font
-    public void initlcfPane() {
-        lcfPane = new HBox();
-        lcfPane.getStyleClass().add(CSS_CLASS_LCF_PANE);
-        ptsnbiPane.getChildren().add(lcfPane);
+    public void initlayoutPane() {
+        layoutPane = new HBox();
+        layoutPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
+        ptsnbiPane.getChildren().add(layoutPane);
+        layoutGroup = new ToggleGroup();
         layoutLabel = new Label("Select Layout:");
-        colorLabel = new Label("Select Color:");
-        fontLabel = new Label("Select Font:");
-        layoutComboBox = new ComboBox();
-        layoutComboBox.getItems().addAll("Layout 1", "Layout 2", "Layout 3", "Layout 4", "Layout 5");
-        colorComboBox = new ComboBox();
-        colorComboBox.getItems().addAll("Color 1", "Color 2", "Color 3", "Color 4", "Color 5");
-        fontComboBox = new ComboBox();
-        fontComboBox.getItems().addAll("Font 1", "Font 2", "Font 3", "Font 4", "Font 5");
-        lcfPane.getChildren().addAll(layoutLabel, layoutComboBox, colorLabel, colorComboBox, fontLabel, fontComboBox);
+        layout1Button = new RadioButton("Layout 1");
+        layout1Button.setToggleGroup(layoutGroup);
+        layout2Button = new RadioButton("Layout 2");
+        layout2Button.setToggleGroup(layoutGroup);
+        layout3Button = new RadioButton("Layout 3");
+        layout3Button.setToggleGroup(layoutGroup);
+        layout4Button = new RadioButton("Layout 4");
+        layout4Button.setToggleGroup(layoutGroup);
+        layout5Button = new RadioButton("Layout 5");
+        layout5Button.setToggleGroup(layoutGroup);
+        layoutPane.getChildren().addAll(layoutLabel, layout1Button, layout2Button, layout3Button, layout4Button, layout5Button);
 
     }
 
@@ -506,6 +535,8 @@ public class EPortfolioGeneratorView {
 
         // INIT THE WORKSPACE MODE TOOLBAR
         initWorkspaceModeToolbar();
+
+        initComponentToolbar();
 
         // INIT EVENT HANDLERS
         initEventHandlers();

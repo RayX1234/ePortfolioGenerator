@@ -64,8 +64,9 @@ and open the template in the editor.
 .ptsnbi_pane{
    -fx-padding: 10px;
    -fx-spacing: 10px;
-}   
-
-.lcf_pane{
-   -fx-spacing: 10px;
 }
+
+.layout_pane{
+    -fx-spacing: 10px;
+}
+
