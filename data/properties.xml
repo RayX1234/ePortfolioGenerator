@@ -11,17 +11,23 @@
         <!-- PROGRAM ICON FILES -->
 	
         <!-- TOOLTIPS FOR BUTTONS -->
-        <property name="TOOLTIP_NEW_PORTFOLIO"	   value="Create a New ePortfolio"></property>
-        <property name="TOOLTIP_LOAD_PORTFOLIO"    value="Load an Existing ePortfolio"></property>
-        <property name="TOOLTIP_SAVE_PORTFOLIO"    value="Save this ePortfolio"></property>
-        <property name="TOOLTIP_SAVE_AS_PORTFOLIO" value="Save As ePortfolio"></property>
-        <property name="TOOLTIP_EXPORT_PORTFOLIO"  value="Export this ePortfolio"></property>
-        <property name="TOOLTIP_EXIT"              value="Exit the Application"></property>
-        <property name="TOOLTIP_ADD_SITE"          value="Add a Site"></property>
-        <property name="TOOLTIP_REMOVE_SITE"       value="Remove a Site"></property>
-        <property name="TOOLTIP_CHANGE_SITE_NAME"  value="Change Site Name"></property>
-        <property name="TOOLTIP_PAGE_EDIT_WORKSPACE" value="Page Edit WorkSpace"></property>
+        <property name="TOOLTIP_NEW_PORTFOLIO"	       value="Create a New ePortfolio"></property>
+        <property name="TOOLTIP_LOAD_PORTFOLIO"        value="Load an Existing ePortfolio"></property>
+        <property name="TOOLTIP_SAVE_PORTFOLIO"        value="Save this ePortfolio"></property>
+        <property name="TOOLTIP_SAVE_AS_PORTFOLIO"     value="Save As ePortfolio"></property>
+        <property name="TOOLTIP_EXPORT_PORTFOLIO"      value="Export this ePortfolio"></property>
+        <property name="TOOLTIP_EXIT"                  value="Exit the Application"></property>
+        <property name="TOOLTIP_ADD_SITE"              value="Add a Site"></property>
+        <property name="TOOLTIP_REMOVE_SITE"           value="Remove a Site"></property>
+        <property name="TOOLTIP_CHANGE_SITE_NAME"      value="Change Site Name"></property>
+        <property name="TOOLTIP_PAGE_EDIT_WORKSPACE"   value="Page Edit WorkSpace"></property>
         <property name="TOOLTIP_SITE_VIEWER_WORKSPACE" value="Site Viewer WorkSpace"></property>
+        <property name="TOOLTIP_ADD_TEXT"              value="Add A Text Component"></property>
+        <property name="TOOLTIP_ADD_IMAGE"             value="Add A Image Component"></property>
+        <property name="TOOLTIP_ADD_SLIDESHOW"         value="Add A SlideShow Component"></property>
+        <property name="TOOLTIP_ADD_VIDEO"             value="Add A Video Component"></property>
+        <property name="TOOLTIP_ADD_TEXT_HYPERLINK"    value="Add A Text HyperLink Component"></property>
+        
         
         
     </property_list>

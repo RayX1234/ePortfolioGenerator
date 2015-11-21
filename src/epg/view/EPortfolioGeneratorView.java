@@ -6,7 +6,12 @@
 package epg.view;
 
 import epg.PropertyType;
+import static epg.PropertyType.TOOLTIP_ADD_IMAGE;
 import static epg.PropertyType.TOOLTIP_ADD_SITE;
+import static epg.PropertyType.TOOLTIP_ADD_SLIDESHOW;
+import static epg.PropertyType.TOOLTIP_ADD_TEXT;
+import static epg.PropertyType.TOOLTIP_ADD_TEXT_HYPERLINK;
+import static epg.PropertyType.TOOLTIP_ADD_VIDEO;
 import static epg.PropertyType.TOOLTIP_CHANGE_SITE_NAME;
 import static epg.PropertyType.TOOLTIP_EXIT;
 import static epg.PropertyType.TOOLTIP_EXPORT_PORTFOLIO;
@@ -30,7 +35,12 @@ import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE;
+import static epg.StartupConstants.ICON_ADD_IMAGE;
 import static epg.StartupConstants.ICON_ADD_SITE;
+import static epg.StartupConstants.ICON_ADD_SLIDESHOW;
+import static epg.StartupConstants.ICON_ADD_TEXT;
+import static epg.StartupConstants.ICON_ADD_TEXT_HYPERLINK;
+import static epg.StartupConstants.ICON_ADD_VIDEO;
 import static epg.StartupConstants.ICON_CHANGE_SITE_NAME;
 import static epg.StartupConstants.ICON_EXIT;
 import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
@@ -53,6 +63,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -149,6 +160,18 @@ public class EPortfolioGeneratorView {
     ComboBox layoutComboBox;
     ComboBox colorComboBox;
     ComboBox fontComboBox;
+    
+    //CompoentPane
+    FlowPane componentFlowPane;
+    Button addTextButton;
+    Button addImageButton;
+    Button addSlideShowButton;
+    Button addVideoButton;
+    Button addTextHLButton;
+    
+    // For placing the components
+    ScrollPane componentScrollPane;
+    VBox componentVBox;
 
     FileController fileController;
     EPortfolioFileManager fileManager;
@@ -348,6 +371,18 @@ public class EPortfolioGeneratorView {
         initTopAreaPane();
         return contentPane;
     }
+    
+    //For the buttons of video,image,slideshow,text annd hyperlink
+    public void initComponentToolbar(){
+        componentFlowPane = new FlowPane();
+        addTextButton = initChildButton(componentFlowPane, ICON_ADD_TEXT, TOOLTIP_ADD_TEXT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        addImageButton = initChildButton(componentFlowPane, ICON_ADD_IMAGE, TOOLTIP_ADD_IMAGE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        addSlideShowButton = initChildButton(componentFlowPane, ICON_ADD_SLIDESHOW, TOOLTIP_ADD_SLIDESHOW, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        addVideoButton = initChildButton(componentFlowPane, ICON_ADD_VIDEO, TOOLTIP_ADD_VIDEO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        addTextHLButton = initChildButton(componentFlowPane, ICON_ADD_TEXT_HYPERLINK, TOOLTIP_ADD_TEXT_HYPERLINK, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        ptsnbiPane.getChildren().add(componentFlowPane);
+        
+    }   
 
     //For the pageTitle, studentName, bannerImage, layout, color, and page font
     public void initTopAreaPane() {
@@ -358,6 +393,7 @@ public class EPortfolioGeneratorView {
         initBannerImage();
         initFooter();
         initlcfPane();
+        initComponentToolbar();
         contentPane.setTop(ptsnbiPane);
     }
 
@@ -366,9 +402,9 @@ public class EPortfolioGeneratorView {
         lcfPane = new HBox();
         lcfPane.getStyleClass().add(CSS_CLASS_LCF_PANE);
         ptsnbiPane.getChildren().add(lcfPane);
-        layoutLabel = new Label("Select A Layout:");
-        colorLabel = new Label("Select A Color:");
-        fontLabel = new Label("Select A Font:");
+        layoutLabel = new Label("Select Layout:");
+        colorLabel = new Label("Select Color:");
+        fontLabel = new Label("Select Font:");
         layoutComboBox = new ComboBox();
         layoutComboBox.getItems().addAll("Layout 1", "Layout 2", "Layout 3", "Layout 4", "Layout 5");
         colorComboBox = new ComboBox();

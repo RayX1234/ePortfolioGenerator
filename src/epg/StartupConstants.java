@@ -39,6 +39,13 @@ public class StartupConstants {
     //WINDOW ICON
     public static String ICON_FIRE = "fire.png";
 
+    //FOR THE COMPOEENTS ADDINGS ICONS
+    public static String ICON_ADD_VIDEO = "addVideo.png";
+    public static String ICON_ADD_TEXT = "addText.png";
+    public static String ICON_ADD_IMAGE = "addImage.png";
+    public static String ICON_ADD_SLIDESHOW = "addSlideShow.png";
+    public static String ICON_ADD_TEXT_HYPERLINK = "addHyperLink.png";
+
     //CSS Class Style Sheet Classes
     public static String CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
     public static String CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";
@@ -48,7 +55,7 @@ public class StartupConstants {
     public static String CSS_CLASS_SITES_TOOL_BAR_PANE = "sites_toolbar_pane";
     public static String CSS_CLASS_CSN_GRID_PANE = "csn_grid_pane";
     public static String CSS_CLASS_SITES_TAB_PANE = "tab-pane .tab-header-area .tab-header-background";
-    public static String CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE ="workspace_mode_toolbar_pane";
+    public static String CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE = "workspace_mode_toolbar_pane";
     public static String CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE = "site_viewer_workspace_pane";
     public static String CSS_CLASS_CONTENT_PANE = "content_pane";
     public static String CSS_CLASS_PTSNBI_PANE = "ptsnbi_pane";
