@@ -44,13 +44,27 @@ public class TextController {
     HBox okCancelHBox;
     Button okButton;
     Button cancelButton;
-
-    //For the heading dialog
-    Stage headingStage;
-    Scene headingScene;
     Label enterContentLabel;
-    TextField headingTextField;
-    VBox headingVBox;
+
+    //For the add heading dialog
+    Stage addHeadingStage;
+    Scene addHeadingScene;
+    TextField addHeadingTextField;
+    VBox addHeadingVBox;
+
+    //For the edit heading dialog
+    Stage editHeadingStage;
+    Scene editHeadingScene;
+    VBox editHeadingVBox;
+    TextField editHeadingTextField;
+
+    //For the add paragraph dialog
+    Stage addParagraphStage;
+    Scene addParagraphScene;
+    TextArea addParagraphTextArea;
+    VBox addParagraphVBox;
+    ComboBox addParagraphComboBox;
+    ObservableList<String> fontOptions;
 
     public TextController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -76,6 +90,9 @@ public class TextController {
             if (addTextComboBox.getValue().equals("Heading")) {
                 displayAddHeadingDialog();
             }
+            if (addTextComboBox.getValue().equals("Paragraph")) {
+                displayAddParagraphDialog();
+            }
             addTextStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -89,28 +106,61 @@ public class TextController {
     }
 
     public void displayAddHeadingDialog() {
-        headingTextField = new TextField();
-        headingStage = new Stage();
-        headingStage.setTitle("Add Heading");
-        ui.setWindowIcon(ICON_FIRE, headingStage);
-        headingVBox = new VBox();
+        addHeadingTextField = new TextField();
+        addHeadingStage = new Stage();
+        addHeadingStage.setTitle("Add Heading");
+        ui.setWindowIcon(ICON_FIRE, addHeadingStage);
+        addHeadingVBox = new VBox();
+        addHeadingVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
         enterContentLabel = new Label("Enter Content:");
-        headingScene = new Scene(headingVBox, 500, 150);
-        headingScene.getStylesheets().add(STYLE_SHEET_UI);
-        headingStage.setScene(headingScene);
-        headingVBox.getChildren().addAll(enterContentLabel, headingTextField, okCancelHBox);
-        okButton.setOnAction(e ->{
-            headingStage.close();
+        addHeadingScene = new Scene(addHeadingVBox, 500, 150);
+        addHeadingScene.getStylesheets().add(STYLE_SHEET_UI);
+        addHeadingStage.setScene(addHeadingScene);
+        addHeadingVBox.getChildren().addAll(enterContentLabel, addHeadingTextField, okCancelHBox);
+        okButton.setOnAction(e -> {
+            addHeadingStage.close();
         });
-        cancelButton.setOnAction(e ->{
-            headingStage.close();
+        cancelButton.setOnAction(e -> {
+            addHeadingStage.close();
         });
-        headingStage.show();
-        
+        addHeadingStage.show();
+
     }
-    
-    public void displayEditHeadingDialog(){
-        headingStage.setTitle("Edit Heading");
-        headingStage.show();
+
+    public void displayEditHeadingDialog() {
+        editHeadingTextField = new TextField();
+        editHeadingStage = new Stage();
+        editHeadingStage.setTitle("Edit Heading");
+        ui.setWindowIcon(ICON_FIRE, editHeadingStage);
+        editHeadingVBox = new VBox();
+        enterContentLabel = new Label("Enter Content:");
+        editHeadingScene = new Scene(editHeadingVBox, 500, 150);
+        editHeadingScene.getStylesheets().add(STYLE_SHEET_UI);
+        editHeadingStage.setScene(editHeadingScene);
+        editHeadingVBox.getChildren().addAll(enterContentLabel, editHeadingTextField, okCancelHBox);
+        okButton.setOnAction(e -> {
+            editHeadingStage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            editHeadingStage.close();
+        });
+        editHeadingStage.show();
+
+    }
+
+    public void displayAddParagraphDialog() {
+        addParagraphStage = new Stage();
+        addParagraphVBox = new VBox();
+        enterContentLabel = new Label("Enter Content:");
+        addParagraphVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
+        addParagraphScene = new Scene(addParagraphVBox, 500, 150);
+        addParagraphTextArea = new TextArea();
+        addParagraphStage.setTitle("Add A Paragraph");
+        ui.setWindowIcon(ICON_FIRE, addParagraphStage);
+        addParagraphScene.getStylesheets().add(STYLE_SHEET_UI);
+        addParagraphVBox.getChildren().addAll(enterContentLabel, addParagraphTextArea, okCancelHBox);
+        addParagraphStage.setScene(addParagraphScene);
+        addParagraphStage.show();
+
     }
 }
