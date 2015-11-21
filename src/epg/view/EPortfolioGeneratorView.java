@@ -95,6 +95,7 @@ public class EPortfolioGeneratorView {
     //General Uses
     Button okButton;
     Button cancelButton;
+    int count;
 
     //The main pane for the GUI
     BorderPane epgPane;
@@ -346,6 +347,7 @@ public class EPortfolioGeneratorView {
         pageEditController = new PageEditController(this);
 
         addSitePageButton.setOnAction(e -> {
+            count++;
             pageEditController.processAddSiteRequest();
 
         });
@@ -374,7 +376,7 @@ public class EPortfolioGeneratorView {
 
         textController = new TextController(this);
         addTextButton.setOnAction(e -> {
-            textController.displayAddTextDialog();
+            textController.displaySelectTypeTextDialog();
         });
 
     }
@@ -382,11 +384,15 @@ public class EPortfolioGeneratorView {
     //Create site page
     public void createSitePage() {
         Tab tab = new Tab();
-        tab.setText("new tab");
+        if(sitesTabPane.getTabs().isEmpty()){
+            count = 1;
+        }
+        tab.setText("new page " + count);
         tab.setContent(initContentPane());
         sitesTabPane.getTabs().add(tab);
         changeSiteNameButton.setDisable(false);
         removeSitePageButton.setDisable(false);
+
     }
 
     //Pane for all the componeents of a sitepage

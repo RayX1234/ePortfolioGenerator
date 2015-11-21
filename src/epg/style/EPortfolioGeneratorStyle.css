@@ -70,3 +70,12 @@ and open the template in the editor.
     -fx-spacing: 10px;
 }
 
+.select_text_type{
+    -fx-alignment:center;
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+}
+
+
+
+

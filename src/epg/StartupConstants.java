@@ -60,5 +60,6 @@ public class StartupConstants {
     public static String CSS_CLASS_CONTENT_PANE = "content_pane";
     public static String CSS_CLASS_PTSNBI_PANE = "ptsnbi_pane";
     public static String CSS_CLASS_LAYOUT_PANE = "layout_pane";
-    
+    public static String CSS_CLASS_SELECT_TEXT_TYPE = "select_text_type";
+
 }
