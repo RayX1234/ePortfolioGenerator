@@ -172,8 +172,8 @@ public class EPortfolioGeneratorView {
     RadioButton color4Button;
     RadioButton color5Button;
     RadioButton font1Button;
-    RadioButton font21Button;
-    RadioButton font31Button;
+    RadioButton font2Button;
+    RadioButton font3Button;
     RadioButton font4Button;
     RadioButton font5Button;
 
@@ -416,15 +416,17 @@ public class EPortfolioGeneratorView {
         initStudentName();
         initBannerImage();
         initFooter();
-        initlayoutPane();
+        initLayoutPane();
+        initColorPane();
+        initFontPane();
         initComponentToolbar();
         initEventHandlers();
         ptsnbiPane.getChildren().add(componentFlowPane);
         contentPane.setTop(ptsnbiPane);
     }
 
-    //For selecting layout, color, and font
-    public void initlayoutPane() {
+    //For selecting layout
+    public void initLayoutPane() {
         layoutPane = new HBox();
         layoutPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
         ptsnbiPane.getChildren().add(layoutPane);
@@ -441,6 +443,48 @@ public class EPortfolioGeneratorView {
         layout5Button = new RadioButton("Layout 5");
         layout5Button.setToggleGroup(layoutGroup);
         layoutPane.getChildren().addAll(layoutLabel, layout1Button, layout2Button, layout3Button, layout4Button, layout5Button);
+
+    }
+
+    //For selecting layout
+    public void initColorPane() {
+        colorPane = new HBox();
+        colorPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
+        ptsnbiPane.getChildren().add(colorPane);
+        colorGroup = new ToggleGroup();
+        colorLabel = new Label("Select Color:");
+        color1Button = new RadioButton("Color 1");
+        color1Button.setToggleGroup(colorGroup);
+        color2Button = new RadioButton("Color 2");
+        color2Button.setToggleGroup(colorGroup);
+        color3Button = new RadioButton("Color 3");
+        color3Button.setToggleGroup(colorGroup);
+        color4Button = new RadioButton("Color 4");
+        color4Button.setToggleGroup(colorGroup);
+        color5Button = new RadioButton("Color 5");
+        color5Button.setToggleGroup(colorGroup);
+        colorPane.getChildren().addAll(colorLabel, color1Button, color2Button, color3Button, color4Button, color5Button);
+
+    }
+
+    //For selecting layout
+    public void initFontPane() {
+        fontPane = new HBox();
+        fontPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
+        ptsnbiPane.getChildren().add(fontPane);
+        fontGroup = new ToggleGroup();
+        fontLabel = new Label("Select Font:");
+        font1Button = new RadioButton("Font 1");
+        font1Button.setToggleGroup(fontGroup);
+        font2Button = new RadioButton("Font 2");
+        font2Button.setToggleGroup(fontGroup);
+        font3Button = new RadioButton("Font 3");
+        font3Button.setToggleGroup(fontGroup);
+        font4Button = new RadioButton("Font 4");
+        font4Button.setToggleGroup(fontGroup);
+        font5Button = new RadioButton("Font 5");
+        font5Button.setToggleGroup(fontGroup);
+        fontPane.getChildren().addAll(fontLabel, font1Button, font2Button, font3Button, font4Button, font5Button);
 
     }
 
