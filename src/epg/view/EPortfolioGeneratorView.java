@@ -56,8 +56,10 @@ import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.controller.BannerImageController;
 import epg.controller.FileController;
+import epg.controller.ImageController;
 import epg.controller.PageEditController;
 import epg.controller.TextController;
+import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -199,6 +201,8 @@ public class EPortfolioGeneratorView {
     PageEditController pageEditController;
     BannerImageController bannerImageController;
     TextController textController;
+    ImageController imageController;
+    VideoController videoController;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
@@ -377,6 +381,16 @@ public class EPortfolioGeneratorView {
         textController = new TextController(this);
         addTextButton.setOnAction(e -> {
             textController.displaySelectTypeTextDialog();
+        });
+        
+        imageController = new ImageController(this);
+        addImageButton.setOnAction(e ->{
+            imageController.displayAddImageDialog();
+        });
+        
+        videoController = new VideoController(this);
+        addVideoButton.setOnAction(e ->{
+            videoController.displayAddVideoDialog();
         });
 
     }
