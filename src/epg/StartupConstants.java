@@ -45,6 +45,8 @@ public class StartupConstants {
     public static String ICON_ADD_IMAGE = "addImage.png";
     public static String ICON_ADD_SLIDESHOW = "addSlideShow.png";
     public static String ICON_ADD_TEXT_HYPERLINK = "addHyperLink.png";
+    public static String ICON_ADD_LIST = "Add2.png";
+    public static String ICON_REMOVE_LIST = "Remove2.png";
 
     //CSS Class Style Sheet Classes
     public static String CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
@@ -61,5 +63,6 @@ public class StartupConstants {
     public static String CSS_CLASS_PTSNBI_PANE = "ptsnbi_pane";
     public static String CSS_CLASS_LAYOUT_PANE = "layout_pane";
     public static String CSS_CLASS_SELECT_TEXT_TYPE = "select_text_type";
+    public static String CSS_CLASS_ALIGN_CENTER ="align_center";
 
 }
