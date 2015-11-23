@@ -28,9 +28,11 @@ import epg.model.SlideShowModel;
 import epg.view.EPortfolioGeneratorView;
 import epg.view.SlideEditView;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -58,6 +60,13 @@ public class SlideShowController {
     private SlideEditView slideEditor;
     // THIS IS THE SLIDE SHOW WE'RE WORKING WITH
     SlideShowModel slideShow;
+    
+    //General cases
+    BorderPane slideShowBorderPane;
+    HBox okCancelHBox;
+    Button okButton;
+    Button cancelButton;
+
 
     public SlideShowController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -66,9 +75,24 @@ public class SlideShowController {
 
     public void displayAddSlideShowDialog() {
         addSlideShowStage = new Stage();
+        slideShowBorderPane = new BorderPane();
         workspace = new HBox();
+        slideShowBorderPane.setCenter(workspace);
         // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
         slideEditToolbar = new VBox();
+        slideShowBorderPane.setLeft(slideEditToolbar);
+        okCancelHBox = new HBox(10);
+        okCancelHBox.setAlignment(Pos.BOTTOM_RIGHT);
+        okButton = new Button("Ok");
+        cancelButton = new Button("Cancel");
+        okCancelHBox.getChildren().addAll(okButton,cancelButton);
+        okButton.setOnAction(e -> {
+           addSlideShowStage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            addSlideShowStage.close();
+        });
+        slideShowBorderPane.setBottom(okCancelHBox);
         slideEditToolbar.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
         addSlideButton = ui.initChildButton(slideEditToolbar, ICON_ADD_SLIDE, TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         removeSlideButton = ui.initChildButton(slideEditToolbar, ICON_REMOVE_SLIDE, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
@@ -82,12 +106,11 @@ public class SlideShowController {
         slidesEditorScrollPane.getStyleClass().add(CSS_CLASS_SCROLL_PANE);
 
         // NOW PUT THESE TWO IN THE WORKSPACE
-        workspace.getChildren().add(slideEditToolbar);
         workspace.getChildren().add(slidesEditorScrollPane);
 
         initEventHandlers();
 
-        addSlideShowScene = new Scene(workspace, 1000, 500);
+        addSlideShowScene = new Scene(slideShowBorderPane, 1000, 500);
         addSlideShowScene.getStylesheets().add(STYLE_SHEET_UI);
         addSlideShowStage.setScene(addSlideShowScene);
         ui.setWindowIcon(ICON_FIRE, addSlideShowStage);

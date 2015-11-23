@@ -81,6 +81,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
@@ -282,6 +284,11 @@ public class EPortfolioGeneratorView {
 
     private void initSiteViewerWorkspace() {
         siteViewerWorkspace = new BorderPane();
+        //TTEMP FOR HW 6 oNLY HVE TO DELETE LATER
+        WebView browser = new WebView();
+        WebEngine webEngine = browser.getEngine();
+        webEngine.load("http://google.com");
+        siteViewerWorkspace.setCenter(browser);
         siteViewerScene = new Scene(siteViewerWorkspace);
         siteViewerScene.getStylesheets().add(STYLE_SHEET_UI);
         siteViewerWorkspace.getStyleClass().add(CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE);
@@ -401,9 +408,9 @@ public class EPortfolioGeneratorView {
         addVideoButton.setOnAction(e -> {
             videoController.displayAddVideoDialog();
         });
-        
+
         slideShowController = new SlideShowController(this);
-        addSlideShowButton.setOnAction(e ->{
+        addSlideShowButton.setOnAction(e -> {
             slideShowController.displayAddSlideShowDialog();
         });
     }
