@@ -5,8 +5,10 @@
  */
 package epg.controller;
 
+import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
+import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
 import javafx.geometry.Pos;
@@ -62,7 +64,9 @@ public class VideoController {
         okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
         videoStage.setTitle("Add Video");
         videoVBox = new VBox();
-        videoScene = new Scene(videoVBox, 500, 300);
+        videoVBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
+        videoScene = new Scene(videoVBox, 500, 420);
+        videoScene.getStylesheets().add(STYLE_SHEET_UI);
         selectVideoLabel = new Label("Select Video");
         selectVideoButton = new Button("Choose");
         selectVideoButton.setOnAction(e -> {
@@ -115,7 +119,9 @@ public class VideoController {
     public void displayEditVideoDialog() {
         video1Stage = new Stage();
         video1VBox = new VBox();
-        video1Scene = new Scene(video1VBox, 500, 300);
+        video1VBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
+        video1Scene = new Scene(video1VBox, 500, 420);
+        video1Scene.getStylesheets().add(STYLE_SHEET_UI);
         video1VBox.getChildren().addAll(selectVideoLabel, selectVideoButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, okCancelHBox);
         ui.setWindowIcon(ICON_FIRE, video1Stage);
         video1Stage.setTitle("Edit Video");

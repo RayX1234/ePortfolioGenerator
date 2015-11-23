@@ -8,6 +8,7 @@ package epg.controller;
 import static epg.PropertyType.TOOLTIP_ADD_SITE;
 import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.StartupConstants.CSS_CLASS_ALIGN_CENTER;
+import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.CSS_CLASS_LAYOUT_PANE;
 import static epg.StartupConstants.CSS_CLASS_SELECT_TEXT_TYPE;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
@@ -101,7 +102,7 @@ public class TextController {
     Button addListButton;
     Button removeListButton;
     VBox listVBox;
-    
+
     //For the edit list dialog
     Stage editListStage;
     Scene editListScene;
@@ -109,7 +110,7 @@ public class TextController {
     VBox editListVBox;
     TextField editListTextField;
     VBox editlistVBox;
-    
+
     //String
     String heading;
     String paragraph;
@@ -135,7 +136,13 @@ public class TextController {
         addTextComboBox = new ComboBox(textOptions);
 
         okButton = new Button("Ok");
+        okButton.setDisable(true);
         cancelButton = new Button("Cancel");
+        addTextComboBox.setOnAction(e -> {
+            if (addTextComboBox.getValue() != null) {
+                okButton.setDisable(false);
+            }
+        });
         okButton.setOnAction(e -> {
             if (addTextComboBox.getValue().equals("Heading")) {
                 displayAddHeadingDialog();
@@ -171,7 +178,7 @@ public class TextController {
         addHeadingStage.setScene(addHeadingScene);
         addHeadingVBox.getChildren().addAll(enterContentLabel, addHeadingTextField, okCancelHBox);
         okButton.setOnAction(e -> {
-            if(ui.getListData().isEmpty()){
+            if (ui.getListData().isEmpty()) {
                 count = 0;
             }
             count++;
@@ -192,6 +199,7 @@ public class TextController {
         editHeadingStage.setTitle("Edit Heading");
         ui.setWindowIcon(ICON_FIRE, editHeadingStage);
         editHeadingVBox = new VBox();
+        editHeadingVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
         enterContentLabel = new Label("Enter Content:");
         editHeadingScene = new Scene(editHeadingVBox, 500, 150);
         editHeadingScene.getStylesheets().add(STYLE_SHEET_UI);
@@ -235,7 +243,7 @@ public class TextController {
         addParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, addParagraphTextArea, okCancelHBox);
         addParagraphStage.setScene(addParagraphScene);
         okButton.setOnAction(e -> {
-            if(ui.getListData().isEmpty()){
+            if (ui.getListData().isEmpty()) {
                 count = 0;
             }
             count++;
@@ -253,7 +261,9 @@ public class TextController {
     public void displayEditParagraphDialog() {
         editParagraphStage = new Stage();
         editParagraphVBox = new VBox();
+        editParagraphVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
         editParagraphScene = new Scene(editParagraphVBox, 500, 300);
+        editParagraphScene.getStylesheets().add(STYLE_SHEET_UI);
         editParagraphStage.setTitle("Edit Paragraph");
         ui.setWindowIcon(ICON_FIRE, editParagraphStage);
         editParagraphTextArea = new TextArea();
@@ -273,6 +283,7 @@ public class TextController {
         ui.setWindowIcon(ICON_FIRE, addListStage);
         addListStage.setTitle("Add List");
         addListBorderPane = new BorderPane();
+        addListBorderPane.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         enterContentLabel = new Label("Enter Content:");
         addListScene = new Scene(addListBorderPane, 500, 300);
         addListStage.setScene(addListScene);
@@ -286,17 +297,17 @@ public class TextController {
         addRemoveListVBox = new VBox();
         addRemoveListVBox.getStyleClass().add(CSS_CLASS_ALIGN_CENTER);
         addListButton = ui.initChildButton(addRemoveListVBox, ICON_ADD_LIST, TOOLTIP_ADD_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
-        removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        // removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         addListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
             listData.add(addListTextField.getText());
             addListTextField.clear();
         });
-        removeListButton.setOnAction(e -> {
-            list.getItems().remove(list.getSelectionModel().getSelectedItem());
-        });
+//        removeListButton.setOnAction(e -> {
+//            list.getItems().remove(list.getSelectionModel().getSelectedItem());
+//        });
         okButton.setOnAction(e -> {
-            if(ui.getListData().isEmpty()){
+            if (ui.getListData().isEmpty()) {
                 count = 0;
             }
             count++;
@@ -314,8 +325,8 @@ public class TextController {
         addListBorderPane.setCenter(listVBox);
         addListStage.show();
     }
-    
-    public void displayEditListDialog(){
+
+    public void displayEditListDialog() {
         editListStage = new Stage();
         ui.setWindowIcon(ICON_FIRE, editListStage);
         editListStage.setTitle("Edit List");
@@ -342,10 +353,10 @@ public class TextController {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
-            addListStage.close();
+            editListStage.close();
         });
         cancelButton.setOnAction(e -> {
-            addListStage.close();
+            editListStage.close();
         });
         editlistVBox = new VBox();
         list = new ListView<>();
@@ -353,5 +364,9 @@ public class TextController {
         editlistVBox.getChildren().add(list);
         editListBorderPane.setCenter(editlistVBox);
         editListStage.show();
+    }
+    
+    public Stage getEditParagraphStage(){
+        return editParagraphStage;
     }
 }

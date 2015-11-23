@@ -5,8 +5,10 @@
  */
 package epg.controller;
 
+import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
+import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
 import javafx.geometry.Pos;
@@ -36,6 +38,7 @@ public class ImageController {
     Label captionLabel;
     TextField captionTextField;
     Label selectImageLabel;
+    Label chooseFloat;
     Button selectImageButton;
     Label widthLabel;
     TextField widthTextField;
@@ -66,9 +69,11 @@ public class ImageController {
     public void displayAddImageDialog() {
         imageStage = new Stage();
         imageVBox = new VBox();
+        imageVBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         okCancelHBox = new HBox(10);
         okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
-        imageScene = new Scene(imageVBox, 500, 400);
+        imageScene = new Scene(imageVBox, 500, 550);
+        imageScene.getStylesheets().add(STYLE_SHEET_UI);
         captionLabel = new Label("Enter Caption:");
         captionTextField = new TextField();
         selectImageLabel = new Label("Select Image:");
@@ -77,6 +82,7 @@ public class ImageController {
         widthTextField = new TextField();
         heightLabel = new Label("Enter Height");
         heightTextField = new TextField();
+        chooseFloat = new Label("Choose Float:");
         rgroup = new ToggleGroup();
         rLeftButton = new RadioButton("Left");
         rRightButton = new RadioButton("Right");
@@ -102,7 +108,7 @@ public class ImageController {
         selectImageButton.setOnAction(e -> {
             processSelectImage();
         });
-        imageVBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
+        imageVBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, chooseFloat, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         imageStage.setTitle("Add Image");
         ui.setWindowIcon(ICON_FIRE, imageStage);
         imageStage.setScene(imageScene);
@@ -131,8 +137,10 @@ public class ImageController {
     public void displayEditImageDialog() {
         image1Stage = new Stage();
         image1VBox = new VBox();
-        image1Scene = new Scene(image1VBox, 500, 400);
-        image1VBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
+        image1VBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
+        image1Scene = new Scene(image1VBox, 500, 550);
+        image1Scene.getStylesheets().add(STYLE_SHEET_UI);
+        image1VBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, chooseFloat, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         okButton.setOnAction(e -> {
             image1Stage.close();
         });

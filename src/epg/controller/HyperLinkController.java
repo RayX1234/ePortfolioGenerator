@@ -5,8 +5,11 @@
  */
 package epg.controller;
 
+import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
+import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.view.EPortfolioGeneratorView;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,11 +48,14 @@ public class HyperLinkController {
     public void displayAddHyperLinkDialog() {
         hyperLinkStage = new Stage();
         hyperLinkVBox = new VBox();
-        hyperLinkScene = new Scene(hyperLinkVBox, 500, 300);
+        hyperLinkVBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
+        hyperLinkScene = new Scene(hyperLinkVBox, 500, 150);
+        hyperLinkScene.getStylesheets().add(STYLE_SHEET_UI);
         hyperLinkStage.setScene(hyperLinkScene);
         hyperLinkLabel = new Label("Enter HyperLink:");
         hyperLinkTextField = new TextField();
-        okCancelHBox = new HBox();
+        okCancelHBox = new HBox(10);
+        okCancelHBox.setAlignment(Pos.BOTTOM_RIGHT);
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
@@ -72,7 +78,10 @@ public class HyperLinkController {
     public void displayEditHyperLinkDialog() {
         hyperLink1Stage = new Stage();
         hyperLink1VBox = new VBox();
-        hyperLink1Scene = new Scene(hyperLink1VBox, 500, 300);
+        hyperLink1VBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
+        okCancelHBox.setAlignment(Pos.BOTTOM_RIGHT);
+        hyperLink1Scene = new Scene(hyperLink1VBox, 500, 150);
+        hyperLink1Scene.getStylesheets().add(STYLE_SHEET_UI);
         hyperLink1Stage.setScene(hyperLink1Scene);
         hyperLink1VBox.getChildren().addAll(hyperLinkLabel, hyperLinkTextField, okCancelHBox);
         okButton.setOnAction(e ->{

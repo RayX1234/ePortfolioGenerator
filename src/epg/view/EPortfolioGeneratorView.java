@@ -31,6 +31,7 @@ import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_LAYOUT_PANE;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_PTSNBI_PANE;
+import static epg.StartupConstants.CSS_CLASS_SELECT_TEXT_TYPE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE;
@@ -67,6 +68,7 @@ import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -232,7 +234,7 @@ public class EPortfolioGeneratorView {
     ObservableList<String> componentListData;
     ListView<String> componentlist;
     VBox componentRemoveToolbar;
-    
+
     //FOR SEEING IF WE WANT TO EDIT PARAGRAPH OR HYPERLINK
     Stage checkPHStage;
     Scene checkPHScene;
@@ -727,8 +729,13 @@ public class EPortfolioGeneratorView {
                     textController.displayEditHeadingDialog();
                 }
                 if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph")) {
+                    textController.displayEditParagraphDialog();
+                }
+                if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph") && componentlist.getSelectionModel().getSelectedItem().contains("HyperLink")) {
+                    textController.getEditParagraphStage().close();
                     checkPH();
                 }
+
                 if (componentlist.getSelectionModel().getSelectedItem().contains("List")) {
                     textController.displayEditListDialog();
                 }
@@ -741,7 +748,6 @@ public class EPortfolioGeneratorView {
                 if (componentlist.getSelectionModel().getSelectedItem().contains("Video")) {
                     videoController.displayEditVideoDialog();
                 }
-
             }
         });
         removeComponentButton.setOnAction(e -> {
@@ -749,31 +755,43 @@ public class EPortfolioGeneratorView {
             componentListData.remove(s);
         });
     }
-    
-    public void checkPH(){
+
+    public void checkPH() {
         checkPHStage = new Stage();
+        checkPHStage.setTitle("Edit (Paragraph Or HyperLink)");
+        setWindowIcon(ICON_FIRE,checkPHStage);
         checkPHVBox = new VBox();
-        checkPHScene = new Scene(checkPHVBox, 500,400);
+        checkPHVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
+        checkPHScene = new Scene(checkPHVBox, 500, 150);
+        checkPHScene.getStylesheets().add(STYLE_SHEET_UI);
         checkPHStage.setScene(checkPHScene);
-        checkPHList = FXCollections.observableArrayList("Paragraph","HyperLink");
+        checkPHList = FXCollections.observableArrayList("Paragraph", "HyperLink");
         checkPHLabel = new Label("Edit (Paragraph Or HyperLink)");
         okButton = new Button("Ok");
+        okButton.setDisable(true);
         cancelButton = new Button("Cancel");
         okCancelHBox = new HBox();
-        okCancelHBox.getChildren().addAll(okButton,cancelButton);
+        okCancelHBox.setAlignment(Pos.BOTTOM_RIGHT);
+        okCancelHBox.setSpacing(10);
+        okCancelHBox.getChildren().addAll(okButton, cancelButton);
         checkPHComboBox = new ComboBox(checkPHList);
-        checkPHVBox.getChildren().addAll(checkPHLabel,checkPHComboBox, okCancelHBox);
-        okButton.setOnAction(e ->{
-            if(checkPHComboBox.getValue().equals("Paragraph")){
+        checkPHComboBox.setOnAction(e -> {
+            if (checkPHComboBox.getValue() != null) {
+                okButton.setDisable(false);
+            }
+        });
+        checkPHVBox.getChildren().addAll(checkPHLabel, checkPHComboBox, okCancelHBox);
+        okButton.setOnAction(e -> {
+            if (checkPHComboBox.getValue().equals("Paragraph")) {
                 checkPHStage.close();
                 textController.displayEditParagraphDialog();
             }
-            if(checkPHComboBox.getValue().equals("HyperLink")){
+            if (checkPHComboBox.getValue().equals("HyperLink")) {
                 checkPHStage.close();
                 hyperLinkController.displayEditHyperLinkDialog();
             }
         });
-        cancelButton.setOnAction(e ->{
+        cancelButton.setOnAction(e -> {
             checkPHStage.close();
         });
         checkPHStage.show();

@@ -56,7 +56,7 @@ public class StartupConstants {
     public static String ICON_ADD_TEXT_HYPERLINK = "addHyperLink.png";
     public static String ICON_ADD_LIST = "Add2.png";
     public static String ICON_REMOVE_LIST = "Remove2.png";
-    public static String ICON_REMOVE_MAIN_LIST ="Remove3.png";
+    public static String ICON_REMOVE_MAIN_LIST = "Remove3.png";
 
     //FOR SLIDESHOW
     public static String ICON_ADD_SLIDE = "Add3.png";
@@ -85,5 +85,6 @@ public class StartupConstants {
     public static String CSS_CLASS_DESELECT_SLIDE = "deselect_slide";
     public static String CSS_CLASS_SLIDE_SHOW_EDIT_VBOX = "slide_show_edit_vbox";
     public static String CSS_CLASS_SCROLL_PANE = "scroll_pane";
+    public static String CSS_CLASS_IMAGE_VBOX = "image_vbox";
 
 }

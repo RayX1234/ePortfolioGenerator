@@ -74,6 +74,7 @@ and open the template in the editor.
     -fx-alignment:center;
     -fx-spacing: 10px;
     -fx-padding: 10px;
+    -fx-background-color: #cccccc;
 }
 
 .align_center{
@@ -86,6 +87,12 @@ and open the template in the editor.
 
 .deselect_slide {
     -fx-background-color: rgb(255, 224, 178);
+}
+
+.image_vbox{
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-background-color: #cccccc;
 }
 
 
