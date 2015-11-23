@@ -58,6 +58,7 @@ import epg.controller.BannerImageController;
 import epg.controller.FileController;
 import epg.controller.ImageController;
 import epg.controller.PageEditController;
+import epg.controller.SlideShowController;
 import epg.controller.TextController;
 import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
@@ -203,6 +204,14 @@ public class EPortfolioGeneratorView {
     TextController textController;
     ImageController imageController;
     VideoController videoController;
+    SlideShowController slideShowController;
+
+    // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
+    VBox slideEditToolbar;
+    Button addSlideButton;
+    Button deleteSlideButton;
+    Button moveUpSlideButton;
+    Button moveDownSlideButton;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
@@ -382,23 +391,27 @@ public class EPortfolioGeneratorView {
         addTextButton.setOnAction(e -> {
             textController.displaySelectTypeTextDialog();
         });
-        
+
         imageController = new ImageController(this);
-        addImageButton.setOnAction(e ->{
+        addImageButton.setOnAction(e -> {
             imageController.displayAddImageDialog();
         });
-        
+
         videoController = new VideoController(this);
-        addVideoButton.setOnAction(e ->{
+        addVideoButton.setOnAction(e -> {
             videoController.displayAddVideoDialog();
         });
-
+        
+        slideShowController = new SlideShowController(this);
+        addSlideShowButton.setOnAction(e ->{
+            slideShowController.displayAddSlideShowDialog();
+        });
     }
 
     //Create site page
     public void createSitePage() {
         Tab tab = new Tab();
-        if(sitesTabPane.getTabs().isEmpty()){
+        if (sitesTabPane.getTabs().isEmpty()) {
             count = 1;
         }
         tab.setText("new page " + count);

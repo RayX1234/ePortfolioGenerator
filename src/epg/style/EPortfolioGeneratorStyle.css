@@ -62,8 +62,8 @@ and open the template in the editor.
 }
 
 .ptsnbi_pane{
-   -fx-padding: 10px;
-   -fx-spacing: 10px;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
 }
 
 .layout_pane{
@@ -78,6 +78,14 @@ and open the template in the editor.
 
 .align_center{
     -fx-alignment:center;
+}
+
+.highlight_slide {
+    -fx-background-color: rgb(178, 209, 255);
+}
+
+.deselect_slide {
+    -fx-background-color: rgb(255, 224, 178);
 }
 
 

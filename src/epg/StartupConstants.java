@@ -18,6 +18,7 @@ public class StartupConstants {
     public static String PATH_ICONS = PATH_IMAGES + "icons/";
     public static String PATH_CSS = "epg/style/";
     public static String STYLE_SHEET_UI = PATH_CSS + "EPortfolioGeneratorStyle.css";
+    public static String PATH_SLIDE_SHOW_IMAGES = PATH_IMAGES + "slide_show_images/";
 
     //For the fileToolbar
     public static String ICON_NEW_PORTFOLIO = "newPortfolio.png";
@@ -26,6 +27,14 @@ public class StartupConstants {
     public static String ICON_SAVE_AS_PORTFOLIO = "saveAsPortfolio.png";
     public static String ICON_EXPORT_PORTFOLIO = "exportPortfolio.png";
     public static String ICON_EXIT = "exit.png";
+
+    //SLIDESHOW STUFF
+    public static String DEFAULT_SLIDE_IMAGE = "DefaultStartSlide.png";
+    public static String DEFAULT_SLIDE_CAPTION = "";
+    public static String SLASH = "/";
+    public static int DEFAULT_THUMBNAIL_WIDTH = 200;
+    public static int DEFAULT_SLIDE_SHOW_VIEW_WIDTH;
+    public static int DEFAULT_SLIDE_SHOW_HEIGHT = 500;
 
     //For the siteToolbar
     public static String ICON_ADD_SITE = "Add.png";
@@ -48,6 +57,12 @@ public class StartupConstants {
     public static String ICON_ADD_LIST = "Add2.png";
     public static String ICON_REMOVE_LIST = "Remove2.png";
 
+    //FOR SLIDESHOW
+    public static String ICON_ADD_SLIDE = "Add3.png";
+    public static String ICON_REMOVE_SLIDE = "Remove3.png";
+    public static String ICON_MOVE_UP = "MoveUp.png";
+    public static String ICON_MOVE_DOWN = "MoveDown.png";
+
     //CSS Class Style Sheet Classes
     public static String CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON = "horizontal_toolbar_button";
     public static String CSS_CLASS_VERTICAL_TOOLBAR_BUTTON = "vertical_toolbar_button";
@@ -63,6 +78,11 @@ public class StartupConstants {
     public static String CSS_CLASS_PTSNBI_PANE = "ptsnbi_pane";
     public static String CSS_CLASS_LAYOUT_PANE = "layout_pane";
     public static String CSS_CLASS_SELECT_TEXT_TYPE = "select_text_type";
-    public static String CSS_CLASS_ALIGN_CENTER ="align_center";
+    public static String CSS_CLASS_ALIGN_CENTER = "align_center";
+    public static String CSS_CLASS_SLIDE_EDIT_VIEW = "slide_edit_view";
+    public static String CSS_CLASS_SELECT_SLIDE = "highlight_slide";
+    public static String CSS_CLASS_DESELECT_SLIDE = "deselect_slide";
+    public static String CSS_CLASS_SLIDE_SHOW_EDIT_VBOX = "slide_show_edit_vbox";
+    public static String CSS_CLASS_SCROLL_PANE = "scroll_pane";
 
 }
