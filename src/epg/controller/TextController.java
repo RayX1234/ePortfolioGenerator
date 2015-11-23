@@ -109,6 +109,12 @@ public class TextController {
     VBox editListVBox;
     TextField editListTextField;
     VBox editlistVBox;
+    
+    //String
+    String heading;
+    String paragraph;
+    String List;
+    int count;
 
     public TextController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -165,6 +171,12 @@ public class TextController {
         addHeadingStage.setScene(addHeadingScene);
         addHeadingVBox.getChildren().addAll(enterContentLabel, addHeadingTextField, okCancelHBox);
         okButton.setOnAction(e -> {
+            if(ui.getListData().isEmpty()){
+                count = 0;
+            }
+            count++;
+            heading = "Heading Component " + count;
+            ui.getListData().add(heading);
             addHeadingStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -223,6 +235,12 @@ public class TextController {
         addParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, addParagraphTextArea, okCancelHBox);
         addParagraphStage.setScene(addParagraphScene);
         okButton.setOnAction(e -> {
+            if(ui.getListData().isEmpty()){
+                count = 0;
+            }
+            count++;
+            paragraph = "Paragraph Component " + count;
+            ui.getListData().add(paragraph);
             addParagraphStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -278,6 +296,12 @@ public class TextController {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
+            if(ui.getListData().isEmpty()){
+                count = 0;
+            }
+            count++;
+            List = "List Component " + count;
+            ui.getListData().add(List);
             addListStage.close();
         });
         cancelButton.setOnAction(e -> {

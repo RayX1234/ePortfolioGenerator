@@ -56,6 +56,7 @@ public class StartupConstants {
     public static String ICON_ADD_TEXT_HYPERLINK = "addHyperLink.png";
     public static String ICON_ADD_LIST = "Add2.png";
     public static String ICON_REMOVE_LIST = "Remove2.png";
+    public static String ICON_REMOVE_MAIN_LIST ="Remove3.png";
 
     //FOR SLIDESHOW
     public static String ICON_ADD_SLIDE = "Add3.png";

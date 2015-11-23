@@ -18,6 +18,7 @@ import static epg.PropertyType.TOOLTIP_EXPORT_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_LOAD_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_NEW_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_PAGE_EDIT_WORKSPACE;
+import static epg.PropertyType.TOOLTIP_REMOVE_MAIN_LIST;
 import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
@@ -48,6 +49,7 @@ import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.ICON_LOAD_PORTFOLIO;
 import static epg.StartupConstants.ICON_NEW_PORTFOLIO;
 import static epg.StartupConstants.ICON_PAGE_EDIT_WORKSPACE;
+import static epg.StartupConstants.ICON_REMOVE_MAIN_LIST;
 import static epg.StartupConstants.ICON_REMOVE_SITE;
 import static epg.StartupConstants.ICON_SAVE_AS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
@@ -56,16 +58,21 @@ import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.controller.BannerImageController;
 import epg.controller.FileController;
+import epg.controller.HyperLinkController;
 import epg.controller.ImageController;
 import epg.controller.PageEditController;
 import epg.controller.SlideShowController;
 import epg.controller.TextController;
 import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -100,6 +107,7 @@ public class EPortfolioGeneratorView {
     //General Uses
     Button okButton;
     Button cancelButton;
+    HBox okCancelHBox;
     int count;
 
     //The main pane for the GUI
@@ -207,6 +215,7 @@ public class EPortfolioGeneratorView {
     ImageController imageController;
     VideoController videoController;
     SlideShowController slideShowController;
+    HyperLinkController hyperLinkController;
 
     // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
     VBox slideEditToolbar;
@@ -214,6 +223,23 @@ public class EPortfolioGeneratorView {
     Button deleteSlideButton;
     Button moveUpSlideButton;
     Button moveDownSlideButton;
+
+    //THIS IS FOR THE CENTER PANE TO SEE THE LISTVIEW OF COMPONENETS TO REMOVE ADD AND SELECT
+    ScrollPane componentListScrollPane;
+    BorderPane componentListBorderPane;
+    VBox componentListVBox;
+    Button removeComponentButton;
+    ObservableList<String> componentListData;
+    ListView<String> componentlist;
+    VBox componentRemoveToolbar;
+    
+    //FOR SEEING IF WE WANT TO EDIT PARAGRAPH OR HYPERLINK
+    Stage checkPHStage;
+    Scene checkPHScene;
+    VBox checkPHVBox;
+    ComboBox checkPHComboBox;
+    ObservableList<String> checkPHList;
+    Label checkPHLabel;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
@@ -413,6 +439,13 @@ public class EPortfolioGeneratorView {
         addSlideShowButton.setOnAction(e -> {
             slideShowController.displayAddSlideShowDialog();
         });
+
+        hyperLinkController = new HyperLinkController(this);
+        addTextHLButton.setOnAction(e -> {
+            if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph")) {
+                hyperLinkController.displayAddHyperLinkDialog();
+            }
+        });
     }
 
     //Create site page
@@ -434,6 +467,7 @@ public class EPortfolioGeneratorView {
         contentPane = new BorderPane();
         contentPane.getStyleClass().add(CSS_CLASS_CONTENT_PANE);
         initTopAreaPane();
+        initCenterAreaPane();
         return contentPane;
     }
 
@@ -463,6 +497,21 @@ public class EPortfolioGeneratorView {
         initEventHandlers();
         ptsnbiPane.getChildren().add(componentFlowPane);
         contentPane.setTop(ptsnbiPane);
+    }
+
+    public void initCenterAreaPane() {
+        componentListBorderPane = new BorderPane();
+        componentListVBox = new VBox();
+        componentListBorderPane.setCenter(componentListVBox);
+        componentRemoveToolbar = new VBox();
+        removeComponentButton = initChildButton(componentRemoveToolbar, ICON_REMOVE_MAIN_LIST, TOOLTIP_REMOVE_MAIN_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        componentListBorderPane.setLeft(componentRemoveToolbar);
+        componentlist = new ListView<>();
+        componentListData = FXCollections.observableArrayList();
+        componentlist.setItems(componentListData);
+        componentListVBox.getChildren().add(componentlist);
+        initContentEventHandlers();
+        contentPane.setCenter(componentListBorderPane);
     }
 
     //For selecting layout
@@ -661,6 +710,73 @@ public class EPortfolioGeneratorView {
         String imagePath = "file:" + PATH_ICONS + iconFileName;
         Image icon = new Image(imagePath);
         s.getIcons().add(icon);
+    }
+
+    public ObservableList<String> getListData() {
+        return componentListData;
+    }
+
+    public ListView<String> getList() {
+        return componentlist;
+    }
+
+    public void initContentEventHandlers() {
+        componentlist.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                if (componentlist.getSelectionModel().getSelectedItem().contains("Heading")) {
+                    textController.displayEditHeadingDialog();
+                }
+                if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph")) {
+                    checkPH();
+                }
+                if (componentlist.getSelectionModel().getSelectedItem().contains("List")) {
+                    textController.displayEditListDialog();
+                }
+                if (componentlist.getSelectionModel().getSelectedItem().contains("Image")) {
+                    imageController.displayEditImageDialog();
+                }
+                if (componentlist.getSelectionModel().getSelectedItem().contains("SlideShow")) {
+                    slideShowController.displayEditSlideShowDialog();
+                }
+                if (componentlist.getSelectionModel().getSelectedItem().contains("Video")) {
+                    videoController.displayEditVideoDialog();
+                }
+
+            }
+        });
+        removeComponentButton.setOnAction(e -> {
+            String s = componentlist.getSelectionModel().getSelectedItem();
+            componentListData.remove(s);
+        });
+    }
+    
+    public void checkPH(){
+        checkPHStage = new Stage();
+        checkPHVBox = new VBox();
+        checkPHScene = new Scene(checkPHVBox, 500,400);
+        checkPHStage.setScene(checkPHScene);
+        checkPHList = FXCollections.observableArrayList("Paragraph","HyperLink");
+        checkPHLabel = new Label("Edit (Paragraph Or HyperLink)");
+        okButton = new Button("Ok");
+        cancelButton = new Button("Cancel");
+        okCancelHBox = new HBox();
+        okCancelHBox.getChildren().addAll(okButton,cancelButton);
+        checkPHComboBox = new ComboBox(checkPHList);
+        checkPHVBox.getChildren().addAll(checkPHLabel,checkPHComboBox, okCancelHBox);
+        okButton.setOnAction(e ->{
+            if(checkPHComboBox.getValue().equals("Paragraph")){
+                checkPHStage.close();
+                textController.displayEditParagraphDialog();
+            }
+            if(checkPHComboBox.getValue().equals("HyperLink")){
+                checkPHStage.close();
+                hyperLinkController.displayEditHyperLinkDialog();
+            }
+        });
+        cancelButton.setOnAction(e ->{
+            checkPHStage.close();
+        });
+        checkPHStage.show();
     }
 
 }

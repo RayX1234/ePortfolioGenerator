@@ -51,8 +51,14 @@ public class ImageController {
     HBox okCancelHBox;
     Button okButton;
     Button cancelButton;
+    String image;
+    int count;
 
     //For editImageDialog
+    Stage image1Stage;
+    Scene image1Scene;
+    VBox image1VBox;
+
     public ImageController(EPortfolioGeneratorView initUI) {
         ui = initUI;
     }
@@ -81,6 +87,12 @@ public class ImageController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
+            if (ui.getListData().isEmpty()) {
+                count = 0;
+            }
+            count++;
+            image = "Image Component " + count;
+            ui.getListData().add(image);
             imageStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -90,7 +102,7 @@ public class ImageController {
         selectImageButton.setOnAction(e -> {
             processSelectImage();
         });
-        imageVBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, rLeftButton, rRightButton, rNeitherButton,okCancelHBox);
+        imageVBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         imageStage.setTitle("Add Image");
         ui.setWindowIcon(ICON_FIRE, imageStage);
         imageStage.setScene(imageScene);
@@ -117,6 +129,19 @@ public class ImageController {
     }
 
     public void displayEditImageDialog() {
-
+        image1Stage = new Stage();
+        image1VBox = new VBox();
+        image1Scene = new Scene(image1VBox, 500, 400);
+        image1VBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
+        okButton.setOnAction(e -> {
+            image1Stage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            image1Stage.close();
+        });
+        image1Stage.setScene(image1Scene);
+        image1Stage.setTitle("Edit Image");
+        ui.setWindowIcon(ICON_FIRE, image1Stage);
+        image1Stage.show();
     }
 }

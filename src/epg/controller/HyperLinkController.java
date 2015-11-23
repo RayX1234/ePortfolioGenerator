@@ -31,6 +31,13 @@ public class HyperLinkController {
     Label hyperLinkLabel;
     TextField hyperLinkTextField;
 
+    int count;
+    String hyperLink;
+
+    Stage hyperLink1Stage;
+    Scene hyperLink1Scene;
+    VBox hyperLink1VBox;
+
     public HyperLinkController(EPortfolioGeneratorView initUI) {
         ui = initUI;
     }
@@ -45,10 +52,38 @@ public class HyperLinkController {
         okCancelHBox = new HBox();
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
+        okButton.setOnAction(e -> {
+            String temp = ui.getList().getSelectionModel().getSelectedItem();
+            hyperLink = temp + " And HyperLink";
+            ui.getListData().remove(temp);
+            ui.getListData().add(hyperLink);
+            hyperLinkStage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            hyperLinkStage.close();
+        });
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
-        hyperLinkVBox.getChildren().addAll(hyperLinkLabel,hyperLinkTextField,okCancelHBox);
+        hyperLinkVBox.getChildren().addAll(hyperLinkLabel, hyperLinkTextField, okCancelHBox);
         ui.setWindowIcon(ICON_FIRE, hyperLinkStage);
         hyperLinkStage.setTitle("Add HyperLink");
         hyperLinkStage.show();
+    }
+
+    public void displayEditHyperLinkDialog() {
+        hyperLink1Stage = new Stage();
+        hyperLink1VBox = new VBox();
+        hyperLink1Scene = new Scene(hyperLink1VBox, 500, 300);
+        hyperLink1Stage.setScene(hyperLink1Scene);
+        hyperLink1VBox.getChildren().addAll(hyperLinkLabel, hyperLinkTextField, okCancelHBox);
+        okButton.setOnAction(e ->{
+            hyperLink1Stage.close();
+        });
+        cancelButton.setOnAction(e ->{
+            hyperLink1Stage.close();
+        });
+        ui.setWindowIcon(ICON_FIRE, hyperLink1Stage);
+        hyperLink1Stage.setTitle("Edit HyperLink");
+        hyperLink1Stage.show();
+
     }
 }

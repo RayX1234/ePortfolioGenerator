@@ -66,6 +66,15 @@ public class SlideShowController {
     HBox okCancelHBox;
     Button okButton;
     Button cancelButton;
+    
+    //For editSlideShowDialog
+    Stage editSlideShowStage;
+    Scene editSlideShowScene;
+    BorderPane editSlideShowBorderPane;
+    
+    // FOR componenet
+    int count;
+    String slideshowname;
 
 
     public SlideShowController(EPortfolioGeneratorView initUI) {
@@ -87,6 +96,12 @@ public class SlideShowController {
         cancelButton = new Button("Cancel");
         okCancelHBox.getChildren().addAll(okButton,cancelButton);
         okButton.setOnAction(e -> {
+            if(ui.getListData().isEmpty()){
+                count = 0;
+            }
+            count++;
+            slideshowname = "SlideShow Component " + count;
+            ui.getListData().add(slideshowname);
            addSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -179,6 +194,26 @@ public class SlideShowController {
         moveDownSlideButton.setOnAction(e -> {
             moveDownSlideRequest();
         });
+    }
+    
+    public void displayEditSlideShowDialog(){
+        editSlideShowStage = new Stage();
+        editSlideShowBorderPane = new BorderPane();
+        editSlideShowBorderPane.setCenter(workspace);
+        editSlideShowBorderPane.setLeft(slideEditToolbar);
+        editSlideShowBorderPane.setBottom(okCancelHBox);
+        okButton.setOnAction(e -> {
+           editSlideShowStage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            editSlideShowStage.close();
+        });
+        editSlideShowScene = new Scene(editSlideShowBorderPane,1000,500);
+        editSlideShowScene.getStylesheets().add(STYLE_SHEET_UI);
+        editSlideShowStage.setScene(editSlideShowScene);
+        editSlideShowStage.setTitle("Edit SlideShow");
+        ui.setWindowIcon(ICON_FIRE, editSlideShowStage);
+        editSlideShowStage.show();
     }
 
 }

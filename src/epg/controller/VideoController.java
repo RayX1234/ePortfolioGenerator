@@ -45,6 +45,13 @@ public class VideoController {
     Button okButton;
     Button cancelButton;
 
+    Stage video1Stage;
+    Scene video1Scene;
+    VBox video1VBox;
+    
+    int count;
+    String video;
+
     public VideoController(EPortfolioGeneratorView initUI) {
         ui = initUI;
     }
@@ -64,6 +71,12 @@ public class VideoController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
+            if(ui.getListData().isEmpty()){
+                count = 0;
+            }
+            count++;
+            video = "Video Component " + count;
+            ui.getListData().add(video);
             videoStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -97,5 +110,22 @@ public class VideoController {
             String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
             String fileName = file.getName();
         }
+    }
+
+    public void displayEditVideoDialog() {
+        video1Stage = new Stage();
+        video1VBox = new VBox();
+        video1Scene = new Scene(video1VBox, 500, 300);
+        video1VBox.getChildren().addAll(selectVideoLabel, selectVideoButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, okCancelHBox);
+        ui.setWindowIcon(ICON_FIRE, video1Stage);
+        video1Stage.setTitle("Edit Video");
+        video1Stage.setScene(video1Scene);
+          okButton.setOnAction(e -> {
+            video1Stage.close();
+        });
+        cancelButton.setOnAction(e -> {
+            video1Stage.close();
+        });
+        video1Stage.show();
     }
 }
