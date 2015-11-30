@@ -297,15 +297,15 @@ public class TextController {
         addRemoveListVBox = new VBox();
         addRemoveListVBox.getStyleClass().add(CSS_CLASS_ALIGN_CENTER);
         addListButton = ui.initChildButton(addRemoveListVBox, ICON_ADD_LIST, TOOLTIP_ADD_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
-        // removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         addListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
             listData.add(addListTextField.getText());
             addListTextField.clear();
         });
-//        removeListButton.setOnAction(e -> {
-//            list.getItems().remove(list.getSelectionModel().getSelectedItem());
-//        });
+        removeListButton.setOnAction(e -> {
+            list.getItems().remove(list.getSelectionModel().getSelectedItem());
+        });
         okButton.setOnAction(e -> {
             if (ui.getListData().isEmpty()) {
                 count = 0;
@@ -365,8 +365,8 @@ public class TextController {
         editListBorderPane.setCenter(editlistVBox);
         editListStage.show();
     }
-    
-    public Stage getEditParagraphStage(){
+
+    public Stage getEditParagraphStage() {
         return editParagraphStage;
     }
 }

@@ -272,7 +272,7 @@ public class EPortfolioGeneratorView {
         saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_PORTFOLIO, TOOLTIP_SAVE_AS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        ePortfolioTitleLabel = new Label("Enter A Title:");
+        ePortfolioTitleLabel = new Label("Student Name:");
         ePortfolioTitleTF = new TextField();
         fileToolbarPane.getChildren().addAll(ePortfolioTitleLabel, ePortfolioTitleTF);
         initEventHandlers();
@@ -459,8 +459,8 @@ public class EPortfolioGeneratorView {
         tab.setText("new page " + count);
         tab.setContent(initContentPane());
         sitesTabPane.getTabs().add(tab);
-        changeSiteNameButton.setDisable(false);
         removeSitePageButton.setDisable(false);
+        changeSiteNameButton.setDisable(false);
 
     }
 
@@ -488,8 +488,8 @@ public class EPortfolioGeneratorView {
     public void initTopAreaPane() {
         ptsnbiPane = new VBox();
         ptsnbiPane.getStyleClass().add(CSS_CLASS_PTSNBI_PANE);
-        initPageTitle();
-        initStudentName();
+        //   initPageTitle();
+        //  initStudentName();
         initBannerImage();
         initFooter();
         initLayoutPane();
@@ -627,7 +627,7 @@ public class EPortfolioGeneratorView {
     public void updateSiteNameDialog() {
         siteNameGridPane = new GridPane();
         siteNameGridPane.getStyleClass().add(CSS_CLASS_CSN_GRID_PANE);
-        siteNameLabel = new Label("Enter a Site Name:");
+        siteNameLabel = new Label("Enter a Page Title:");
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         siteNameTextField = new TextField();
@@ -651,7 +651,7 @@ public class EPortfolioGeneratorView {
             siteNameStage.close();
         });
         siteNameStage.setScene(siteNameScene);
-        siteNameStage.setTitle("Change Site Name");
+        siteNameStage.setTitle("Change Page Title");
         siteNameStage.show();
     }
 
@@ -759,7 +759,7 @@ public class EPortfolioGeneratorView {
     public void checkPH() {
         checkPHStage = new Stage();
         checkPHStage.setTitle("Edit (Paragraph Or HyperLink)");
-        setWindowIcon(ICON_FIRE,checkPHStage);
+        setWindowIcon(ICON_FIRE, checkPHStage);
         checkPHVBox = new VBox();
         checkPHVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
         checkPHScene = new Scene(checkPHVBox, 500, 150);
