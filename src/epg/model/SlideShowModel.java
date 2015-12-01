@@ -23,6 +23,7 @@ public class SlideShowModel {
     Slide selectedSlide;
     Slide slide;
     SlideEditView slideEditor;
+    int count;
 
     public SlideShowModel(SlideShowController initUI) {
         ui = initUI;
@@ -42,6 +43,10 @@ public class SlideShowModel {
 
     public ObservableList<Slide> getSlides() {
         return slides;
+    }
+
+    public void setSlides(ObservableList<Slide> initSlides) {
+        slides = initSlides;
     }
 
     public Slide getSelectedSlide() {
@@ -89,4 +94,10 @@ public class SlideShowModel {
         }
 
     }
+    
+    @Override
+    public String toString(){
+        return "Slide Show Component";
+    }
+
 }

@@ -16,6 +16,7 @@ import static epg.StartupConstants.ICON_ADD_LIST;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.ICON_REMOVE_LIST;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Component;
 import epg.model.Heading;
 import epg.model.List;
 import epg.model.Paragraph;
@@ -113,17 +114,18 @@ public class TextController {
     BorderPane editListBorderPane;
     VBox editListVBox;
     VBox editlistVBox;
-    
+
     Heading h;
     Paragraph p;
     List l;
-    
+    Component c;
+
     int count;
-    
+
     public TextController(EPortfolioGeneratorView initUI) {
         ui = initUI;
     }
-    
+
     public void displaySelectTypeTextDialog() {
         addTextStage = new Stage();
         addTextStage.setTitle("Choose Type Of Text");
@@ -137,7 +139,7 @@ public class TextController {
         addTextScene.getStylesheets().add(STYLE_SHEET_UI);
         addTextStage.setScene(addTextScene);
         addTextComboBox = new ComboBox(textOptions);
-        
+
         okButton = new Button("Ok");
         okButton.setDisable(true);
         cancelButton = new Button("Cancel");
@@ -165,11 +167,13 @@ public class TextController {
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
         selectTypeTextVBox.getChildren().addAll(selectTypeOfTextLabel, addTextComboBox, okCancelHBox);
         addTextStage.show();
-        
+
     }
-    
+
     public void displayAddHeadingDialog() {
         h = new Heading();
+        c = new Component();
+        c.setH(h);
         HeadingTextField = new TextField();
         addHeadingStage = new Stage();
         addHeadingStage.setTitle("Add Heading");
@@ -182,25 +186,22 @@ public class TextController {
         addHeadingStage.setScene(addHeadingScene);
         addHeadingVBox.getChildren().addAll(enterContentLabel, HeadingTextField, okCancelHBox);
         okButton.setOnAction(e -> {
-            if (ui.getListData().isEmpty()) {
-                count = 0;
-            }
-            count++;
+            c.setHeading(true);
             h.setHeadingText(HeadingTextField.getText());
-            HeadingTextField.setText(h.getHeadingText());
-            headingLabel = new Label("Heading Component " + count);
-            ui.getListData().add(headingLabel);
+            ui.getListData().add(c);
             addHeadingStage.close();
         });
         cancelButton.setOnAction(e -> {
             addHeadingStage.close();
         });
         addHeadingStage.show();
-        
+
     }
-    
+
     public void displayEditHeadingDialog() {
         editHeadingStage = new Stage();
+        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        HeadingTextField.setText(temp.getH().getHeadingText());
         editHeadingStage.setTitle("Edit Heading");
         ui.setWindowIcon(ICON_FIRE, editHeadingStage);
         editHeadingVBox = new VBox();
@@ -210,20 +211,21 @@ public class TextController {
         editHeadingStage.setScene(editHeadingScene);
         editHeadingVBox.getChildren().addAll(enterContentLabel, HeadingTextField, okCancelHBox);
         okButton.setOnAction(e -> {
-            h.setHeadingText(HeadingTextField.getText());
-            HeadingTextField.setText(h.getHeadingText());
+            temp.getH().setHeadingText(HeadingTextField.getText());
             editHeadingStage.close();
         });
         cancelButton.setOnAction(e -> {
             editHeadingStage.close();
         });
         editHeadingStage.show();
-        
+
     }
-    
+
     public void displayAddParagraphDialog() {
         addParagraphStage = new Stage();
+        Component a = new Component();
         p = new Paragraph();
+        a.setP(p);
         addParagraphVBox = new VBox();
         enterContentLabel = new Label("Enter Content:");
         fontHBox = new HBox();
@@ -250,27 +252,38 @@ public class TextController {
         addParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, ParagraphTextArea, okCancelHBox);
         addParagraphStage.setScene(addParagraphScene);
         okButton.setOnAction(e -> {
-            if (ui.getListData().isEmpty()) {
-                count = 0;
-            }
-            count++;
             p.setParagraphText(ParagraphTextArea.getText());
-            p.setFont(fontGroup.getSelectedToggle().toString());
-            ParagraphTextArea.setText(p.getParagraphText());
-            fontGroup.selectToggle(fontGroup.getSelectedToggle());
-            paragraphLabel = new Label("Paragraph Component " + count);
-            ui.getListData().add(paragraphLabel);
+            p.setFontToggle(fontGroup.getSelectedToggle());
+            a.setParagraph(true);
+            ui.getListData().add(a);
             addParagraphStage.close();
         });
         cancelButton.setOnAction(e -> {
             addParagraphStage.close();
         });
         addParagraphStage.show();
-        
+
     }
-    
+
     public void displayEditParagraphDialog() {
         editParagraphStage = new Stage();
+        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        ParagraphTextArea.setText(temp.getP().getParagraphText());
+        if(temp.getP().getFontToggle().toString().contains("Font 1")){
+            fontGroup.selectToggle(font1Button);
+        }
+        if(temp.getP().getFontToggle().toString().contains("Font 2")){
+            fontGroup.selectToggle(font2Button);
+        }
+        if(temp.getP().getFontToggle().toString().contains("Font 3")){
+            fontGroup.selectToggle(font3Button);
+        }
+        if(temp.getP().getFontToggle().toString().contains("Font 4")){
+            fontGroup.selectToggle(font4Button);
+        }
+        if(temp.getP().getFontToggle().toString().contains("Font 5")){
+            fontGroup.selectToggle(font5Button);
+        }
         editParagraphVBox = new VBox();
         editParagraphVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
         editParagraphScene = new Scene(editParagraphVBox, 500, 300);
@@ -279,10 +292,8 @@ public class TextController {
         ui.setWindowIcon(ICON_FIRE, editParagraphStage);
         editParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, ParagraphTextArea, okCancelHBox);
         okButton.setOnAction(e -> {
-            p.setParagraphText(ParagraphTextArea.getText());
-            p.setFont(fontGroup.getSelectedToggle().toString());
-            ParagraphTextArea.setText(p.getParagraphText());
-            fontGroup.selectToggle(fontGroup.getSelectedToggle());
+            temp.getP().setFontToggle(fontGroup.getSelectedToggle());
+            temp.getP().setParagraphText(ParagraphTextArea.getText());
             editParagraphStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -291,10 +302,12 @@ public class TextController {
         editParagraphStage.setScene(editParagraphScene);
         editParagraphStage.show();
     }
-    
+
     public void displayAddListDialog() {
         addListStage = new Stage();
         l = new List();
+        Component b = new Component();
+        b.setL(l);
         ui.setWindowIcon(ICON_FIRE, addListStage);
         addListStage.setTitle("Add List");
         addListBorderPane = new BorderPane();
@@ -324,27 +337,25 @@ public class TextController {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
-            if (ui.getListData().isEmpty()) {
-                count = 0;
-            }
-            count++;
-            l.setList(list);
-            listLabel = new Label("List Component " + count);
-            ui.getListData().add(listLabel);
+            l.setListData(listData);
+            b.setList(true);
+            ui.getListData().add(b);
             addListStage.close();
         });
         cancelButton.setOnAction(e -> {
             addListStage.close();
         });
         listVBox = new VBox();
-        
+
         listVBox.getChildren().add(list);
         addListBorderPane.setCenter(listVBox);
         addListStage.show();
     }
-    
+
     public void displayEditListDialog() {
         editListStage = new Stage();
+        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        list.setItems(temp.getL().getListData());
         ui.setWindowIcon(ICON_FIRE, editListStage);
         editListStage.setTitle("Edit List");
         editListBorderPane = new BorderPane();
@@ -369,7 +380,7 @@ public class TextController {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
-            l.setList(list);
+            temp.getL().setListData(listData);
             editListStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -380,9 +391,9 @@ public class TextController {
         editListBorderPane.setCenter(editlistVBox);
         editListStage.show();
     }
-    
+
     public Stage getEditParagraphStage() {
         return editParagraphStage;
     }
-    
+
 }

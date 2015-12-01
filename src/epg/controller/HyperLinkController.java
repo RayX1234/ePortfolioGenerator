@@ -64,11 +64,11 @@ public class HyperLinkController {
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
             hyperLinkTextField.setText(hyperLinkTextField.getText());
-            temp = ui.getList().getSelectionModel().getSelectedItem();
+       //     temp = ui.getList().getSelectionModel().getSelectedItem();
             hl.setHyperLinkText(hyperLinkTextField.getText());
             hyperLinkLabel = new Label(temp + "And HyperLink");
             ui.getListData().remove(temp);
-            ui.getListData().add(hyperLinkLabel);
+         //   ui.getListData().add(hyperLinkLabel);
             hyperLinkStage.close();
         });
         cancelButton.setOnAction(e -> {

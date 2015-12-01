@@ -67,6 +67,7 @@ import epg.controller.SlideShowController;
 import epg.controller.TextController;
 import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
+import epg.model.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -232,8 +233,8 @@ public class EPortfolioGeneratorView {
     BorderPane componentListBorderPane;
     VBox componentListVBox;
     Button removeComponentButton;
-    ObservableList<Label> componentListData;
-    ListView<Label> componentlist;
+    ObservableList<Component> componentListData;
+    ListView<Component> componentlist;
     VBox componentRemoveToolbar;
 
     //FOR SEEING IF WE WANT TO EDIT PARAGRAPH OR HYPERLINK
@@ -445,7 +446,7 @@ public class EPortfolioGeneratorView {
 
         hyperLinkController = new HyperLinkController(this);
         addTextHLButton.setOnAction(e -> {
-            if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Paragraph")) {
+            if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph")) {
                 hyperLinkController.displayAddHyperLinkDialog();
             }
         });
@@ -716,45 +717,45 @@ public class EPortfolioGeneratorView {
         s.getIcons().add(icon);
     }
 
-    public ObservableList<Label> getListData() {
+    public ObservableList<Component> getListData() {
         return componentListData;
     }
 
-    public ListView<Label> getList() {
+    public ListView<Component> getList() {
         return componentlist;
     }
 
     public void initContentEventHandlers() {
         componentlist.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Heading")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Heading")) {
                     textController.displayEditHeadingDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Paragraph")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph")) {
                     textController.displayEditParagraphDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Paragraph") && componentlist.getSelectionModel().getSelectedItem().getText().contains("HyperLink")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph") && componentlist.getSelectionModel().getSelectedItem().toString().contains("HyperLink")) {
                     textController.getEditParagraphStage().close();
                     checkPH();
                 }
 
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("List")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("List")) {
                     textController.displayEditListDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Image")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Image")) {
                     imageController.displayEditImageDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("SlideShow")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Slide Show")) {
                     slideShowController.displayEditSlideShowDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Video")) {
+                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Video")) {
                     videoController.displayEditVideoDialog();
                 }
             }
         });
         removeComponentButton.setOnAction(e -> {
-            Label l = componentlist.getSelectionModel().getSelectedItem();
-            componentListData.remove(l);
+            Component c = componentlist.getSelectionModel().getSelectedItem();
+            componentListData.remove(c);
         });
     }
 

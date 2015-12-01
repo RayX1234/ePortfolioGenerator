@@ -9,6 +9,7 @@ import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Component;
 import epg.model.Video;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
@@ -55,6 +56,7 @@ public class VideoController {
     int count;
     Label videoLabel;
     Video v;
+    Component c;
 
     public VideoController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -70,6 +72,8 @@ public class VideoController {
         heightTextField = new TextField();
         okCancelHBox = new HBox(10);
         v = new Video();
+        c = new Component();
+        c.setV(v);
         okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
         videoStage.setTitle("Add Video");
         videoVBox = new VBox();
@@ -84,18 +88,11 @@ public class VideoController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
-            if (ui.getListData().isEmpty()) {
-                count = 0;
-            }
-            count++;
-            captionTextField.setText(captionTextField.getText());
             v.setCaption(captionTextField.getText());
-            heightTextField.setText(heightTextField.getText());
             v.setHeight(heightTextField.getText());
-            widthTextField.setText(widthTextField.getText());
             v.setWidth(widthTextField.getText());
-            videoLabel = new Label("Video Component " + count);
-            ui.getListData().add(videoLabel);
+            c.setVideo(true);
+            ui.getListData().add(c);
             videoStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -132,6 +129,10 @@ public class VideoController {
     public void displayEditVideoDialog() {
         video1Stage = new Stage();
         video1VBox = new VBox();
+        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        captionTextField.setText(temp.getV().getCaption());
+        heightTextField.setText(temp.getV().getHeight());
+        widthTextField.setText(temp.getV().getWidth());
         video1VBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         video1Scene = new Scene(video1VBox, 500, 420);
         video1Scene.getStylesheets().add(STYLE_SHEET_UI);
@@ -140,12 +141,9 @@ public class VideoController {
         video1Stage.setTitle("Edit Video");
         video1Stage.setScene(video1Scene);
         okButton.setOnAction(e -> {
-            captionTextField.setText(captionTextField.getText());
-            v.setCaption(captionTextField.getText());
-            heightTextField.setText(heightTextField.getText());
-            v.setHeight(heightTextField.getText());
-            widthTextField.setText(widthTextField.getText());
-            v.setWidth(widthTextField.getText());
+           temp.getV().setCaption(captionTextField.getText());
+           temp.getV().setHeight(heightTextField.getText());
+           temp.getV().setWidth(widthTextField.getText());
             video1Stage.close();
         });
         cancelButton.setOnAction(e -> {

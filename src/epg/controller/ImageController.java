@@ -9,6 +9,7 @@ import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Component;
 import epg.model.Image;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
@@ -57,7 +58,7 @@ public class ImageController {
     Button cancelButton;
     Label imageLabel;
     Image i;
-    int count;
+    Component c;
 
     //For editImageDialog
     Stage image1Stage;
@@ -72,6 +73,8 @@ public class ImageController {
         imageStage = new Stage();
         imageVBox = new VBox();
         i = new Image();
+        c = new Component();
+        c.setI(i);
         imageVBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         okCancelHBox = new HBox(10);
         okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
@@ -96,20 +99,12 @@ public class ImageController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
-            if (ui.getListData().isEmpty()) {
-                count = 0;
-            }
-            count++;
-            captionTextField.setText(captionTextField.getText());
-            heightTextField.setText(heightTextField.getText());
-            widthTextField.setText(widthTextField.getText());
-            rgroup.selectToggle(rgroup.getSelectedToggle());
+            i.setImagePosition(rgroup.getSelectedToggle());
             i.setCaption(captionTextField.getText());
             i.setHeight(heightTextField.getText());
             i.setWidth(widthTextField.getText());
-            i.setImagePosition(rgroup.getSelectedToggle().toString());
-            imageLabel = new Label("Image Component " + count);
-            ui.getListData().add(imageLabel);
+            c.setImage(true);
+            ui.getListData().add(c);
             imageStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -150,20 +145,30 @@ public class ImageController {
 
     public void displayEditImageDialog() {
         image1Stage = new Stage();
+
+        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        if (temp.getI().getImagePosition().toString().contains("Left")) {
+            rgroup.selectToggle(rLeftButton);
+        }
+        if (temp.getI().getImagePosition().toString().contains("Right")) {
+            rgroup.selectToggle(rRightButton);
+        }
+        if (temp.getI().getImagePosition().toString().contains("Neither")) {
+            rgroup.selectToggle(rNeitherButton);
+        }
+        captionTextField.setText(temp.getI().getCaption());
+        heightTextField.setText(temp.getI().getHeight());
+        widthTextField.setText(temp.getI().getWidth());
         image1VBox = new VBox();
         image1VBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         image1Scene = new Scene(image1VBox, 500, 550);
         image1Scene.getStylesheets().add(STYLE_SHEET_UI);
         image1VBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, chooseFloat, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         okButton.setOnAction(e -> {
-            captionTextField.setText(captionTextField.getText());
-            heightTextField.setText(heightTextField.getText());
-            widthTextField.setText(widthTextField.getText());
-            rgroup.selectToggle(rgroup.getSelectedToggle());
-            i.setCaption(captionTextField.getText());
-            i.setHeight(heightTextField.getText());
-            i.setWidth(widthTextField.getText());
-            i.setImagePosition(rgroup.getSelectedToggle().toString());
+            temp.getI().setImagePosition(rgroup.getSelectedToggle());
+            temp.getI().setCaption(captionTextField.getText());
+            temp.getI().setHeight(heightTextField.getText());
+            temp.getI().setWidth(widthTextField.getText());
             image1Stage.close();
         });
         cancelButton.setOnAction(e -> {

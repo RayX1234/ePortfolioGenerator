@@ -5,7 +5,7 @@
  */
 package epg.model;
 
-import javafx.scene.control.ListView;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -13,17 +13,22 @@ import javafx.scene.control.ListView;
  */
 public class List {
 
-    private ListView<String> list;
+    private ObservableList<String> ld;
 
     public List() {
 
     }
 
-    public void setList(ListView<String> initList) {
-        list = initList;
+    public void setListData(ObservableList<String> initLD) {
+        ld = initLD;
     }
 
-    public ListView<String> getList() {
-        return list;
+    public ObservableList<String> getListData() {
+        return ld;
+    }
+
+    @Override
+    public String toString() {
+        return "List Component";
     }
 }

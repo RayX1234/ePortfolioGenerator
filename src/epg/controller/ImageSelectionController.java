@@ -39,7 +39,6 @@ public class ImageSelectionController {
         File file = imageFileChooser.showOpenDialog(null);
         if (file != null) {
             String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
-            System.out.println(path);
             String fileName = file.getName();
             slideToEdit.setImage(path, fileName);
             view.updateSlideImage();

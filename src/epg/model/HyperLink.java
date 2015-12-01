@@ -11,6 +11,9 @@ package epg.model;
  */
 public class HyperLink {
     private String hyperLinkText;
+    private int count;
+    private Paragraph p;
+    
     
     public HyperLink(){
         
@@ -22,5 +25,14 @@ public class HyperLink {
     
     public String getHyperLinkText(){
         return hyperLinkText;
+    }
+    
+    public void setParagraphSpace(Paragraph initP){
+        p = initP;
+    }
+    
+    @Override
+    public String toString(){
+        return p.toString() + "And HyperLink";
     }
 }

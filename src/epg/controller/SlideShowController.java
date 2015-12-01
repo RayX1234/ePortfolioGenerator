@@ -105,7 +105,7 @@ public class SlideShowController {
             }
             count++;
             slideshownameLabel = new Label("SlideShow Component " + count);
-            ui.getListData().add(slideshownameLabel);
+   //         ui.getListData().add(slideshownameLabel);
             addSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {

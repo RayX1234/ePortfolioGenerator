@@ -5,6 +5,8 @@
  */
 package epg.model;
 
+import epg.controller.TextController;
+
 /**
  *
  * @author Ray
@@ -14,14 +16,21 @@ public class Heading {
     private String headingText;
 
     public Heading() {
+
     }
 
     public void setHeadingText(String initHeadingText) {
         headingText = initHeadingText;
     }
-    
-    public String getHeadingText(){
+
+    public String getHeadingText() {
         return headingText;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Heading Component";
     }
 
 }

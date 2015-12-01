@@ -5,6 +5,8 @@
  */
 package epg.model;
 
+import javafx.scene.control.Toggle;
+
 /**
  *
  * @author Ray
@@ -12,7 +14,7 @@ package epg.model;
 public class Paragraph {
 
     private String paragraphText;
-    private String font;
+    private Toggle font;
 
     public Paragraph() {
 
@@ -26,12 +28,18 @@ public class Paragraph {
         return paragraphText;
     }
 
-    public void setFont(String initFont) {
-        font = initFont;
+    public void setFontToggle(Toggle initFontToggle) {
+        font = initFontToggle;
     }
 
-    public String getFont() {
+    public Toggle getFontToggle() {
         return font;
+    }
+    
+    @Override
+    public String toString(){
+        
+        return "Paragraph Component";
     }
 
 }

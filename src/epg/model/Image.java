@@ -5,6 +5,8 @@
  */
 package epg.model;
 
+import javafx.scene.control.Toggle;
+
 /**
  *
  * @author Ray
@@ -16,7 +18,8 @@ public class Image {
     private String caption;
     private String height;
     private String width;
-    private String imagePosition;
+    private Toggle imagePosition;
+    
 
     public Image() {
 
@@ -67,11 +70,16 @@ public class Image {
         return width;
     }
     
-    public void setImagePosition(String initImagePosition){
+    public void setImagePosition(Toggle initImagePosition){
         imagePosition = initImagePosition;
     }
     
-    public String getImagePosition(){
+    public Toggle getImagePosition(){
         return imagePosition;
+    }
+    
+    @Override
+    public String toString(){
+        return "Image Component";
     }
 }

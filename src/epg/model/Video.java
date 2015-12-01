@@ -65,5 +65,11 @@ public class Video {
         videoPath = initPath;
         videoFileName = initFileName;
     }
+    
+    @Override
+    public String toString(){
+       
+        return "Video Component";
+    }
 
 }
