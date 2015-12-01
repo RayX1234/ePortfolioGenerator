@@ -9,6 +9,7 @@ import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Image;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
 import javafx.geometry.Pos;
@@ -54,7 +55,8 @@ public class ImageController {
     HBox okCancelHBox;
     Button okButton;
     Button cancelButton;
-    String image;
+    Label imageLabel;
+    Image i;
     int count;
 
     //For editImageDialog
@@ -69,6 +71,7 @@ public class ImageController {
     public void displayAddImageDialog() {
         imageStage = new Stage();
         imageVBox = new VBox();
+        i = new Image();
         imageVBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         okCancelHBox = new HBox(10);
         okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
@@ -97,8 +100,16 @@ public class ImageController {
                 count = 0;
             }
             count++;
-            image = "Image Component " + count;
-            ui.getListData().add(image);
+            captionTextField.setText(captionTextField.getText());
+            heightTextField.setText(heightTextField.getText());
+            widthTextField.setText(widthTextField.getText());
+            rgroup.selectToggle(rgroup.getSelectedToggle());
+            i.setCaption(captionTextField.getText());
+            i.setHeight(heightTextField.getText());
+            i.setWidth(widthTextField.getText());
+            i.setImagePosition(rgroup.getSelectedToggle().toString());
+            imageLabel = new Label("Image Component " + count);
+            ui.getListData().add(imageLabel);
             imageStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -131,6 +142,9 @@ public class ImageController {
         if (file != null) {
             String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
             String fileName = file.getName();
+            i.setImageFileName(fileName);
+            i.setImagePath(path);
+            i.setImage(path, fileName);
         }
     }
 
@@ -142,6 +156,14 @@ public class ImageController {
         image1Scene.getStylesheets().add(STYLE_SHEET_UI);
         image1VBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, chooseFloat, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         okButton.setOnAction(e -> {
+            captionTextField.setText(captionTextField.getText());
+            heightTextField.setText(heightTextField.getText());
+            widthTextField.setText(widthTextField.getText());
+            rgroup.selectToggle(rgroup.getSelectedToggle());
+            i.setCaption(captionTextField.getText());
+            i.setHeight(heightTextField.getText());
+            i.setWidth(widthTextField.getText());
+            i.setImagePosition(rgroup.getSelectedToggle().toString());
             image1Stage.close();
         });
         cancelButton.setOnAction(e -> {

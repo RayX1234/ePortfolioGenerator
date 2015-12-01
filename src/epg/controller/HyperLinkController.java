@@ -8,6 +8,7 @@ package epg.controller;
 import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.HyperLink;
 import epg.view.EPortfolioGeneratorView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,7 +36,9 @@ public class HyperLinkController {
     TextField hyperLinkTextField;
 
     int count;
-    String hyperLink;
+    Label hyperLinkLabel1;
+    Label temp;
+    HyperLink hl;
 
     Stage hyperLink1Stage;
     Scene hyperLink1Scene;
@@ -47,6 +50,7 @@ public class HyperLinkController {
 
     public void displayAddHyperLinkDialog() {
         hyperLinkStage = new Stage();
+        hl = new HyperLink();
         hyperLinkVBox = new VBox();
         hyperLinkVBox.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         hyperLinkScene = new Scene(hyperLinkVBox, 500, 150);
@@ -59,10 +63,12 @@ public class HyperLinkController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
-            String temp = ui.getList().getSelectionModel().getSelectedItem();
-            hyperLink = temp + " And HyperLink";
+            hyperLinkTextField.setText(hyperLinkTextField.getText());
+            temp = ui.getList().getSelectionModel().getSelectedItem();
+            hl.setHyperLinkText(hyperLinkTextField.getText());
+            hyperLinkLabel = new Label(temp + "And HyperLink");
             ui.getListData().remove(temp);
-            ui.getListData().add(hyperLink);
+            ui.getListData().add(hyperLinkLabel);
             hyperLinkStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -84,15 +90,24 @@ public class HyperLinkController {
         hyperLink1Scene.getStylesheets().add(STYLE_SHEET_UI);
         hyperLink1Stage.setScene(hyperLink1Scene);
         hyperLink1VBox.getChildren().addAll(hyperLinkLabel, hyperLinkTextField, okCancelHBox);
-        okButton.setOnAction(e ->{
+        okButton.setOnAction(e -> {
+            hyperLinkTextField.setText(hyperLinkTextField.getText());
             hyperLink1Stage.close();
         });
-        cancelButton.setOnAction(e ->{
+        cancelButton.setOnAction(e -> {
             hyperLink1Stage.close();
         });
         ui.setWindowIcon(ICON_FIRE, hyperLink1Stage);
         hyperLink1Stage.setTitle("Edit HyperLink");
         hyperLink1Stage.show();
 
+    }
+
+    public TextField getHyperLinkTF() {
+        return hyperLinkTextField;
+    }
+
+    public Label getLabel() {
+        return temp;
     }
 }

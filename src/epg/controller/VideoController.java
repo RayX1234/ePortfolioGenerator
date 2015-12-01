@@ -9,6 +9,7 @@ import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Video;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
 import javafx.geometry.Pos;
@@ -50,9 +51,10 @@ public class VideoController {
     Stage video1Stage;
     Scene video1Scene;
     VBox video1VBox;
-    
+
     int count;
-    String video;
+    Label videoLabel;
+    Video v;
 
     public VideoController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -60,7 +62,14 @@ public class VideoController {
 
     public void displayAddVideoDialog() {
         videoStage = new Stage();
+        captionLabel = new Label("Enter Caption");
+        captionTextField = new TextField();
+        widthLabel = new Label("Enter Width");
+        widthTextField = new TextField();
+        heightLabel = new Label("Enter Height");
+        heightTextField = new TextField();
         okCancelHBox = new HBox(10);
+        v = new Video();
         okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
         videoStage.setTitle("Add Video");
         videoVBox = new VBox();
@@ -75,24 +84,25 @@ public class VideoController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
-            if(ui.getListData().isEmpty()){
+            if (ui.getListData().isEmpty()) {
                 count = 0;
             }
             count++;
-            video = "Video Component " + count;
-            ui.getListData().add(video);
+            captionTextField.setText(captionTextField.getText());
+            v.setCaption(captionTextField.getText());
+            heightTextField.setText(heightTextField.getText());
+            v.setHeight(heightTextField.getText());
+            widthTextField.setText(widthTextField.getText());
+            v.setWidth(widthTextField.getText());
+            videoLabel = new Label("Video Component " + count);
+            ui.getListData().add(videoLabel);
             videoStage.close();
         });
         cancelButton.setOnAction(e -> {
             videoStage.close();
         });
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
-        captionLabel = new Label("Enter Caption");
-        captionTextField = new TextField();
-        widthLabel = new Label("Enter Width");
-        widthTextField = new TextField();
-        heightLabel = new Label("Enter Height");
-        heightTextField = new TextField();
+
         videoVBox.getChildren().addAll(selectVideoLabel, selectVideoButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, okCancelHBox);
         videoStage.setScene(videoScene);
         ui.setWindowIcon(ICON_FIRE, videoStage);
@@ -113,6 +123,9 @@ public class VideoController {
         if (file != null) {
             String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
             String fileName = file.getName();
+            v.setVideo(path, fileName);
+            v.setVideoFileName(fileName);
+            v.setVideoPath(path);
         }
     }
 
@@ -126,7 +139,13 @@ public class VideoController {
         ui.setWindowIcon(ICON_FIRE, video1Stage);
         video1Stage.setTitle("Edit Video");
         video1Stage.setScene(video1Scene);
-          okButton.setOnAction(e -> {
+        okButton.setOnAction(e -> {
+            captionTextField.setText(captionTextField.getText());
+            v.setCaption(captionTextField.getText());
+            heightTextField.setText(heightTextField.getText());
+            v.setHeight(heightTextField.getText());
+            widthTextField.setText(widthTextField.getText());
+            v.setWidth(widthTextField.getText());
             video1Stage.close();
         });
         cancelButton.setOnAction(e -> {

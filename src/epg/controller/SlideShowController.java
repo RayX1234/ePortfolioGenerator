@@ -33,6 +33,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -76,7 +77,7 @@ public class SlideShowController {
 
     // FOR componenet
     int count;
-    String slideshowname;
+    Label slideshownameLabel;
 
     public SlideShowController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -103,8 +104,8 @@ public class SlideShowController {
                 count = 0;
             }
             count++;
-            slideshowname = "SlideShow Component " + count;
-            ui.getListData().add(slideshowname);
+            slideshownameLabel = new Label("SlideShow Component " + count);
+            ui.getListData().add(slideshownameLabel);
             addSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {

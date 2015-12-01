@@ -23,6 +23,7 @@ import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SITE_VIEWER_WORKSPACE;
+import static epg.StartupConstants.CSS_CLASS_ALIGN_CENTER;
 import static epg.StartupConstants.CSS_CLASS_CONTENT_PANE;
 import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
@@ -231,8 +232,8 @@ public class EPortfolioGeneratorView {
     BorderPane componentListBorderPane;
     VBox componentListVBox;
     Button removeComponentButton;
-    ObservableList<String> componentListData;
-    ListView<String> componentlist;
+    ObservableList<Label> componentListData;
+    ListView<Label> componentlist;
     VBox componentRemoveToolbar;
 
     //FOR SEEING IF WE WANT TO EDIT PARAGRAPH OR HYPERLINK
@@ -444,7 +445,7 @@ public class EPortfolioGeneratorView {
 
         hyperLinkController = new HyperLinkController(this);
         addTextHLButton.setOnAction(e -> {
-            if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph")) {
+            if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Paragraph")) {
                 hyperLinkController.displayAddHyperLinkDialog();
             }
         });
@@ -506,6 +507,7 @@ public class EPortfolioGeneratorView {
         componentListVBox = new VBox();
         componentListBorderPane.setCenter(componentListVBox);
         componentRemoveToolbar = new VBox();
+        componentRemoveToolbar.getStyleClass().add(CSS_CLASS_ALIGN_CENTER);
         removeComponentButton = initChildButton(componentRemoveToolbar, ICON_REMOVE_MAIN_LIST, TOOLTIP_REMOVE_MAIN_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         componentListBorderPane.setLeft(componentRemoveToolbar);
         componentlist = new ListView<>();
@@ -714,45 +716,45 @@ public class EPortfolioGeneratorView {
         s.getIcons().add(icon);
     }
 
-    public ObservableList<String> getListData() {
+    public ObservableList<Label> getListData() {
         return componentListData;
     }
 
-    public ListView<String> getList() {
+    public ListView<Label> getList() {
         return componentlist;
     }
 
     public void initContentEventHandlers() {
         componentlist.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                if (componentlist.getSelectionModel().getSelectedItem().contains("Heading")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Heading")) {
                     textController.displayEditHeadingDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Paragraph")) {
                     textController.displayEditParagraphDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().contains("Paragraph") && componentlist.getSelectionModel().getSelectedItem().contains("HyperLink")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Paragraph") && componentlist.getSelectionModel().getSelectedItem().getText().contains("HyperLink")) {
                     textController.getEditParagraphStage().close();
                     checkPH();
                 }
 
-                if (componentlist.getSelectionModel().getSelectedItem().contains("List")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("List")) {
                     textController.displayEditListDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().contains("Image")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Image")) {
                     imageController.displayEditImageDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().contains("SlideShow")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("SlideShow")) {
                     slideShowController.displayEditSlideShowDialog();
                 }
-                if (componentlist.getSelectionModel().getSelectedItem().contains("Video")) {
+                if (componentlist.getSelectionModel().getSelectedItem().getText().contains("Video")) {
                     videoController.displayEditVideoDialog();
                 }
             }
         });
         removeComponentButton.setOnAction(e -> {
-            String s = componentlist.getSelectionModel().getSelectedItem();
-            componentListData.remove(s);
+            Label l = componentlist.getSelectionModel().getSelectedItem();
+            componentListData.remove(l);
         });
     }
 
