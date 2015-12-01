@@ -18,7 +18,6 @@ import javafx.collections.ObservableList;
 public class SlideShowModel {
 
     SlideShowController ui;
-    String title;
     ObservableList<Slide> slides;
     Slide selectedSlide;
     Slide slide;
@@ -44,8 +43,8 @@ public class SlideShowModel {
     public ObservableList<Slide> getSlides() {
         return slides;
     }
-
-    public void setSlides(ObservableList<Slide> initSlides) {
+    
+    public void setSlides(ObservableList<Slide> initSlides){
         slides = initSlides;
     }
 
@@ -94,10 +93,7 @@ public class SlideShowModel {
         }
 
     }
+
     
-    @Override
-    public String toString(){
-        return "Slide Show Component";
-    }
 
 }

@@ -25,7 +25,9 @@ import static epg.StartupConstants.ICON_MOVE_UP;
 import static epg.StartupConstants.ICON_REMOVE_SLIDE;
 import static epg.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
 import static epg.StartupConstants.STYLE_SHEET_UI;
+import epg.model.Component;
 import epg.model.Slide;
+import epg.model.SlideShow;
 import epg.model.SlideShowModel;
 import epg.view.EPortfolioGeneratorView;
 import epg.view.SlideEditView;
@@ -33,7 +35,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -75,17 +76,20 @@ public class SlideShowController {
     Scene editSlideShowScene;
     BorderPane editSlideShowBorderPane;
 
-    // FOR componenet
-    int count;
-    Label slideshownameLabel;
+    Component c;
+    SlideShow ss;
 
     public SlideShowController(EPortfolioGeneratorView initUI) {
         ui = initUI;
-        slideShow = new SlideShowModel(this);
+
     }
 
     public void displayAddSlideShowDialog() {
+        slideShow = new SlideShowModel(this);
         addSlideShowStage = new Stage();
+        c = new Component();
+        ss = new SlideShow();
+        c.setSS(ss);
         slideShowBorderPane = new BorderPane();
         slideShowBorderPane.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         workspace = new HBox();
@@ -100,12 +104,10 @@ public class SlideShowController {
         cancelButton = new Button("Cancel");
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
         okButton.setOnAction(e -> {
-            if (ui.getListData().isEmpty()) {
-                count = 0;
-            }
-            count++;
-            slideshownameLabel = new Label("SlideShow Component " + count);
-   //         ui.getListData().add(slideshownameLabel);
+            ss.setSlideShowModel(slideShow);
+            System.out.println(ss.getSlideShowModel().getSlides().size());
+            c.setSlideshow(true);
+            ui.getListData().add(c);
             addSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -202,12 +204,16 @@ public class SlideShowController {
 
     public void displayEditSlideShowDialog() {
         editSlideShowStage = new Stage();
+        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        slideShow.setSlides(temp.getSS().getSlideShowModel().getSlides());
+        System.out.println(temp.getSS().getSlideShowModel().getSlides().size());
         editSlideShowBorderPane = new BorderPane();
         editSlideShowBorderPane.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         editSlideShowBorderPane.setCenter(workspace);
         editSlideShowBorderPane.setLeft(slideEditToolbar);
         editSlideShowBorderPane.setBottom(okCancelHBox);
         okButton.setOnAction(e -> {
+            temp.getSS().setSlideShowModel(slideShow);
             editSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {

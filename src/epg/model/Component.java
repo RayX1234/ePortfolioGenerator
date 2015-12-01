@@ -16,10 +16,10 @@ public class Component {
     private Image i;
     private List l;
     private Paragraph p;
-    private SlideShowModel ssm;
+    private SlideShow ss;
     private Video v;
 
-    private boolean heading, hyperlink, image, list, slideshowmodel, paragraph, video;
+    private boolean heading, hyperlink, image, list, slideshow, paragraph, video;
 
     public Component() {
 
@@ -103,16 +103,16 @@ public class Component {
     /**
      * @return the ssm
      */
-    public SlideShowModel getSSM() {
-        return ssm;
+    public SlideShow getSS() {
+        return ss;
     }
 
     /**
      * @param ssm the ssm to set
      */
-    public void setSSM(SlideShowModel initSSM) {
+    public void setSS(SlideShow initSS) {
 
-        this.ssm = initSSM;
+        this.ss = initSS;
     }
 
     /**
@@ -147,8 +147,8 @@ public class Component {
         if (isParagraph()) {
             return p.toString();
         }
-        if (isSlideshowmodel()) {
-            return ssm.toString();
+        if (isSlideshow()) {
+            return ss.toString();
         }
         if (isVideo()) {
             return v.toString();
@@ -230,15 +230,15 @@ public class Component {
     /**
      * @return the slideshowmodel
      */
-    public boolean isSlideshowmodel() {
-        return slideshowmodel;
+    public boolean isSlideshow() {
+        return slideshow;
     }
 
     /**
      * @param slideshowmodel the slideshowmodel to set
      */
-    public void setSlideshowmodel(boolean slideshowmodel) {
-        this.slideshowmodel = slideshowmodel;
+    public void setSlideshow(boolean slideshow) {
+        this.slideshow = slideshow;
     }
 
     /**
