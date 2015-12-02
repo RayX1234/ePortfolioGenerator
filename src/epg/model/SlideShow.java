@@ -11,22 +11,22 @@ package epg.model;
  */
 public class SlideShow {
 
-    SlideShowModel ssm;
+    private SlideShowModel ssm;
 
     public SlideShow() {
 
     }
 
-    public void setSlideShowModel(SlideShowModel initSSM) {
-        ssm = initSSM;
-    }
-
-    public SlideShowModel getSlideShowModel() {
-        return ssm;
-    }
-
     @Override
     public String toString() {
         return "Slide Show Component";
+    }
+
+    public void setSlideShowModel(SlideShowModel initSSM){
+        ssm = initSSM;
+    }
+    
+    public SlideShowModel getSlideShowModel(){
+        return ssm;
     }
 }

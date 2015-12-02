@@ -799,5 +799,9 @@ public class EPortfolioGeneratorView {
         });
         checkPHStage.show();
     }
+    
+     public Stage getWindow() {
+        return primaryStage;
+    }
 
 }

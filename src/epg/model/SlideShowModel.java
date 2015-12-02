@@ -6,7 +6,6 @@
 package epg.model;
 
 import epg.controller.SlideShowController;
-import epg.view.SlideEditView;
 import java.util.Collections;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +20,7 @@ public class SlideShowModel {
     ObservableList<Slide> slides;
     Slide selectedSlide;
     Slide slide;
-    SlideEditView slideEditor;
+    //   SlideEditView slideEditor;
     int count;
 
     public SlideShowModel(SlideShowController initUI) {
@@ -42,10 +41,6 @@ public class SlideShowModel {
 
     public ObservableList<Slide> getSlides() {
         return slides;
-    }
-    
-    public void setSlides(ObservableList<Slide> initSlides){
-        slides = initSlides;
     }
 
     public Slide getSelectedSlide() {
@@ -93,7 +88,42 @@ public class SlideShowModel {
         }
 
     }
-
     
+    public void addSlide2(String initImageFileName,
+            String initImagePath, String initCaption, SlideShowModel temp) {
+        Slide slideToAdd = new Slide(initImageFileName, initImagePath, initCaption);
+        slides.add(slideToAdd);
+
+        ui.reloadSlideShowPaneEmpty(temp);
+
+    }
+
+    public void removeSlide2(Slide s, SlideShowModel temp) {
+        slides.remove(s);
+        ui.reloadSlideShowPane(temp);
+        setSelectedSlide(null);
+    }
+
+    public void moveUpSlide2(Slide s, SlideShowModel temp) {
+        int slideIndex = slides.indexOf(s);
+        try {
+
+            Collections.swap(slides, slideIndex, slideIndex - 1);
+            ui.reloadSlideShowPane(temp);
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+    }
+
+    public void moveDownSlide2(Slide s, SlideShowModel temp) {
+        int slideIndex = slides.indexOf(s);
+        try {
+
+            Collections.swap(slides, slideIndex, slideIndex + 1);
+            ui.reloadSlideShowPane(temp);
+        } catch (IndexOutOfBoundsException e) {
+        }
+
+    }
 
 }

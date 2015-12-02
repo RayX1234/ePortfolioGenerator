@@ -31,7 +31,6 @@ import epg.model.SlideShow;
 import epg.model.SlideShowModel;
 import epg.view.EPortfolioGeneratorView;
 import epg.view.SlideEditView;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -59,9 +58,9 @@ public class SlideShowController {
     Button removeSlideButton;
     Button moveUpSlideButton;
     Button moveDownSlideButton;
-    ObservableList<Slide> slides;
+
     VBox slidesEditorPane;
-    private SlideEditView slideEditor;
+    SlideEditView slideEditor;
     // THIS IS THE SLIDE SHOW WE'RE WORKING WITH
     SlideShowModel slideShow;
 
@@ -105,7 +104,6 @@ public class SlideShowController {
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
         okButton.setOnAction(e -> {
             ss.setSlideShowModel(slideShow);
-            System.out.println(ss.getSlideShowModel().getSlides().size());
             c.setSlideshow(true);
             ui.getListData().add(c);
             addSlideShowStage.close();
@@ -182,6 +180,26 @@ public class SlideShowController {
         slideShow.moveDownSlide(slideShow.getSelectedSlide());
     }
 
+    public void processAddSlideRequest2() {
+        slideShow.addSlide2(DEFAULT_SLIDE_IMAGE, PATH_SLIDE_SHOW_IMAGES, DEFAULT_SLIDE_CAPTION, ss.getSlideShowModel());
+
+    }
+
+    public void processDeleteSlideRequest2() {
+        slideShow.removeSlide2(slideShow.getSelectedSlide(), ss.getSlideShowModel());
+    }
+
+    public void moveUpSlideRequest2() {
+
+        slideShow.moveUpSlide2(slideShow.getSelectedSlide(), ss.getSlideShowModel());
+
+    }
+
+    public void moveDownSlideRequest2() {
+
+        slideShow.moveDownSlide2(slideShow.getSelectedSlide(), ss.getSlideShowModel());
+    }
+
     public void initEventHandlers() {
         addSlideButton.setOnAction(e -> {
 
@@ -202,17 +220,38 @@ public class SlideShowController {
         });
     }
 
+    public void initEventHandlersEdit() {
+        addSlideButton.setOnAction(e -> {
+
+            processAddSlideRequest2();
+
+        });
+
+        removeSlideButton.setOnAction(e -> {
+            processDeleteSlideRequest2();
+        });
+
+        moveUpSlideButton.setOnAction(e -> {
+            moveUpSlideRequest2();
+        });
+
+        moveDownSlideButton.setOnAction(e -> {
+            moveDownSlideRequest2();
+        });
+    }
+
     public void displayEditSlideShowDialog() {
         editSlideShowStage = new Stage();
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
-        slideShow.setSlides(temp.getSS().getSlideShowModel().getSlides());
-        System.out.println(temp.getSS().getSlideShowModel().getSlides().size());
+        reloadSlideShowPaneEmpty(temp.getSS().getSlideShowModel());
+        initEventHandlersEdit();
         editSlideShowBorderPane = new BorderPane();
         editSlideShowBorderPane.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         editSlideShowBorderPane.setCenter(workspace);
         editSlideShowBorderPane.setLeft(slideEditToolbar);
         editSlideShowBorderPane.setBottom(okCancelHBox);
         okButton.setOnAction(e -> {
+            reloadSlideShowPaneEmpty(slideShow);
             temp.getSS().setSlideShowModel(slideShow);
             editSlideShowStage.close();
         });
