@@ -265,7 +265,7 @@ public class EPortfolioGeneratorView {
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
     }
 
-    private void reset() {
+    public void reset() {
         fileToolbarPane.getChildren().clear();
         sitesTabPane.getTabs().clear();
         newPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_PORTFOLIO, TOOLTIP_NEW_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
@@ -387,7 +387,7 @@ public class EPortfolioGeneratorView {
         fileController = new FileController(this, fileManager);
 
         newPortfolioButton.setOnAction(e -> {
-            reset();
+            fileController.handleNewPortfolioRequest();
             activatePEW();
             pageEditWorkspaceActivated = true;
             isPEWActivated();
