@@ -74,9 +74,16 @@ public class SlideShowController {
     Stage editSlideShowStage;
     Scene editSlideShowScene;
     BorderPane editSlideShowBorderPane;
+    VBox slideEditToolbar2;
+    Button addSlideButton2;
+    Button removeSlideButton2;
+    Button moveUpSlideButton2;
+    Button moveDownSlideButton2;
 
     Component c;
     SlideShow ss;
+    boolean newSlideShow;
+    SlideShowModel temp2;
 
     public SlideShowController(EPortfolioGeneratorView initUI) {
         ui = initUI;
@@ -84,7 +91,8 @@ public class SlideShowController {
     }
 
     public void displayAddSlideShowDialog() {
-        slideShow = new SlideShowModel(this);
+        newSlideShow = true;
+        slideShow = new SlideShowModel(this, ui);
         addSlideShowStage = new Stage();
         c = new Component();
         ss = new SlideShow();
@@ -159,6 +167,29 @@ public class SlideShowController {
 
         }
     }
+    
+     public void reloadSlideShowPaneEmpty2(SlideShowModel slideShowToLoad) {
+        slidesEditorPane.getChildren().clear();
+        for (Slide slide : slideShowToLoad.getSlides()) {
+            slideEditor = new SlideEditView(slide, slideShowToLoad, this);
+            slidesEditorPane.getChildren().add(slideEditor);
+        }
+    }
+
+    public void reloadSlideShowPane2(SlideShowModel slideShowToLoad) {
+        slidesEditorPane.getChildren().clear();
+        for (Slide slide : slideShowToLoad.getSlides()) {
+            slideEditor = new SlideEditView(slide, slideShowToLoad, this);
+            slidesEditorPane.getChildren().add(slideEditor);
+            int value = slideShowToLoad.getSlides().indexOf(slide);
+            if (slideShowToLoad.getSlides().get(value) == slideShowToLoad.getSelectedSlide()) {
+                slideEditor.getStyleClass().add(CSS_CLASS_SELECT_SLIDE);
+            } else {
+                slideEditor.getStyleClass().add(CSS_CLASS_DESELECT_SLIDE);
+            }
+
+        }
+    }
 
     public void processAddSlideRequest() {
         slideShow.addSlide(DEFAULT_SLIDE_IMAGE, PATH_SLIDE_SHOW_IMAGES, DEFAULT_SLIDE_CAPTION);
@@ -181,23 +212,25 @@ public class SlideShowController {
     }
 
     public void processAddSlideRequest2() {
-        slideShow.addSlide2(DEFAULT_SLIDE_IMAGE, PATH_SLIDE_SHOW_IMAGES, DEFAULT_SLIDE_CAPTION, ss.getSlideShowModel());
+        SlideShowModel temp = ui.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        temp.addSlide2(DEFAULT_SLIDE_IMAGE, PATH_SLIDE_SHOW_IMAGES, DEFAULT_SLIDE_CAPTION);
 
     }
 
     public void processDeleteSlideRequest2() {
-        slideShow.removeSlide2(slideShow.getSelectedSlide(), ss.getSlideShowModel());
+        SlideShowModel temp = ui.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        temp.removeSlide2(temp.getSelectedSlide());
     }
 
     public void moveUpSlideRequest2() {
-
-        slideShow.moveUpSlide2(slideShow.getSelectedSlide(), ss.getSlideShowModel());
+        SlideShowModel temp = ui.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        temp.moveUpSlide2(temp.getSelectedSlide());
 
     }
 
     public void moveDownSlideRequest2() {
-
-        slideShow.moveDownSlide2(slideShow.getSelectedSlide(), ss.getSlideShowModel());
+        SlideShowModel temp = ui.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        temp.moveDownSlide2(temp.getSelectedSlide());
     }
 
     public void initEventHandlers() {
@@ -220,39 +253,29 @@ public class SlideShowController {
         });
     }
 
-    public void initEventHandlersEdit() {
-        addSlideButton.setOnAction(e -> {
-
-            processAddSlideRequest2();
-
-        });
-
-        removeSlideButton.setOnAction(e -> {
-            processDeleteSlideRequest2();
-        });
-
-        moveUpSlideButton.setOnAction(e -> {
-            moveUpSlideRequest2();
-        });
-
-        moveDownSlideButton.setOnAction(e -> {
-            moveDownSlideRequest2();
-        });
-    }
-
     public void displayEditSlideShowDialog() {
+        newSlideShow = false;
         editSlideShowStage = new Stage();
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
         reloadSlideShowPaneEmpty(temp.getSS().getSlideShowModel());
-        initEventHandlersEdit();
+        temp2 = temp.getSS().getSlideShowModel();
+        
         editSlideShowBorderPane = new BorderPane();
+        slideEditToolbar2 = new VBox();
+        editSlideShowBorderPane.setLeft(slideEditToolbar2);
+        slideEditToolbar2.getStyleClass().add(CSS_CLASS_ALIGN_CENTER);
+        slideEditToolbar2.getStyleClass().add(CSS_CLASS_SLIDE_SHOW_EDIT_VBOX);
+        addSlideButton2 = ui.initChildButton(slideEditToolbar2, ICON_ADD_SLIDE, TOOLTIP_ADD_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        removeSlideButton2 = ui.initChildButton(slideEditToolbar2, ICON_REMOVE_SLIDE, TOOLTIP_REMOVE_SLIDE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        moveUpSlideButton2 = ui.initChildButton(slideEditToolbar2, ICON_MOVE_UP, TOOLTIP_MOVE_UP, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        moveDownSlideButton2 = ui.initChildButton(slideEditToolbar2, ICON_MOVE_DOWN, TOOLTIP_MOVE_DOWN, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        initEventHandlers2();
         editSlideShowBorderPane.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         editSlideShowBorderPane.setCenter(workspace);
-        editSlideShowBorderPane.setLeft(slideEditToolbar);
         editSlideShowBorderPane.setBottom(okCancelHBox);
         okButton.setOnAction(e -> {
-            reloadSlideShowPaneEmpty(slideShow);
-            temp.getSS().setSlideShowModel(slideShow);
+            temp.getSS().setSlideShowModel(ui.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel());
+            
             editSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -265,5 +288,35 @@ public class SlideShowController {
         ui.setWindowIcon(ICON_FIRE, editSlideShowStage);
         editSlideShowStage.show();
     }
+
+    public void initEventHandlers2() {
+        addSlideButton2.setOnAction(e -> {
+
+            processAddSlideRequest2();
+
+        });
+
+        removeSlideButton2.setOnAction(e -> {
+            processDeleteSlideRequest2();
+        });
+
+        moveUpSlideButton2.setOnAction(e -> {
+            moveUpSlideRequest2();
+        });
+
+        moveDownSlideButton2.setOnAction(e -> {
+            moveDownSlideRequest2();
+        });
+    }
+    
+    public Boolean isNewSlideShow(){
+        return newSlideShow;
+    }
+    
+    public SlideShowModel getTemp2(){
+        return temp2;
+    }
+    
+   
 
 }
