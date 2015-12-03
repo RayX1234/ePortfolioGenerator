@@ -5,6 +5,8 @@
  */
 package epg.model;
 
+import epg.view.EPortfolioGeneratorView;
+
 /**
  *
  * @author Ray
@@ -65,10 +67,10 @@ public class Video {
         videoPath = initPath;
         videoFileName = initFileName;
     }
-    
+
     @Override
-    public String toString(){
-       
+    public String toString() {
+
         return "Video Component";
     }
 

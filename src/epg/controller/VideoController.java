@@ -88,6 +88,7 @@ public class VideoController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
+            ui.getRemoveComponentButton().setDisable(false);
             v.setCaption(captionTextField.getText());
             v.setHeight(heightTextField.getText());
             v.setWidth(widthTextField.getText());
@@ -141,9 +142,9 @@ public class VideoController {
         video1Stage.setTitle("Edit Video");
         video1Stage.setScene(video1Scene);
         okButton.setOnAction(e -> {
-           temp.getV().setCaption(captionTextField.getText());
-           temp.getV().setHeight(heightTextField.getText());
-           temp.getV().setWidth(widthTextField.getText());
+            temp.getV().setCaption(captionTextField.getText());
+            temp.getV().setHeight(heightTextField.getText());
+            temp.getV().setWidth(widthTextField.getText());
             video1Stage.close();
         });
         cancelButton.setOnAction(e -> {

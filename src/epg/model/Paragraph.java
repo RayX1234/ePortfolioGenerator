@@ -5,6 +5,7 @@
  */
 package epg.model;
 
+import epg.view.EPortfolioGeneratorView;
 import javafx.scene.control.Toggle;
 
 /**
@@ -35,10 +36,10 @@ public class Paragraph {
     public Toggle getFontToggle() {
         return font;
     }
-    
+
     @Override
-    public String toString(){
-        
+    public String toString() {
+
         return "Paragraph Component";
     }
 

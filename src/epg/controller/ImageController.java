@@ -105,6 +105,7 @@ public class ImageController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
+            ui.getRemoveComponentButton().setDisable(false);
             i.setImagePosition(rgroup.getSelectedToggle());
             i.setCaption(captionTextField.getText());
             i.setHeight(heightTextField.getText());

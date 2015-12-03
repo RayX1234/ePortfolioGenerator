@@ -111,6 +111,7 @@ public class SlideShowController {
         cancelButton = new Button("Cancel");
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
         okButton.setOnAction(e -> {
+            ui.getRemoveComponentButton().setDisable(false);
             ss.setSlideShowModel(slideShow);
             c.setSlideshow(true);
             ui.getListData().add(c);
@@ -167,8 +168,8 @@ public class SlideShowController {
 
         }
     }
-    
-     public void reloadSlideShowPaneEmpty2(SlideShowModel slideShowToLoad) {
+
+    public void reloadSlideShowPaneEmpty2(SlideShowModel slideShowToLoad) {
         slidesEditorPane.getChildren().clear();
         for (Slide slide : slideShowToLoad.getSlides()) {
             slideEditor = new SlideEditView(slide, slideShowToLoad, this);
@@ -259,7 +260,7 @@ public class SlideShowController {
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
         reloadSlideShowPaneEmpty(temp.getSS().getSlideShowModel());
         temp2 = temp.getSS().getSlideShowModel();
-        
+
         editSlideShowBorderPane = new BorderPane();
         slideEditToolbar2 = new VBox();
         editSlideShowBorderPane.setLeft(slideEditToolbar2);
@@ -275,7 +276,7 @@ public class SlideShowController {
         editSlideShowBorderPane.setBottom(okCancelHBox);
         okButton.setOnAction(e -> {
             temp.getSS().setSlideShowModel(ui.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel());
-            
+
             editSlideShowStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -308,15 +309,13 @@ public class SlideShowController {
             moveDownSlideRequest2();
         });
     }
-    
-    public Boolean isNewSlideShow(){
+
+    public Boolean isNewSlideShow() {
         return newSlideShow;
     }
-    
-    public SlideShowModel getTemp2(){
+
+    public SlideShowModel getTemp2() {
         return temp2;
     }
-    
-   
 
 }

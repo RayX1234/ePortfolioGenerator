@@ -113,6 +113,7 @@ public class EPortfolioGeneratorView {
     Button cancelButton;
     HBox okCancelHBox;
     int count;
+    int componentCount;
 
     //The main pane for the GUI
     BorderPane epgPane;
@@ -404,6 +405,7 @@ public class EPortfolioGeneratorView {
 
         removeSitePageButton.setOnAction(e -> {
             pageEditController.processRemoveSiteRequest();
+            count--;
 
         });
 
@@ -458,7 +460,7 @@ public class EPortfolioGeneratorView {
         if (sitesTabPane.getTabs().isEmpty()) {
             count = 1;
         }
-        tab.setText("new page " + count);
+        tab.setText("New Page " + count);
         tab.setContent(initContentPane());
         sitesTabPane.getTabs().add(tab);
         removeSitePageButton.setDisable(false);
@@ -482,7 +484,7 @@ public class EPortfolioGeneratorView {
         addImageButton = initChildButton(componentFlowPane, ICON_ADD_IMAGE, TOOLTIP_ADD_IMAGE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addSlideShowButton = initChildButton(componentFlowPane, ICON_ADD_SLIDESHOW, TOOLTIP_ADD_SLIDESHOW, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addVideoButton = initChildButton(componentFlowPane, ICON_ADD_VIDEO, TOOLTIP_ADD_VIDEO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        addTextHLButton = initChildButton(componentFlowPane, ICON_ADD_TEXT_HYPERLINK, TOOLTIP_ADD_TEXT_HYPERLINK, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        addTextHLButton = initChildButton(componentFlowPane, ICON_ADD_TEXT_HYPERLINK, TOOLTIP_ADD_TEXT_HYPERLINK, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
 
     }
 
@@ -509,7 +511,7 @@ public class EPortfolioGeneratorView {
         componentListBorderPane.setCenter(componentListVBox);
         componentRemoveToolbar = new VBox();
         componentRemoveToolbar.getStyleClass().add(CSS_CLASS_ALIGN_CENTER);
-        removeComponentButton = initChildButton(componentRemoveToolbar, ICON_REMOVE_MAIN_LIST, TOOLTIP_REMOVE_MAIN_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        removeComponentButton = initChildButton(componentRemoveToolbar, ICON_REMOVE_MAIN_LIST, TOOLTIP_REMOVE_MAIN_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true);
         componentListBorderPane.setLeft(componentRemoveToolbar);
         componentlist = new ListView<>();
         componentListData = FXCollections.observableArrayList();
@@ -756,6 +758,10 @@ public class EPortfolioGeneratorView {
         removeComponentButton.setOnAction(e -> {
             Component c = componentlist.getSelectionModel().getSelectedItem();
             componentListData.remove(c);
+            if(componentListData.isEmpty()){
+                removeComponentButton.setDisable(true);
+            }
+           
         });
     }
 
@@ -803,5 +809,10 @@ public class EPortfolioGeneratorView {
      public Stage getWindow() {
         return primaryStage;
     }
+     
+   
+     public Button getRemoveComponentButton(){
+         return removeComponentButton;
+     }
 
 }

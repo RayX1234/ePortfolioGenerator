@@ -5,6 +5,7 @@
  */
 package epg.model;
 
+import epg.view.EPortfolioGeneratorView;
 import javafx.collections.ObservableList;
 
 /**
@@ -14,9 +15,10 @@ import javafx.collections.ObservableList;
 public class List {
 
     private ObservableList<String> ld;
+    
 
     public List() {
-
+       
     }
 
     public void setListData(ObservableList<String> initLD) {

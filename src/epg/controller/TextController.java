@@ -186,6 +186,7 @@ public class TextController {
         addHeadingStage.setScene(addHeadingScene);
         addHeadingVBox.getChildren().addAll(enterContentLabel, HeadingTextField, okCancelHBox);
         okButton.setOnAction(e -> {
+            ui.getRemoveComponentButton().setDisable(false);
             c.setHeading(true);
             h.setHeadingText(HeadingTextField.getText());
             ui.getListData().add(c);
@@ -252,6 +253,10 @@ public class TextController {
         addParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, ParagraphTextArea, okCancelHBox);
         addParagraphStage.setScene(addParagraphScene);
         okButton.setOnAction(e -> {
+            ui.getRemoveComponentButton().setDisable(false);
+            if (fontGroup.getSelectedToggle() == null) {
+                fontGroup.selectToggle(font1Button);
+            }
             p.setParagraphText(ParagraphTextArea.getText());
             p.setFontToggle(fontGroup.getSelectedToggle());
             a.setParagraph(true);
@@ -269,19 +274,19 @@ public class TextController {
         editParagraphStage = new Stage();
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
         ParagraphTextArea.setText(temp.getP().getParagraphText());
-        if(temp.getP().getFontToggle().toString().contains("Font 1")){
+        if (temp.getP().getFontToggle().toString().contains("Font 1")) {
             fontGroup.selectToggle(font1Button);
         }
-        if(temp.getP().getFontToggle().toString().contains("Font 2")){
+        if (temp.getP().getFontToggle().toString().contains("Font 2")) {
             fontGroup.selectToggle(font2Button);
         }
-        if(temp.getP().getFontToggle().toString().contains("Font 3")){
+        if (temp.getP().getFontToggle().toString().contains("Font 3")) {
             fontGroup.selectToggle(font3Button);
         }
-        if(temp.getP().getFontToggle().toString().contains("Font 4")){
+        if (temp.getP().getFontToggle().toString().contains("Font 4")) {
             fontGroup.selectToggle(font4Button);
         }
-        if(temp.getP().getFontToggle().toString().contains("Font 5")){
+        if (temp.getP().getFontToggle().toString().contains("Font 5")) {
             fontGroup.selectToggle(font5Button);
         }
         editParagraphVBox = new VBox();
@@ -337,6 +342,7 @@ public class TextController {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
+            ui.getRemoveComponentButton().setDisable(false);
             l.setListData(listData);
             b.setList(true);
             ui.getListData().add(b);

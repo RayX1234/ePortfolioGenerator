@@ -5,6 +5,8 @@
  */
 package epg.model;
 
+import epg.view.EPortfolioGeneratorView;
+
 /**
  *
  * @author Ray
@@ -12,9 +14,10 @@ package epg.model;
 public class SlideShow {
 
     private SlideShowModel ssm;
+    
 
     public SlideShow() {
-
+      
     }
 
     @Override
