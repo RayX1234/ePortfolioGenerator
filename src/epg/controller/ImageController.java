@@ -6,13 +6,16 @@
 package epg.controller;
 
 import static epg.StartupConstants.CSS_CLASS_IMAGE_VBOX;
+import static epg.StartupConstants.DEFAULT_THUMBNAIL_WIDTH;
 import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.PATH_ICONS;
+import static epg.StartupConstants.SLASH;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Image;
 import epg.view.EPortfolioGeneratorView;
 import java.io.File;
+import java.net.URL;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -51,6 +55,7 @@ public class ImageController {
     RadioButton rNeitherButton;
     ToggleGroup rgroup;
     VBox imageVBox;
+    File file;
 
     //General cases
     HBox okCancelHBox;
@@ -70,6 +75,7 @@ public class ImageController {
     }
 
     public void displayAddImageDialog() {
+
         imageStage = new Stage();
         imageVBox = new VBox();
         i = new Image();
@@ -103,6 +109,9 @@ public class ImageController {
             i.setCaption(captionTextField.getText());
             i.setHeight(heightTextField.getText());
             i.setWidth(widthTextField.getText());
+            if (rgroup.getSelectedToggle() == null) {
+                i.setImagePosition(rNeitherButton);
+            }
             c.setImage(true);
             ui.getListData().add(c);
             imageStage.close();
@@ -111,9 +120,11 @@ public class ImageController {
             imageStage.close();
         });
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
+
         selectImageButton.setOnAction(e -> {
             processSelectImage();
         });
+
         imageVBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, chooseFloat, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         imageStage.setTitle("Add Image");
         ui.setWindowIcon(ICON_FIRE, imageStage);
@@ -140,12 +151,12 @@ public class ImageController {
             i.setImageFileName(fileName);
             i.setImagePath(path);
             i.setImage(path, fileName);
+
         }
     }
 
     public void displayEditImageDialog() {
         image1Stage = new Stage();
-
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
         if (temp.getI().getImagePosition().toString().contains("Left")) {
             rgroup.selectToggle(rLeftButton);
@@ -179,4 +190,5 @@ public class ImageController {
         ui.setWindowIcon(ICON_FIRE, image1Stage);
         image1Stage.show();
     }
+
 }

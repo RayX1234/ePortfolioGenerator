@@ -6,6 +6,7 @@
 package epg.model;
 
 import epg.controller.SlideShowController;
+import epg.view.EPortfolioGeneratorView;
 import java.util.Collections;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +18,16 @@ import javafx.collections.ObservableList;
 public class SlideShowModel {
 
     SlideShowController ui;
+    EPortfolioGeneratorView ui2;
     ObservableList<Slide> slides;
     Slide selectedSlide;
     Slide slide;
     //   SlideEditView slideEditor;
     int count;
 
-    public SlideShowModel(SlideShowController initUI) {
+    public SlideShowModel(SlideShowController initUI, EPortfolioGeneratorView initUI2) {
         ui = initUI;
+        ui2 = initUI2;
         slides = FXCollections.observableArrayList();
         reset();
     }
@@ -89,38 +92,50 @@ public class SlideShowModel {
 
     }
     
-    public void addSlide2(String initImageFileName,
-            String initImagePath, String initCaption, SlideShowModel temp) {
+     public void addSlide2(String initImageFileName,
+            String initImagePath, String initCaption) {
         Slide slideToAdd = new Slide(initImageFileName, initImagePath, initCaption);
-        slides.add(slideToAdd);
+       
+        SlideShowModel temp2 = ui.getTemp2();
+        ObservableList<Slide> temp = temp2.getSlides();
+        temp.add(slideToAdd);
 
-        ui.reloadSlideShowPaneEmpty(temp);
+        ui.reloadSlideShowPaneEmpty2(temp2);
 
     }
 
-    public void removeSlide2(Slide s, SlideShowModel temp) {
-        slides.remove(s);
-        ui.reloadSlideShowPane(temp);
+    public void removeSlide2(Slide s) {
+      
+        SlideShowModel temp2 = ui.getTemp2();
+        ObservableList<Slide> temp = temp2.getSlides();
+        temp.remove(s);
+        ui.reloadSlideShowPane2(temp2);
         setSelectedSlide(null);
     }
 
-    public void moveUpSlide2(Slide s, SlideShowModel temp) {
-        int slideIndex = slides.indexOf(s);
+    public void moveUpSlide2(Slide s) {
+       
+        SlideShowModel temp2 = ui.getTemp2();
+        ObservableList<Slide> temp = temp2.getSlides();
+        int slideIndex = temp.indexOf(s);
         try {
 
-            Collections.swap(slides, slideIndex, slideIndex - 1);
-            ui.reloadSlideShowPane(temp);
+            Collections.swap(temp, slideIndex, slideIndex - 1);
+            ui.reloadSlideShowPane2(temp2);
         } catch (IndexOutOfBoundsException e) {
 
         }
     }
 
-    public void moveDownSlide2(Slide s, SlideShowModel temp) {
-        int slideIndex = slides.indexOf(s);
+    public void moveDownSlide2(Slide s) {
+        
+        SlideShowModel temp2 = ui.getTemp2();
+        ObservableList<Slide> temp = temp2.getSlides();
+        int slideIndex = temp.indexOf(s);
         try {
 
-            Collections.swap(slides, slideIndex, slideIndex + 1);
-            ui.reloadSlideShowPane(temp);
+            Collections.swap(temp, slideIndex, slideIndex + 1);
+            ui.reloadSlideShowPane2(temp2);
         } catch (IndexOutOfBoundsException e) {
         }
 

@@ -69,8 +69,15 @@ public class SlideEditView extends HBox {
         captionVBox.setOnMousePressed(e -> {
 
             slideShow.setSelectedSlide(slide);
+            if (ui.isNewSlideShow()) {
 
-            ui.reloadSlideShowPane(slideShow);
+                ui.reloadSlideShowPane(slideShow);
+
+            } else {
+
+                ui.reloadSlideShowPane2(ui.getTemp2());
+
+            }
             if (file.exists()) {
 
             }
