@@ -68,6 +68,8 @@ import epg.controller.TextController;
 import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
 import epg.model.Component;
+import epg.model.EPortfolioModel;
+import epg.model.Page;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -246,9 +248,15 @@ public class EPortfolioGeneratorView {
     ObservableList<String> checkPHList;
     Label checkPHLabel;
 
+    //PAGE OBJECT
+    Page page;
+    EPortfolioModel portfolioModel;
+
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
-
+        // FIRST HOLD ONTO THE FILE MANAGER
+        fileManager = initFileManager;
+        portfolioModel = new EPortfolioModel();
     }
 
     //initalizing the fileToolbar Buttons
@@ -277,6 +285,9 @@ public class EPortfolioGeneratorView {
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         ePortfolioTitleLabel = new Label("Student Name:");
         ePortfolioTitleTF = new TextField();
+        ePortfolioTitleTF.setOnAction(e -> {
+            portfolioModel.setStudentName(ePortfolioTitleTF.getText());
+        });
         fileToolbarPane.getChildren().addAll(ePortfolioTitleLabel, ePortfolioTitleTF);
         initEventHandlers();
 
@@ -304,7 +315,7 @@ public class EPortfolioGeneratorView {
     }
 
     //activate the pageEditWorkspace
-    private void activatePEW() {
+    public void activatePEW() {
         pageEditWorkspace.setTop(fileToolbarPane);
         pageEditWorkspace.setLeft(siteToolbarPane);
         pageEditWorkspace.setCenter(sitesTabPane);
@@ -389,10 +400,12 @@ public class EPortfolioGeneratorView {
 
         newPortfolioButton.setOnAction(e -> {
             fileController.handleNewPortfolioRequest();
-            activatePEW();
-            pageEditWorkspaceActivated = true;
-            isPEWActivated();
-            removeSitePageButton.setDisable(true);
+
+        });
+
+        savePortfolioButton.setOnAction(e -> {
+            fileController.handleSavePortfolioRequest();
+
         });
 
         pageEditController = new PageEditController(this);
@@ -434,6 +447,7 @@ public class EPortfolioGeneratorView {
         imageController = new ImageController(this);
         addImageButton.setOnAction(e -> {
             imageController.displayAddImageDialog();
+
         });
 
         videoController = new VideoController(this);
@@ -456,6 +470,7 @@ public class EPortfolioGeneratorView {
 
     //Create site page
     public void createSitePage() {
+        page = new Page();
         Tab tab = new Tab();
         if (sitesTabPane.getTabs().isEmpty()) {
             count = 1;
@@ -465,6 +480,7 @@ public class EPortfolioGeneratorView {
         sitesTabPane.getTabs().add(tab);
         removeSitePageButton.setDisable(false);
         changeSiteNameButton.setDisable(false);
+        portfolioModel.getPages().add(page);
 
     }
 
@@ -516,6 +532,7 @@ public class EPortfolioGeneratorView {
         componentlist = new ListView<>();
         componentListData = FXCollections.observableArrayList();
         componentlist.setItems(componentListData);
+        page.setComponents(componentListData);
         componentListVBox.getChildren().add(componentlist);
         initContentEventHandlers();
         contentPane.setCenter(componentListBorderPane);
@@ -538,6 +555,11 @@ public class EPortfolioGeneratorView {
         layout4Button.setToggleGroup(layoutGroup);
         layout5Button = new RadioButton("Layout 5");
         layout5Button.setToggleGroup(layoutGroup);
+        if (layoutGroup.getSelectedToggle() == null) {
+            layoutGroup.selectToggle(layout1Button);
+            page.setLayout(layout1Button.toString());
+        }
+
         layoutPane.getChildren().addAll(layoutLabel, layout1Button, layout2Button, layout3Button, layout4Button, layout5Button);
 
     }
@@ -559,6 +581,10 @@ public class EPortfolioGeneratorView {
         color4Button.setToggleGroup(colorGroup);
         color5Button = new RadioButton("Color 5");
         color5Button.setToggleGroup(colorGroup);
+        if (colorGroup.getSelectedToggle() == null) {
+            colorGroup.selectToggle(color1Button);
+            page.setColor(color1Button.toString());
+        }
         colorPane.getChildren().addAll(colorLabel, color1Button, color2Button, color3Button, color4Button, color5Button);
 
     }
@@ -580,6 +606,10 @@ public class EPortfolioGeneratorView {
         font4Button.setToggleGroup(fontGroup);
         font5Button = new RadioButton("Font 5");
         font5Button.setToggleGroup(fontGroup);
+        if (fontGroup.getSelectedToggle() == null) {
+            fontGroup.selectToggle(font1Button);
+            page.setFont(font1Button.toString());
+        }
         fontPane.getChildren().addAll(fontLabel, font1Button, font2Button, font3Button, font4Button, font5Button);
 
     }
@@ -588,6 +618,10 @@ public class EPortfolioGeneratorView {
     public void initPageTitle() {
         pageTitleLabel = new Label("Enter a Page Title:");
         pageTitleTextField = new TextField();
+        pageTitleTextField.setOnAction(e -> {
+            portfolioModel.setStudentName(pageTitleTextField.getText());
+            System.out.println(portfolioModel.getStudentName());
+        });
         ptsnbiPane.getChildren().addAll(pageTitleLabel, pageTitleTextField);
     }
 
@@ -595,6 +629,12 @@ public class EPortfolioGeneratorView {
     public void initStudentName() {
         studentNameLabel = new Label("Enter a Student Name:");
         studentNameTextField = new TextField();
+        studentNameTextField.setOnAction(e -> {
+            portfolioModel.setStudentName(studentNameTextField.getText());
+            System.out.println(portfolioModel.getStudentName());
+            System.out.println(studentNameTextField.getText());
+        });
+
         ptsnbiPane.getChildren().addAll(studentNameLabel, studentNameTextField);
     }
 
@@ -604,7 +644,7 @@ public class EPortfolioGeneratorView {
         bannerImageLabel = new Label("Banner Image:");
         selectBIButton = new Button("Select");
         ptsnbiPane.getChildren().addAll(bannerImageLabel, selectBIButton);
-        bannerImageController = new BannerImageController();
+        bannerImageController = new BannerImageController(this);
         selectBIButton.setOnAction(e -> {
             bannerImageController.processSelectImage();
         });
@@ -620,11 +660,15 @@ public class EPortfolioGeneratorView {
     //Remove site page
     public void removeSitePage() {
         Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
+        int value = sitesTabPane.getTabs().indexOf(selectedTab);
         sitesTabPane.getTabs().remove(selectedTab);
+
         if (sitesTabPane.getTabs().isEmpty()) {
             changeSiteNameButton.setDisable(true);
             removeSitePageButton.setDisable(true);
         }
+        portfolioModel.getPages().remove(value);
+        System.out.println(portfolioModel.getPages().size());
 
     }
 
@@ -636,6 +680,7 @@ public class EPortfolioGeneratorView {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         siteNameTextField = new TextField();
+
         siteNameStage = new Stage();
         setWindowIcon(ICON_FIRE, siteNameStage);
         siteNameScene = new Scene(siteNameGridPane, 400, 200);
@@ -650,6 +695,8 @@ public class EPortfolioGeneratorView {
         okButton.setOnAction(e -> {
             Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
             selectedTab.setText(siteName);
+            page.setPagetitle(siteNameTextField.getText());
+
             siteNameStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -758,10 +805,10 @@ public class EPortfolioGeneratorView {
         removeComponentButton.setOnAction(e -> {
             Component c = componentlist.getSelectionModel().getSelectedItem();
             componentListData.remove(c);
-            if(componentListData.isEmpty()){
+            if (componentListData.isEmpty()) {
                 removeComponentButton.setDisable(true);
             }
-           
+
         });
     }
 
@@ -805,14 +852,41 @@ public class EPortfolioGeneratorView {
         });
         checkPHStage.show();
     }
-    
-     public Stage getWindow() {
+
+    public Stage getWindow() {
         return primaryStage;
     }
-     
-   
-     public Button getRemoveComponentButton(){
-         return removeComponentButton;
-     }
+
+    public Button getRemoveComponentButton() {
+        return removeComponentButton;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
+    public EPortfolioModel getPortfolioModel() {
+        return portfolioModel;
+    }
+
+    public ToggleGroup getLayoutGroup() {
+        return layoutGroup;
+    }
+
+    public ToggleGroup getColorGroup() {
+        return colorGroup;
+    }
+
+    public ToggleGroup getFontGroup() {
+        return fontGroup;
+    }
+
+    public void setPageEditWorkspaceActivated(Boolean initPEW) {
+        pageEditWorkspaceActivated = initPEW;
+    }
+
+    public Button getRemoveSitePageButton() {
+        return removeSitePageButton;
+    }
 
 }

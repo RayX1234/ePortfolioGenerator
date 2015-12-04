@@ -6,6 +6,7 @@
 package epg.controller;
 
 import epg.file.EPortfolioFileManager;
+import epg.model.EPortfolioModel;
 import epg.view.EPortfolioGeneratorView;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -36,33 +37,50 @@ public class FileController {
 
     //Create a new ePortfolio
     public void handleNewPortfolioRequest() {
+        try {
+            boolean continueToMakeNew = true;
+            if (!saved) {
 
-        boolean continueToMakeNew = true;
-        if (!saved) {
-            try {
                 // THE USER CAN OPT OUT HERE WITH A CANCEL
                 continueToMakeNew = promptToSave();
-            } catch (IOException ex) {
-                Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+
             }
-        }
-        // IF THE USER REALLY WANTS TO MAKE A NEW COURSE
-        if (continueToMakeNew) {
-            // RESET THE DATA, WHICH SHOULD TRIGGER A RESET OF THE UI
+            // IF THE USER REALLY WANTS TO MAKE A NEW COURSE
+            if (continueToMakeNew) {
+                // RESET THE DATA, WHICH SHOULD TRIGGER A RESET OF THE UI
+                ui.reset();
+                saved = false;
+                ui.activatePEW();
+                ui.setPageEditWorkspaceActivated(true);
+                ui.isPEWActivated();
+                ui.getRemoveSitePageButton().setDisable(true);
+            }
 
-            ui.reset();
-            saved = false;
+        } catch (IOException ioe) {
         }
-
     }
 
     //Load a ePortfolio
+
     public void handleLoadPortfolioRequest() {
 
     }
 
     //Save a ePortfolio
-    public void handleSavePortfolioRequest() {
+    public boolean handleSavePortfolioRequest() {
+        try {
+            EPortfolioModel portfolioModel = ui.getPortfolioModel();
+            ui.getPage().setLayout(ui.getLayoutGroup().getSelectedToggle().toString());
+            ui.getPage().setColor(ui.getColorGroup().getSelectedToggle().toString());
+            ui.getPage().setFont(ui.getFontGroup().getSelectedToggle().toString());
+
+            portfolioIO.saveEPortfolio(portfolioModel);
+            saved = true;
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
 
     }
 
@@ -102,8 +120,7 @@ public class FileController {
 
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
         if (saveWork) {
-//            SlideShowModel slideShow = ui.getSlideShow();
-//            slideShowIO.saveSlideShow(slideShow);
+            EPortfolioModel portfolioModel = ui.getPortfolioModel();
             saved = true;
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE

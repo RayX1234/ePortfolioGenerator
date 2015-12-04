@@ -106,13 +106,15 @@ public class ImageController {
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
             ui.getRemoveComponentButton().setDisable(false);
-            i.setImagePosition(rgroup.getSelectedToggle());
+            if (rgroup.getSelectedToggle() == null) {
+                i.setImagePosition(rNeitherButton.toString());
+            } else {
+                i.setImagePosition(rgroup.getSelectedToggle().toString());
+            }
             i.setCaption(captionTextField.getText());
             i.setHeight(heightTextField.getText());
             i.setWidth(widthTextField.getText());
-            if (rgroup.getSelectedToggle() == null) {
-                i.setImagePosition(rNeitherButton);
-            }
+
             c.setImage(true);
             ui.getListData().add(c);
             imageStage.close();
@@ -159,13 +161,13 @@ public class ImageController {
     public void displayEditImageDialog() {
         image1Stage = new Stage();
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
-        if (temp.getI().getImagePosition().toString().contains("Left")) {
+        if (temp.getI().getImagePosition().contains("Left")) {
             rgroup.selectToggle(rLeftButton);
         }
-        if (temp.getI().getImagePosition().toString().contains("Right")) {
+        if (temp.getI().getImagePosition().contains("Right")) {
             rgroup.selectToggle(rRightButton);
         }
-        if (temp.getI().getImagePosition().toString().contains("Neither")) {
+        if (temp.getI().getImagePosition().contains("Neither")) {
             rgroup.selectToggle(rNeitherButton);
         }
         captionTextField.setText(temp.getI().getCaption());
@@ -177,7 +179,7 @@ public class ImageController {
         image1Scene.getStylesheets().add(STYLE_SHEET_UI);
         image1VBox.getChildren().addAll(selectImageLabel, selectImageButton, captionLabel, captionTextField, widthLabel, widthTextField, heightLabel, heightTextField, chooseFloat, rLeftButton, rRightButton, rNeitherButton, okCancelHBox);
         okButton.setOnAction(e -> {
-            temp.getI().setImagePosition(rgroup.getSelectedToggle());
+            temp.getI().setImagePosition(rgroup.getSelectedToggle().toString());
             temp.getI().setCaption(captionTextField.getText());
             temp.getI().setHeight(heightTextField.getText());
             temp.getI().setWidth(widthTextField.getText());

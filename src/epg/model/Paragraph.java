@@ -15,7 +15,7 @@ import javafx.scene.control.Toggle;
 public class Paragraph {
 
     private String paragraphText;
-    private Toggle font;
+    private String font;
 
     public Paragraph() {
 
@@ -29,11 +29,11 @@ public class Paragraph {
         return paragraphText;
     }
 
-    public void setFontToggle(Toggle initFontToggle) {
+    public void setFont(String initFontToggle) {
         font = initFontToggle;
     }
 
-    public Toggle getFontToggle() {
+    public String getFontToggle() {
         return font;
     }
 

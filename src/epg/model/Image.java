@@ -18,7 +18,7 @@ public class Image {
     private String caption;
     private String height;
     private String width;
-    private Toggle imagePosition;
+    private String imagePosition;
     
 
     public Image() {
@@ -70,11 +70,11 @@ public class Image {
         return width;
     }
     
-    public void setImagePosition(Toggle initImagePosition){
+    public void setImagePosition(String initImagePosition){
         imagePosition = initImagePosition;
     }
     
-    public Toggle getImagePosition(){
+    public String getImagePosition(){
         return imagePosition;
     }
     

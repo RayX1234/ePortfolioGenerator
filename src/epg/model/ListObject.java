@@ -12,12 +12,12 @@ import javafx.collections.ObservableList;
  *
  * @author Ray
  */
-public class List {
+public class ListObject {
 
     private ObservableList<String> ld;
     
 
-    public List() {
+    public ListObject() {
        
     }
 

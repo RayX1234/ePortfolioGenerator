@@ -18,7 +18,7 @@ import static epg.StartupConstants.ICON_REMOVE_LIST;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Heading;
-import epg.model.List;
+import epg.model.ListObject;
 import epg.model.Paragraph;
 import epg.view.EPortfolioGeneratorView;
 import javafx.collections.FXCollections;
@@ -117,7 +117,7 @@ public class TextController {
 
     Heading h;
     Paragraph p;
-    List l;
+    ListObject l;
     Component c;
 
     int count;
@@ -255,10 +255,12 @@ public class TextController {
         okButton.setOnAction(e -> {
             ui.getRemoveComponentButton().setDisable(false);
             if (fontGroup.getSelectedToggle() == null) {
-                fontGroup.selectToggle(font1Button);
+                p.setFont(font1Button.toString());
+            } else {
+                p.setFont(fontGroup.getSelectedToggle().toString());
             }
             p.setParagraphText(ParagraphTextArea.getText());
-            p.setFontToggle(fontGroup.getSelectedToggle());
+
             a.setParagraph(true);
             ui.getListData().add(a);
             addParagraphStage.close();
@@ -274,19 +276,19 @@ public class TextController {
         editParagraphStage = new Stage();
         Component temp = ui.getList().getSelectionModel().getSelectedItem();
         ParagraphTextArea.setText(temp.getP().getParagraphText());
-        if (temp.getP().getFontToggle().toString().contains("Font 1")) {
+        if (temp.getP().getFontToggle().contains("Font 1")) {
             fontGroup.selectToggle(font1Button);
         }
-        if (temp.getP().getFontToggle().toString().contains("Font 2")) {
+        if (temp.getP().getFontToggle().contains("Font 2")) {
             fontGroup.selectToggle(font2Button);
         }
-        if (temp.getP().getFontToggle().toString().contains("Font 3")) {
+        if (temp.getP().getFontToggle().contains("Font 3")) {
             fontGroup.selectToggle(font3Button);
         }
-        if (temp.getP().getFontToggle().toString().contains("Font 4")) {
+        if (temp.getP().getFontToggle().contains("Font 4")) {
             fontGroup.selectToggle(font4Button);
         }
-        if (temp.getP().getFontToggle().toString().contains("Font 5")) {
+        if (temp.getP().getFontToggle().contains("Font 5")) {
             fontGroup.selectToggle(font5Button);
         }
         editParagraphVBox = new VBox();
@@ -297,7 +299,7 @@ public class TextController {
         ui.setWindowIcon(ICON_FIRE, editParagraphStage);
         editParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, ParagraphTextArea, okCancelHBox);
         okButton.setOnAction(e -> {
-            temp.getP().setFontToggle(fontGroup.getSelectedToggle());
+            temp.getP().setFont(fontGroup.getSelectedToggle().toString());
             temp.getP().setParagraphText(ParagraphTextArea.getText());
             editParagraphStage.close();
         });
@@ -310,7 +312,7 @@ public class TextController {
 
     public void displayAddListDialog() {
         addListStage = new Stage();
-        l = new List();
+        l = new ListObject();
         Component b = new Component();
         b.setL(l);
         ui.setWindowIcon(ICON_FIRE, addListStage);

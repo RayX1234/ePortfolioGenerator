@@ -6,6 +6,7 @@
 package epg.controller;
 
 import static epg.StartupConstants.PATH_ICONS;
+import epg.view.EPortfolioGeneratorView;
 import java.io.File;
 import javafx.stage.FileChooser;
 
@@ -15,8 +16,10 @@ import javafx.stage.FileChooser;
  */
 public class BannerImageController {
 
-    public BannerImageController() {
+    EPortfolioGeneratorView ui;
 
+    public BannerImageController(EPortfolioGeneratorView initUI) {
+        ui = initUI;
     }
 
     public void processSelectImage() {
@@ -35,6 +38,8 @@ public class BannerImageController {
         if (file != null) {
             String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
             String fileName = file.getName();
+            ui.getPage().setBannerImageFileName(fileName);
+            ui.getPage().setBannerImageFilePath(path);
 
         }
     }
