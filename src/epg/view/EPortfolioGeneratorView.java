@@ -69,6 +69,7 @@ import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
 import epg.model.Component;
 import epg.model.EPortfolioModel;
+import epg.model.ListModel;
 import epg.model.Page;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -251,12 +252,14 @@ public class EPortfolioGeneratorView {
     //PAGE OBJECT
     Page page;
     EPortfolioModel portfolioModel;
+    ListModel listModel;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
         // FIRST HOLD ONTO THE FILE MANAGER
         fileManager = initFileManager;
         portfolioModel = new EPortfolioModel();
+        listModel = new ListModel();
     }
 
     //initalizing the fileToolbar Buttons
@@ -285,6 +288,12 @@ public class EPortfolioGeneratorView {
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         ePortfolioTitleLabel = new Label("Student Name:");
         ePortfolioTitleTF = new TextField();
+        if(portfolioModel.getStudentName() != null){
+            ePortfolioTitleTF.setText(portfolioModel.getStudentName());
+        }
+        else{
+            ePortfolioTitleTF.setText("ENTER STUDENT NAME");
+        }
         ePortfolioTitleTF.setOnAction(e -> {
             portfolioModel.setStudentName(ePortfolioTitleTF.getText());
         });
@@ -654,6 +663,15 @@ public class EPortfolioGeneratorView {
     public void initFooter() {
         footerLabel = new Label("Enter a Footer:");
         footerTextField = new TextField();
+        if(page.getFooter() != null){
+            footerTextField.setText(page.getFooter());
+        }
+        else{
+            footerTextField.setText("ENTER FOOTER");
+        }
+        footerTextField.setOnAction(e -> {
+            page.setFooter(footerTextField.getText());
+        });
         ptsnbiPane.getChildren().addAll(footerLabel, footerTextField);
     }
 
@@ -680,7 +698,12 @@ public class EPortfolioGeneratorView {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         siteNameTextField = new TextField();
-
+         if(page.getPagetitle() != null){
+             siteNameTextField.setText(page.getPagetitle());
+         }
+         else{
+             siteNameTextField.setText("ENTER PAGE TITLE");
+         }
         siteNameStage = new Stage();
         setWindowIcon(ICON_FIRE, siteNameStage);
         siteNameScene = new Scene(siteNameGridPane, 400, 200);
@@ -887,6 +910,10 @@ public class EPortfolioGeneratorView {
 
     public Button getRemoveSitePageButton() {
         return removeSitePageButton;
+    }
+
+    public ListModel getListModel() {
+        return listModel;
     }
 
 }

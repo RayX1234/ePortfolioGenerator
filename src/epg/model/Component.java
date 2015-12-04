@@ -14,7 +14,7 @@ public class Component {
     private Heading h;
     private HyperLink hl;
     private Image i;
-    private ListObject l;
+    private ListModel l;
     private Paragraph p;
     private SlideShow ss;
     private Video v;
@@ -73,14 +73,14 @@ public class Component {
     /**
      * @return the l
      */
-    public ListObject getL() {
+    public ListModel getL() {
         return l;
     }
 
     /**
      * @param l the l to set
      */
-    public void setL(ListObject l) {
+    public void setL(ListModel l) {
 
         this.l = l;
     }

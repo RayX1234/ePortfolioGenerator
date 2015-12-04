@@ -17,6 +17,7 @@ public class Page {
     private String bannerImageFilePath;
     private String font;
     private String layout;
+    private String footer;
     private String color;
     private ObservableList<Component> components;
     private String pagetitle;
@@ -37,6 +38,14 @@ public class Page {
      */
     public void setBannerImageFileName(String bannerImageFileName) {
         this.bannerImageFileName = bannerImageFileName;
+    }
+    
+    public String getFooter(){
+        return footer;
+    }
+    
+    public void setFooter(String initFooter){
+        footer = initFooter;
     }
 
     /**

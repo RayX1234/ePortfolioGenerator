@@ -18,6 +18,7 @@ import static epg.StartupConstants.ICON_REMOVE_LIST;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Heading;
+import epg.model.ListModel;
 import epg.model.ListObject;
 import epg.model.Paragraph;
 import epg.view.EPortfolioGeneratorView;
@@ -98,11 +99,10 @@ public class TextController {
     //For the add list dialog
     Stage addListStage;
     Scene addListScene;
-    ObservableList<String> listData;
     BorderPane addListBorderPane;
     VBox addListVBox;
     VBox addRemoveListVBox;
-    ListView<String> list;
+    ListView<ListObject> list;
     TextField ListTextField;
     Button addListButton;
     Button removeListButton;
@@ -119,6 +119,7 @@ public class TextController {
     Paragraph p;
     ListObject l;
     Component c;
+    ListModel listModel;
 
     int count;
 
@@ -312,9 +313,9 @@ public class TextController {
 
     public void displayAddListDialog() {
         addListStage = new Stage();
-        l = new ListObject();
+        listModel = new ListModel();
         Component b = new Component();
-        b.setL(l);
+        b.setL(listModel);
         ui.setWindowIcon(ICON_FIRE, addListStage);
         addListStage.setTitle("Add List");
         addListBorderPane = new BorderPane();
@@ -325,9 +326,8 @@ public class TextController {
         addListScene.getStylesheets().add(STYLE_SHEET_UI);
         addListVBox = new VBox();
         ListTextField = new TextField();
-        listData = FXCollections.observableArrayList();
         list = new ListView<>();
-        list.setItems(listData);
+        list.setItems(listModel.getListData());
         addListVBox.getChildren().addAll(enterContentLabel, ListTextField);
         addListBorderPane.setTop(addListVBox);
         addListBorderPane.setBottom(okCancelHBox);
@@ -337,7 +337,9 @@ public class TextController {
         removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         addListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
-            listData.add(ListTextField.getText());
+            ListObject l = new ListObject();
+            l.setListString(ListTextField.getText());
+            listModel.getListData().add(l);
             ListTextField.clear();
         });
         removeListButton.setOnAction(e -> {
@@ -345,7 +347,6 @@ public class TextController {
         });
         okButton.setOnAction(e -> {
             ui.getRemoveComponentButton().setDisable(false);
-            l.setListData(listData);
             b.setList(true);
             ui.getListData().add(b);
             addListStage.close();
@@ -381,14 +382,16 @@ public class TextController {
         removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         editListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
-            listData.add(ListTextField.getText());
+            ListObject l = new ListObject();
+            l.setListString(ListTextField.getText());
+            temp.getL().getListData().add(l);
             ListTextField.clear();
         });
         removeListButton.setOnAction(e -> {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
-            temp.getL().setListData(listData);
+
             editListStage.close();
         });
         cancelButton.setOnAction(e -> {

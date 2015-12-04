@@ -14,23 +14,28 @@ import javafx.collections.ObservableList;
  */
 public class ListObject {
 
-    private ObservableList<String> ld;
-    
+    private String listString;
 
     public ListObject() {
-       
+
     }
 
-    public void setListData(ObservableList<String> initLD) {
-        ld = initLD;
+    /**
+     * @return the listString
+     */
+    public String getListString() {
+        return listString;
     }
 
-    public ObservableList<String> getListData() {
-        return ld;
+    /**
+     * @param listString the listString to set
+     */
+    public void setListString(String listString) {
+        this.listString = listString;
+    }
+    
+    public String toString(){
+        return listString;
     }
 
-    @Override
-    public String toString() {
-        return "List Component";
-    }
 }
