@@ -22,6 +22,7 @@ public class SlideShowModel {
     ObservableList<Slide> slides;
     Slide selectedSlide;
     Slide slide;
+    private String slideShowIndex;
     //   SlideEditView slideEditor;
     int count;
 
@@ -144,6 +145,20 @@ public class SlideShowModel {
     @Override
     public String toString() {
         return "Slide Show Component";
+    }
+
+    /**
+     * @return the slideShowIndex
+     */
+    public String getSlideShowIndex() {
+        return slideShowIndex;
+    }
+
+    /**
+     * @param slideShowIndex the slideShowIndex to set
+     */
+    public void setSlideShowIndex(String slideShowIndex) {
+        this.slideShowIndex = slideShowIndex;
     }
 
 }

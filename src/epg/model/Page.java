@@ -26,9 +26,9 @@ public class Page {
     private ObservableList<Component> components;
     private ObservableList<Heading> headings;
     private ObservableList<Image> images;
-    private ObservableList<ListObject> lists;
+    private ObservableList<ListModel> lists;
     private ObservableList<Paragraph> paragraphs;
-    private ObservableList<Slide> slides;
+    private ObservableList<SlideShowModel> slideShows;
     private ObservableList<Video> videos;
     private String pagetitle;
     private BorderPane contentPane;
@@ -41,7 +41,7 @@ public class Page {
         videos = FXCollections.observableArrayList();
         images = FXCollections.observableArrayList();
         lists = FXCollections.observableArrayList();
-        slides = FXCollections.observableArrayList();
+        slideShows = FXCollections.observableArrayList();
     }
 
     public BorderPane getContentPane() {
@@ -190,14 +190,14 @@ public class Page {
     /**
      * @return the lists
      */
-    public ObservableList<ListObject> getLists() {
+    public ObservableList<ListModel> getLists() {
         return lists;
     }
 
     /**
      * @return the slides
      */
-    public ObservableList<Slide> getSlides() {
-        return slides;
+    public ObservableList<SlideShowModel> getSlideShows() {
+        return slideShows;
     }
 }

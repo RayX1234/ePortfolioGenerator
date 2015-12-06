@@ -15,8 +15,7 @@ import javafx.collections.ObservableList;
 public class ListObject {
 
     private String listString;
-    private String listIndex;
-
+    
     public ListObject() {
 
     }
@@ -39,18 +38,5 @@ public class ListObject {
         return listString;
     }
 
-    /**
-     * @return the listIndex
-     */
-    public String getListIndex() {
-        return listIndex;
-    }
-
-    /**
-     * @param listIndex the listIndex to set
-     */
-    public void setListIndex(String listIndex) {
-        this.listIndex = listIndex;
-    }
 
 }

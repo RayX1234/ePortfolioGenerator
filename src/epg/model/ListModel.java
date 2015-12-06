@@ -15,10 +15,13 @@ import javafx.collections.ObservableList;
 public class ListModel {
 
     private ObservableList<ListObject> listData;
+    private String listIndex;
 
     public ListModel() {
         listData = FXCollections.observableArrayList();
     }
+    
+    
 
     /**
      * @return the lists
@@ -26,10 +29,23 @@ public class ListModel {
     public ObservableList<ListObject> getListData() {
         return listData;
     }
-
-    @Override
-    public String toString() {
+    
+    public String toString(){
         return "List Component";
+    }
+
+    /**
+     * @return the listIndex
+     */
+    public String getListIndex() {
+        return listIndex;
+    }
+
+    /**
+     * @param listIndex the listIndex to set
+     */
+    public void setListIndex(String listIndex) {
+        this.listIndex = listIndex;
     }
 
 }

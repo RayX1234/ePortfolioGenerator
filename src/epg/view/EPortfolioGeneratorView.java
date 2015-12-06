@@ -167,7 +167,6 @@ public class EPortfolioGeneratorView {
     Page page;
     EPortfolioModel portfolioModel;
     ListModel listModel;
-    PageEditView pageEditor;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
@@ -357,7 +356,7 @@ public class EPortfolioGeneratorView {
         });
 
         savePortfolioButton.setOnAction(e -> {
-            fileController.handleSavePortfolioRequest(pageEditor);
+            fileController.handleSavePortfolioRequest();
 
         });
 

@@ -369,14 +369,9 @@ public class TextController {
         removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         addListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
-            ListObject l = new ListObject();
+            l = new ListObject();
             l.setListString(ListTextField.getText());
             listModel.getListData().add(l);
-            if (ui.getPage() != null) {
-                ui.getPage().getLists().add(l);
-            } else {
-                pageEditor.getPage().getLists().add(l);
-            }
             ListTextField.clear();
         });
         removeListButton.setOnAction(e -> {
@@ -388,14 +383,16 @@ public class TextController {
             pageEditor.getListData().add(b);
             if (ui.getPage() != null) {
                 ui.getPage().getComponents().add(b);
+                ui.getPage().getLists().add(listModel);
                 int value = ui.getPage().getComponents().indexOf(b);
-                l.setListIndex(Integer.toString(value));
+                listModel.setListIndex(Integer.toString(value));
                 ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
 
             } else {
                 pageEditor.getPage().getComponents().add(b);
+                pageEditor.getPage().getLists().add(listModel);
                 int value = pageEditor.getPage().getComponents().indexOf(b);
-                l.setListIndex(Integer.toString(value));
+                listModel.setListIndex(Integer.toString(value));
                 pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
 
             }

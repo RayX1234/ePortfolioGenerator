@@ -117,8 +117,17 @@ public class SlideShowController {
             pageEditor.getListData().add(c);
             if (ui.getPage() != null) {
                 ui.getPage().getComponents().add(c);
+                ui.getPage().getSlideShows().add(slideShow);
+                int value = ui.getPage().getComponents().indexOf(c);
+                slideShow.setSlideShowIndex(Integer.toString(value));
+                ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
             } else {
                 pageEditor.getPage().getComponents().add(c);
+                pageEditor.getPage().getSlideShows().add(slideShow);
+                int value = pageEditor.getPage().getComponents().indexOf(c);
+                slideShow.setSlideShowIndex(Integer.toString(value));
+                pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
+
             }
             addSlideShowStage.close();
         });
@@ -263,9 +272,9 @@ public class SlideShowController {
         newSlideShow = false;
         editSlideShowStage = new Stage();
         Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
+        initSlideShowStuff();
         reloadSlideShowPaneEmpty(temp.getSS());
         temp2 = temp.getSS();
-
         editSlideShowBorderPane = new BorderPane();
         slideEditToolbar2 = new VBox();
         editSlideShowBorderPane.setLeft(slideEditToolbar2);
@@ -320,6 +329,26 @@ public class SlideShowController {
 
     public SlideShowModel getTemp2() {
         return temp2;
+    }
+
+    public void initSlideShowStuff() {
+        if (okButton == null) {
+
+            workspace = new HBox();
+            // AND THIS WILL GO IN THE CENTER
+            slidesEditorPane = new VBox();
+
+            slidesEditorScrollPane = new ScrollPane(slidesEditorPane);
+            slidesEditorScrollPane.getStyleClass().add(CSS_CLASS_SCROLL_PANE);
+
+            // NOW PUT THESE TWO IN THE WORKSPACE
+            workspace.getChildren().add(slidesEditorScrollPane);
+            okCancelHBox = new HBox(10);
+            okCancelHBox.setAlignment(Pos.BOTTOM_RIGHT);
+            okButton = new Button("Ok");
+            cancelButton = new Button("Cancel");
+            okCancelHBox.getChildren().addAll(okButton, cancelButton);
+        }
     }
 
 }

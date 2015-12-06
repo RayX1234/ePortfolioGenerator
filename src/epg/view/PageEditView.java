@@ -99,7 +99,7 @@ public class PageEditView extends BorderPane {
     RadioButton font3Button;
     RadioButton font4Button;
     RadioButton font5Button;
-    
+
     Label layoutLabel;
     Label colorLabel;
     Label fontLabel;
@@ -115,7 +115,7 @@ public class PageEditView extends BorderPane {
     // For placing the components
     ScrollPane componentScrollPane;
     VBox componentVBox;
-    
+
     FileController fileController;
     EPortfolioFileManager fileManager;
     PageEditController pageEditController;
@@ -151,17 +151,17 @@ public class PageEditView extends BorderPane {
     HBox okCancelHBox;
     int count;
     int componentCount;
-    
+
     public PageEditView(Page initPage, EPortfolioModel portfolioModel, EPortfolioGeneratorView initUI) {
         contentPane = new BorderPane();
         contentPane.getStyleClass().add(CSS_CLASS_CONTENT_PANE);
         ui = initUI;
         page = initPage;
-        
+
         initTopAreaPane();
         initCenterAreaPane();
     }
-    
+
     public void initTopAreaPane() {
         ptsnbiPane = new VBox();
         ptsnbiPane.getStyleClass().add(CSS_CLASS_PTSNBI_PANE);
@@ -174,9 +174,9 @@ public class PageEditView extends BorderPane {
         initEventHandlers();
         ptsnbiPane.getChildren().add(componentFlowPane);
         contentPane.setTop(ptsnbiPane);
-        
+
     }
-    
+
     public void initCenterAreaPane() {
         componentListBorderPane = new BorderPane();
         componentListVBox = new VBox();
@@ -197,7 +197,7 @@ public class PageEditView extends BorderPane {
         initContentEventHandlers();
         contentPane.setCenter(componentListBorderPane);
     }
-    
+
     public void initBannerImage() {
         bannerImageLabel = new Label("Banner Image:");
         selectBIButton = new Button("Select");
@@ -207,7 +207,7 @@ public class PageEditView extends BorderPane {
             bannerImageController.processSelectImage();
         });
     }
-    
+
     public void initFooter() {
         footerLabel = new Label("Enter a Footer:");
         footerTextField = new TextField();
@@ -219,10 +219,10 @@ public class PageEditView extends BorderPane {
         footerTextField.setOnAction(e -> {
             page.setFooter(footerTextField.getText());
         });
-        
+
         ptsnbiPane.getChildren().addAll(footerLabel, footerTextField);
     }
-    
+
     public void initLayoutPane() {
         layoutPane = new HBox();
         layoutPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
@@ -239,13 +239,13 @@ public class PageEditView extends BorderPane {
         layout4Button.setToggleGroup(layoutGroup);
         layout5Button = new RadioButton("Layout 5");
         layout5Button.setToggleGroup(layoutGroup);
-        
+
         updateLayout();
         initLayoutButtons();
-        
+
         layoutPane.getChildren().addAll(layoutLabel, layout1Button, layout2Button, layout3Button, layout4Button, layout5Button);
     }
-    
+
     public void initColorPane() {
         colorPane = new HBox();
         colorPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
@@ -262,13 +262,13 @@ public class PageEditView extends BorderPane {
         color4Button.setToggleGroup(colorGroup);
         color5Button = new RadioButton("Color 5");
         color5Button.setToggleGroup(colorGroup);
-        
+
         updateColor();
         initColorButtons();
-        
+
         colorPane.getChildren().addAll(colorLabel, color1Button, color2Button, color3Button, color4Button, color5Button);
     }
-    
+
     public void initFontPane() {
         fontPane = new HBox();
         fontPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
@@ -285,13 +285,13 @@ public class PageEditView extends BorderPane {
         font4Button.setToggleGroup(fontGroup);
         font5Button = new RadioButton("Font 5");
         font5Button.setToggleGroup(fontGroup);
-        
+
         updateFont();
         initFontButtons();
-        
+
         fontPane.getChildren().addAll(fontLabel, font1Button, font2Button, font3Button, font4Button, font5Button);
     }
-    
+
     public void initComponentToolbar() {
         componentFlowPane = new FlowPane();
         addTextButton = ui.initChildButton(componentFlowPane, ICON_ADD_TEXT, TOOLTIP_ADD_TEXT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
@@ -300,7 +300,7 @@ public class PageEditView extends BorderPane {
         addVideoButton = ui.initChildButton(componentFlowPane, ICON_ADD_VIDEO, TOOLTIP_ADD_VIDEO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         addTextHLButton = ui.initChildButton(componentFlowPane, ICON_ADD_TEXT_HYPERLINK, TOOLTIP_ADD_TEXT_HYPERLINK, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
     }
-    
+
     public void initContentEventHandlers() {
         componentlist.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
@@ -314,7 +314,7 @@ public class PageEditView extends BorderPane {
                     textController.getEditParagraphStage().close();
                     checkPH();
                 }
-                
+
                 if (componentlist.getSelectionModel().getSelectedItem().toString().contains("List")) {
                     textController.displayEditListDialog();
                 }
@@ -361,7 +361,7 @@ public class PageEditView extends BorderPane {
 
         });
     }
-    
+
     public void checkPH() {
         checkPHStage = new Stage();
         checkPHStage.setTitle("Edit (Paragraph Or HyperLink)");
@@ -402,77 +402,77 @@ public class PageEditView extends BorderPane {
         });
         checkPHStage.show();
     }
-    
+
     public BorderPane getContentPane() {
         return contentPane;
     }
-    
+
     public ToggleGroup getLayoutGroup() {
         return layoutGroup;
     }
-    
+
     public ToggleGroup getColorGroup() {
         return colorGroup;
     }
-    
+
     public ToggleGroup getFontGroup() {
         return fontGroup;
     }
-    
+
     public Button getTextButton() {
         return addTextButton;
     }
-    
+
     public Button getImageButton() {
         return addImageButton;
     }
-    
+
     public Button getVideoButton() {
         return addVideoButton;
     }
-    
+
     public Button getSlideShowButton() {
         return addSlideShowButton;
     }
-    
+
     public Button getHyperLinkButton() {
         return addTextHLButton;
     }
-    
+
     public Button getRemoveComponentButton() {
         return removeComponentButton;
     }
-    
+
     public ObservableList<Component> getListData() {
         return componentListData;
     }
-    
+
     public ListView<Component> getList() {
         return componentlist;
     }
-    
+
     public void initEventHandlers() {
         textController = new TextController(ui, this);
         addTextButton.setOnAction(e -> {
             textController.displaySelectTypeTextDialog();
         });
-        
+
         imageController = new ImageController(ui, this);
         addImageButton.setOnAction(e -> {
             imageController.displayAddImageDialog();
-            
+
         });
-        
+
         videoController = new VideoController(ui, this);
         addVideoButton.setOnAction(e -> {
             videoController.displayAddVideoDialog();
         });
-        
+
         slideShowController = new SlideShowController(ui, this);
         addSlideShowButton.setOnAction(e -> {
             slideShowController.displayAddSlideShowDialog();
         });
-        
+
         hyperLinkController = new HyperLinkController(ui, this);
         addTextHLButton.setOnAction(e -> {
             if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph")) {
@@ -480,34 +480,34 @@ public class PageEditView extends BorderPane {
             }
         });
     }
-    
+
     public void initLayoutButtons() {
         initButton(layout1Button, "Layout");
         initButton(layout2Button, "Layout");
         initButton(layout3Button, "Layout");
         initButton(layout4Button, "Layout");
         initButton(layout5Button, "Layout");
-        
+
     }
-    
+
     public void initColorButtons() {
         initButton(color1Button, "Color");
         initButton(color2Button, "Color");
         initButton(color3Button, "Color");
         initButton(color4Button, "Color");
         initButton(color5Button, "Color");
-        
+
     }
-    
+
     public void initFontButtons() {
         initButton(font1Button, "Font");
         initButton(font2Button, "Font");
         initButton(font3Button, "Font");
         initButton(font4Button, "Font");
         initButton(font5Button, "Font");
-        
+
     }
-    
+
     public void initButton(RadioButton b, String s) {
         if (s.equals("Layout")) {
             b.setOnAction(e -> {
@@ -524,15 +524,15 @@ public class PageEditView extends BorderPane {
                 page.setFont(fontGroup.getSelectedToggle().toString());
             });
         }
-        
+
     }
-    
+
     public void updateColor() {
         if (page.getColor() == null) {
             colorGroup.selectToggle(color1Button);
             page.setColor(color1Button.toString());
         } else {
-            
+
             if (page.getColor().contains("Color 1")) {
                 colorGroup.selectToggle(color1Button);
             }
@@ -542,23 +542,23 @@ public class PageEditView extends BorderPane {
             if (page.getColor().contains("Color 3")) {
                 colorGroup.selectToggle(color3Button);
             }
-            
+
             if (page.getColor().contains("Color 4")) {
                 colorGroup.selectToggle(color4Button);
             }
-            
+
             if (page.getColor().contains("Color 5")) {
                 colorGroup.selectToggle(color5Button);
             }
         }
     }
-    
+
     public void updateLayout() {
         if (page.getLayout() == null) {
             layoutGroup.selectToggle(layout1Button);
             page.setLayout(layout1Button.toString());
         } else {
-            
+
             if (page.getLayout().contains("Layout 1")) {
                 layoutGroup.selectToggle(layout1Button);
             }
@@ -576,13 +576,13 @@ public class PageEditView extends BorderPane {
             }
         }
     }
-    
+
     public void updateFont() {
         if (page.getFont() == null) {
             fontGroup.selectToggle(font1Button);
             page.setFont(font1Button.toString());
         } else {
-            
+
             if (page.getFont().contains("Font 1")) {
                 fontGroup.selectToggle(font1Button);
             }
@@ -600,8 +600,13 @@ public class PageEditView extends BorderPane {
             }
         }
     }
-    
+
     public Page getPage() {
         return page;
     }
+    
+    public SlideShowController getSSC(){
+        return slideShowController;
+    }
+
 }

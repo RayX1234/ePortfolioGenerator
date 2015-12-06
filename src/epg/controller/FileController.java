@@ -30,7 +30,6 @@ public class FileController {
 
     // THIS GUY KNOWS HOW TO READ AND WRITE SLIDE SHOW DATA
     private EPortfolioFileManager portfolioIO;
-    
 
     //Default constructor
     public FileController(EPortfolioGeneratorView initUI, EPortfolioFileManager initPortfolioIO) {
@@ -91,11 +90,11 @@ public class FileController {
     }
 
     //Save a ePortfolio
-    public boolean handleSavePortfolioRequest(PageEditView pageEditor) {
+    public boolean handleSavePortfolioRequest() {
         try {
             EPortfolioModel portfolioModel = ui.getPortfolioModel();
 
-            portfolioIO.saveEPortfolio(portfolioModel);
+            portfolioIO.saveEPortfolio(portfolioModel, ui);
             saved = true;
             return true;
         } catch (IOException ex) {
