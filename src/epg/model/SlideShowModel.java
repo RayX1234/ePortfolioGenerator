@@ -91,11 +91,11 @@ public class SlideShowModel {
         }
 
     }
-    
-     public void addSlide2(String initImageFileName,
+
+    public void addSlide2(String initImageFileName,
             String initImagePath, String initCaption) {
         Slide slideToAdd = new Slide(initImageFileName, initImagePath, initCaption);
-       
+
         SlideShowModel temp2 = ui.getTemp2();
         ObservableList<Slide> temp = temp2.getSlides();
         temp.add(slideToAdd);
@@ -105,7 +105,7 @@ public class SlideShowModel {
     }
 
     public void removeSlide2(Slide s) {
-      
+
         SlideShowModel temp2 = ui.getTemp2();
         ObservableList<Slide> temp = temp2.getSlides();
         temp.remove(s);
@@ -114,7 +114,7 @@ public class SlideShowModel {
     }
 
     public void moveUpSlide2(Slide s) {
-       
+
         SlideShowModel temp2 = ui.getTemp2();
         ObservableList<Slide> temp = temp2.getSlides();
         int slideIndex = temp.indexOf(s);
@@ -128,7 +128,7 @@ public class SlideShowModel {
     }
 
     public void moveDownSlide2(Slide s) {
-        
+
         SlideShowModel temp2 = ui.getTemp2();
         ObservableList<Slide> temp = temp2.getSlides();
         int slideIndex = temp.indexOf(s);
@@ -139,6 +139,11 @@ public class SlideShowModel {
         } catch (IndexOutOfBoundsException e) {
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return "Slide Show Component";
     }
 
 }

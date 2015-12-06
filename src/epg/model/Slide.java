@@ -14,6 +14,7 @@ public class Slide {
     String imageFileName;
     String imagePath;
     String caption;
+    private String slideIndex;
 
     /**
      * Constructor, it initializes all slide data.
@@ -60,5 +61,19 @@ public class Slide {
 
     public void setCaption(String initCaption) {
         caption = initCaption;
+    }
+
+    /**
+     * @return the slideIndex
+     */
+    public String getSlideIndex() {
+        return slideIndex;
+    }
+
+    /**
+     * @param slideIndex the slideIndex to set
+     */
+    public void setSlideIndex(String slideIndex) {
+        this.slideIndex = slideIndex;
     }
 }

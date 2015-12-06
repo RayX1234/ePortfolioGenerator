@@ -369,7 +369,7 @@ public class TextController {
         removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         addListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
-            l = new ListObject();
+            ListObject l = new ListObject();
             l.setListString(ListTextField.getText());
             listModel.getListData().add(l);
             if (ui.getPage() != null) {

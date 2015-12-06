@@ -27,7 +27,6 @@ import static epg.StartupConstants.PATH_SLIDE_SHOW_IMAGES;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Slide;
-import epg.model.SlideShow;
 import epg.model.SlideShowModel;
 import epg.view.EPortfolioGeneratorView;
 import epg.view.PageEditView;
@@ -82,7 +81,6 @@ public class SlideShowController {
     Button moveDownSlideButton2;
 
     Component c;
-    SlideShow ss;
     boolean newSlideShow;
     SlideShowModel temp2;
     PageEditView pageEditor;
@@ -98,8 +96,7 @@ public class SlideShowController {
         slideShow = new SlideShowModel(this, ui);
         addSlideShowStage = new Stage();
         c = new Component();
-        ss = new SlideShow();
-        c.setSS(ss);
+        c.setSSM(slideShow);
         slideShowBorderPane = new BorderPane();
         slideShowBorderPane.getStyleClass().add(CSS_CLASS_IMAGE_VBOX);
         workspace = new HBox();
@@ -115,7 +112,7 @@ public class SlideShowController {
         okCancelHBox.getChildren().addAll(okButton, cancelButton);
         okButton.setOnAction(e -> {
             pageEditor.getRemoveComponentButton().setDisable(false);
-            ss.setSlideShowModel(slideShow);
+            //  ss.setSlideShowModel(slideShow);
             c.setSlideshow(true);
             pageEditor.getListData().add(c);
             if (ui.getPage() != null) {
@@ -221,24 +218,24 @@ public class SlideShowController {
     }
 
     public void processAddSlideRequest2() {
-        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS();
         temp.addSlide2(DEFAULT_SLIDE_IMAGE, PATH_SLIDE_SHOW_IMAGES, DEFAULT_SLIDE_CAPTION);
 
     }
 
     public void processDeleteSlideRequest2() {
-        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS();
         temp.removeSlide2(temp.getSelectedSlide());
     }
 
     public void moveUpSlideRequest2() {
-        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS();
         temp.moveUpSlide2(temp.getSelectedSlide());
 
     }
 
     public void moveDownSlideRequest2() {
-        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel();
+        SlideShowModel temp = pageEditor.getList().getSelectionModel().getSelectedItem().getSS();
         temp.moveDownSlide2(temp.getSelectedSlide());
     }
 
@@ -266,8 +263,8 @@ public class SlideShowController {
         newSlideShow = false;
         editSlideShowStage = new Stage();
         Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
-        reloadSlideShowPaneEmpty(temp.getSS().getSlideShowModel());
-        temp2 = temp.getSS().getSlideShowModel();
+        reloadSlideShowPaneEmpty(temp.getSS());
+        temp2 = temp.getSS();
 
         editSlideShowBorderPane = new BorderPane();
         slideEditToolbar2 = new VBox();
@@ -283,7 +280,6 @@ public class SlideShowController {
         editSlideShowBorderPane.setCenter(workspace);
         editSlideShowBorderPane.setBottom(okCancelHBox);
         okButton.setOnAction(e -> {
-            temp.getSS().setSlideShowModel(pageEditor.getList().getSelectionModel().getSelectedItem().getSS().getSlideShowModel());
 
             editSlideShowStage.close();
         });
