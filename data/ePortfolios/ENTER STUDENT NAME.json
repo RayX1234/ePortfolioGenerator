@@ -1,1 +1,24 @@
-{"student_name":"ENTER STUDENT NAME","pages":[{"banner_image_file_name":"Cool-Wallpapers-97.jpg","banner_image_path":"C:\\Users\\Ray\\Pictures\\","page_title":"1","page_font":"RadioButton@5a12f93b[styleClass=radio-button]'Font 1'","page_layout":"RadioButton@6a65d921[styleClass=radio-button]'Layout 1'","page_color":"RadioButton@f8f0c49[styleClass=radio-button]'Color 1'","page_footer":"ENTER FOOTER","components":[]},{"banner_image_file_name":"Cool-hd-backgrounds-24-hd-wallpapers-fan-full-hd-wallpapers-1080p.jpg","banner_image_path":"C:\\Users\\Ray\\Pictures\\","page_title":"2","page_font":"RadioButton@64e07edb[styleClass=radio-button]'Font 1'","page_layout":"RadioButton@55a20c1f[styleClass=radio-button]'Layout 1'","page_color":"RadioButton@1305df33[styleClass=radio-button]'Color 1'","page_footer":"ENTER FOOTER","components":[]}]}
+{
+    "student_name": "ENTER STUDENT NAME",
+    "pages": [{
+            "banner_image_file_name": "Best-Hairstyles-for-Asian-Men_10.jpg",
+            "banner_image_path": "C:\\Users\\Ray\\Pictures\\",
+            "page_title": "wqewq",
+            "page_font": "RadioButton@442de760[styleClass=radio-button]'Font 4'",
+            "page_layout": "RadioButton@24da703d[styleClass=radio-button]'Layout 2'",
+            "page_color": "RadioButton@5c820c65[styleClass=radio-button]'Color 3'",
+            "page_footer": "jkjkj",
+            "component_count": "2",
+            "headings": [],
+            "paragraphs": [],
+            "images": [],
+            "videos": [],
+            "lists": [{
+                    "list_string": "PLese work",
+                    "list_index": "0"
+                }, {
+                    "list_string": "is this working?",
+                    "list_index": "1"
+                }]
+        }]
+}

@@ -14,6 +14,7 @@ import epg.controller.TextController;
 public class Heading {
 
     private String headingText;
+    private String index;
 
     public Heading() {
 
@@ -31,6 +32,14 @@ public class Heading {
     public String toString() {
 
         return "Heading Component";
+    }
+    
+    public void setIndex(String initIndex){
+        index = initIndex;
+    }
+    
+    public String getIndex(){
+        return index;
     }
 
 }

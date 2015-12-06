@@ -19,6 +19,7 @@ public class Image {
     private String height;
     private String width;
     private String imagePosition;
+    private String imageIndex;
     
 
     public Image() {
@@ -81,5 +82,19 @@ public class Image {
     @Override
     public String toString(){
         return "Image Component";
+    }
+
+    /**
+     * @return the imageIndex
+     */
+    public String getImageIndex() {
+        return imageIndex;
+    }
+
+    /**
+     * @param imageIndex the imageIndex to set
+     */
+    public void setImageIndex(String imageIndex) {
+        this.imageIndex = imageIndex;
     }
 }

@@ -22,6 +22,7 @@ import epg.model.ListModel;
 import epg.model.ListObject;
 import epg.model.Paragraph;
 import epg.view.EPortfolioGeneratorView;
+import epg.view.PageEditView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -120,11 +121,12 @@ public class TextController {
     ListObject l;
     Component c;
     ListModel listModel;
-
+    PageEditView pageEditor;
     int count;
 
-    public TextController(EPortfolioGeneratorView initUI) {
+    public TextController(EPortfolioGeneratorView initUI, PageEditView initPageEditor) {
         ui = initUI;
+        pageEditor = initPageEditor;
     }
 
     public void displaySelectTypeTextDialog() {
@@ -187,10 +189,23 @@ public class TextController {
         addHeadingStage.setScene(addHeadingScene);
         addHeadingVBox.getChildren().addAll(enterContentLabel, HeadingTextField, okCancelHBox);
         okButton.setOnAction(e -> {
-            ui.getRemoveComponentButton().setDisable(false);
+            pageEditor.getRemoveComponentButton().setDisable(false);
             c.setHeading(true);
             h.setHeadingText(HeadingTextField.getText());
-            ui.getListData().add(c);
+            pageEditor.getListData().add(c);
+            if (ui.getPage() != null) {
+                ui.getPage().getComponents().add(c);
+                ui.getPage().getHeadings().add(h);
+                int value = ui.getPage().getComponents().indexOf(c);
+                h.setIndex(Integer.toString(value));
+                ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
+            } else {
+                pageEditor.getPage().getComponents().add(c);
+                pageEditor.getPage().getHeadings().add(h);
+                int value = pageEditor.getPage().getComponents().indexOf(c);
+                h.setIndex(Integer.toString(value));
+                pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
+            }
             addHeadingStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -202,9 +217,11 @@ public class TextController {
 
     public void displayEditHeadingDialog() {
         editHeadingStage = new Stage();
-        Component temp = ui.getList().getSelectionModel().getSelectedItem();
-        HeadingTextField.setText(temp.getH().getHeadingText());
         editHeadingStage.setTitle("Edit Heading");
+        Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
+        checkHeadingTextFieldIsThere();
+        HeadingTextField.setText(temp.getH().getHeadingText());
+
         ui.setWindowIcon(ICON_FIRE, editHeadingStage);
         editHeadingVBox = new VBox();
         editHeadingVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
@@ -254,7 +271,7 @@ public class TextController {
         addParagraphVBox.getChildren().addAll(chooseFontLabel, fontHBox, enterContentLabel, ParagraphTextArea, okCancelHBox);
         addParagraphStage.setScene(addParagraphScene);
         okButton.setOnAction(e -> {
-            ui.getRemoveComponentButton().setDisable(false);
+            pageEditor.getRemoveComponentButton().setDisable(false);
             if (fontGroup.getSelectedToggle() == null) {
                 p.setFont(font1Button.toString());
             } else {
@@ -263,7 +280,21 @@ public class TextController {
             p.setParagraphText(ParagraphTextArea.getText());
 
             a.setParagraph(true);
-            ui.getListData().add(a);
+            pageEditor.getListData().add(a);
+            if (ui.getPage() != null) {
+                ui.getPage().getComponents().add(a);
+                ui.getPage().getParagraphs().add(p);
+                int value = ui.getPage().getComponents().indexOf(a);
+                p.setParagraphIndex(Integer.toString(value));
+                ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
+
+            } else {
+                pageEditor.getPage().getComponents().add(a);
+                pageEditor.getPage().getParagraphs().add(p);
+                int value = pageEditor.getPage().getComponents().indexOf(a);
+                p.setParagraphIndex(Integer.toString(value));
+                pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
+            }
             addParagraphStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -275,7 +306,8 @@ public class TextController {
 
     public void displayEditParagraphDialog() {
         editParagraphStage = new Stage();
-        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
+        checkParagraphTextAreaIsThere();
         ParagraphTextArea.setText(temp.getP().getParagraphText());
         if (temp.getP().getFontToggle().contains("Font 1")) {
             fontGroup.selectToggle(font1Button);
@@ -337,18 +369,36 @@ public class TextController {
         removeListButton = ui.initChildButton(addRemoveListVBox, ICON_REMOVE_LIST, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
         addListBorderPane.setLeft(addRemoveListVBox);
         addListButton.setOnAction(e -> {
-            ListObject l = new ListObject();
+            l = new ListObject();
             l.setListString(ListTextField.getText());
             listModel.getListData().add(l);
+            if (ui.getPage() != null) {
+                ui.getPage().getLists().add(l);
+            } else {
+                pageEditor.getPage().getLists().add(l);
+            }
             ListTextField.clear();
         });
         removeListButton.setOnAction(e -> {
             list.getItems().remove(list.getSelectionModel().getSelectedItem());
         });
         okButton.setOnAction(e -> {
-            ui.getRemoveComponentButton().setDisable(false);
+            pageEditor.getRemoveComponentButton().setDisable(false);
             b.setList(true);
-            ui.getListData().add(b);
+            pageEditor.getListData().add(b);
+            if (ui.getPage() != null) {
+                ui.getPage().getComponents().add(b);
+                int value = ui.getPage().getComponents().indexOf(b);
+                l.setListIndex(Integer.toString(value));
+                ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
+
+            } else {
+                pageEditor.getPage().getComponents().add(b);
+                int value = pageEditor.getPage().getComponents().indexOf(b);
+                l.setListIndex(Integer.toString(value));
+                pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
+
+            }
             addListStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -363,7 +413,8 @@ public class TextController {
 
     public void displayEditListDialog() {
         editListStage = new Stage();
-        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
+        checkListTextFieldIsThere();
         list.setItems(temp.getL().getListData());
         ui.setWindowIcon(ICON_FIRE, editListStage);
         editListStage.setTitle("Edit List");
@@ -407,4 +458,50 @@ public class TextController {
         return editParagraphStage;
     }
 
+    public void checkHeadingTextFieldIsThere() {
+        if (HeadingTextField == null) {
+            HeadingTextField = new TextField();
+            initOkCancelHBox();
+            enterContentLabel = new Label("Enter Content:");
+        }
+    }
+
+    public void initOkCancelHBox() {
+        okCancelHBox = new HBox(10);
+        okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
+        okButton = new Button("Ok");
+        cancelButton = new Button("Cancel");
+        okCancelHBox.getChildren().addAll(okButton, cancelButton);
+    }
+
+    public void checkParagraphTextAreaIsThere() {
+        if (ParagraphTextArea == null) {
+            ParagraphTextArea = new TextArea();
+            initOkCancelHBox();
+            fontHBox = new HBox();
+            fontGroup = new ToggleGroup();
+            font1Button = new RadioButton("Font 1");
+            font2Button = new RadioButton("Font 2");
+            font3Button = new RadioButton("Font 3");
+            font4Button = new RadioButton("Font 4");
+            font5Button = new RadioButton("Font 5");
+            chooseFontLabel = new Label("Choose A Font:");
+            font1Button.setToggleGroup(fontGroup);
+            font2Button.setToggleGroup(fontGroup);
+            font3Button.setToggleGroup(fontGroup);
+            font4Button.setToggleGroup(fontGroup);
+            font5Button.setToggleGroup(fontGroup);
+            fontHBox.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
+            fontHBox.getChildren().addAll(font1Button, font2Button, font3Button, font4Button, font5Button);
+        }
+    }
+
+    public void checkListTextFieldIsThere() {
+        if (ListTextField == null) {
+            ListTextField = new TextField();
+            list = new ListView<>();
+            initOkCancelHBox();
+
+        }
+    }
 }

@@ -10,6 +10,7 @@ import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.HyperLink;
 import epg.view.EPortfolioGeneratorView;
+import epg.view.PageEditView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -43,9 +44,11 @@ public class HyperLinkController {
     Stage hyperLink1Stage;
     Scene hyperLink1Scene;
     VBox hyperLink1VBox;
+    PageEditView pageEditor;
 
-    public HyperLinkController(EPortfolioGeneratorView initUI) {
+    public HyperLinkController(EPortfolioGeneratorView initUI, PageEditView initPageEditor) {
         ui = initUI;
+        pageEditor = initPageEditor;
     }
 
     public void displayAddHyperLinkDialog() {
@@ -67,7 +70,7 @@ public class HyperLinkController {
        //     temp = ui.getList().getSelectionModel().getSelectedItem();
             hl.setHyperLinkText(hyperLinkTextField.getText());
             hyperLinkLabel = new Label(temp + "And HyperLink");
-            ui.getListData().remove(temp);
+            pageEditor.getListData().remove(temp);
          //   ui.getListData().add(hyperLinkLabel);
             hyperLinkStage.close();
         });

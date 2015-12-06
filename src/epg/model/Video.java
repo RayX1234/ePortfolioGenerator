@@ -18,6 +18,7 @@ public class Video {
     String caption;
     String width;
     String height;
+    private String videoIndex;
 
     public Video() {
 
@@ -72,6 +73,20 @@ public class Video {
     public String toString() {
 
         return "Video Component";
+    }
+
+    /**
+     * @return the videoIndex
+     */
+    public String getVideoIndex() {
+        return videoIndex;
+    }
+
+    /**
+     * @param videoIndex the videoIndex to set
+     */
+    public void setVideoIndex(String videoIndex) {
+        this.videoIndex = videoIndex;
     }
 
 }

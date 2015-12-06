@@ -5,8 +5,10 @@
  */
 package epg.model;
 
+import epg.view.EPortfolioGeneratorView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 
 /**
  *
@@ -16,9 +18,11 @@ public class EPortfolioModel {
 
     private ObservableList<Page> pages;
     private String studentName;
+    private EPortfolioGeneratorView ui;
 
-    public EPortfolioModel() {
+    public EPortfolioModel(EPortfolioGeneratorView initUI) {
         pages = FXCollections.observableArrayList();
+        ui = initUI;
     }
 
     /**
@@ -35,6 +39,10 @@ public class EPortfolioModel {
     public String getStudentName() {
         return studentName;
     }
-    
+
+    public void reset() {
+        pages.clear();
+        studentName = "ENTER STUDENT NAME";
+    }
 
 }

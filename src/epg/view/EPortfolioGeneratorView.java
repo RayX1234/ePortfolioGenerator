@@ -6,44 +6,28 @@
 package epg.view;
 
 import epg.PropertyType;
-import static epg.PropertyType.TOOLTIP_ADD_IMAGE;
 import static epg.PropertyType.TOOLTIP_ADD_SITE;
-import static epg.PropertyType.TOOLTIP_ADD_SLIDESHOW;
-import static epg.PropertyType.TOOLTIP_ADD_TEXT;
-import static epg.PropertyType.TOOLTIP_ADD_TEXT_HYPERLINK;
-import static epg.PropertyType.TOOLTIP_ADD_VIDEO;
 import static epg.PropertyType.TOOLTIP_CHANGE_SITE_NAME;
 import static epg.PropertyType.TOOLTIP_EXIT;
 import static epg.PropertyType.TOOLTIP_EXPORT_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_LOAD_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_NEW_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_PAGE_EDIT_WORKSPACE;
-import static epg.PropertyType.TOOLTIP_REMOVE_MAIN_LIST;
 import static epg.PropertyType.TOOLTIP_REMOVE_SITE;
 import static epg.PropertyType.TOOLTIP_SAVE_AS_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SAVE_PORTFOLIO;
 import static epg.PropertyType.TOOLTIP_SITE_VIEWER_WORKSPACE;
-import static epg.StartupConstants.CSS_CLASS_ALIGN_CENTER;
-import static epg.StartupConstants.CSS_CLASS_CONTENT_PANE;
 import static epg.StartupConstants.CSS_CLASS_CSN_GRID_PANE;
 import static epg.StartupConstants.CSS_CLASS_EPG_PANE;
 import static epg.StartupConstants.CSS_CLASS_FILE_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON;
-import static epg.StartupConstants.CSS_CLASS_LAYOUT_PANE;
 import static epg.StartupConstants.CSS_CLASS_PAGE_EDIT_WORKSPACE_PANE;
-import static epg.StartupConstants.CSS_CLASS_PTSNBI_PANE;
-import static epg.StartupConstants.CSS_CLASS_SELECT_TEXT_TYPE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TAB_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITES_TOOL_BAR_PANE;
 import static epg.StartupConstants.CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE;
 import static epg.StartupConstants.CSS_CLASS_VERTICAL_TOOLBAR_BUTTON;
 import static epg.StartupConstants.CSS_CLASS_WORKSPACE_MODE_TOOLBAR_PANE;
-import static epg.StartupConstants.ICON_ADD_IMAGE;
 import static epg.StartupConstants.ICON_ADD_SITE;
-import static epg.StartupConstants.ICON_ADD_SLIDESHOW;
-import static epg.StartupConstants.ICON_ADD_TEXT;
-import static epg.StartupConstants.ICON_ADD_TEXT_HYPERLINK;
-import static epg.StartupConstants.ICON_ADD_VIDEO;
 import static epg.StartupConstants.ICON_CHANGE_SITE_NAME;
 import static epg.StartupConstants.ICON_EXIT;
 import static epg.StartupConstants.ICON_EXPORT_PORTFOLIO;
@@ -51,41 +35,30 @@ import static epg.StartupConstants.ICON_FIRE;
 import static epg.StartupConstants.ICON_LOAD_PORTFOLIO;
 import static epg.StartupConstants.ICON_NEW_PORTFOLIO;
 import static epg.StartupConstants.ICON_PAGE_EDIT_WORKSPACE;
-import static epg.StartupConstants.ICON_REMOVE_MAIN_LIST;
 import static epg.StartupConstants.ICON_REMOVE_SITE;
 import static epg.StartupConstants.ICON_SAVE_AS_PORTFOLIO;
 import static epg.StartupConstants.ICON_SAVE_PORTFOLIO;
 import static epg.StartupConstants.ICON_SITE_VIEWER_WORKSPACE;
 import static epg.StartupConstants.PATH_ICONS;
 import static epg.StartupConstants.STYLE_SHEET_UI;
-import epg.controller.BannerImageController;
 import epg.controller.FileController;
-import epg.controller.HyperLinkController;
-import epg.controller.ImageController;
 import epg.controller.PageEditController;
-import epg.controller.SlideShowController;
-import epg.controller.TextController;
-import epg.controller.VideoController;
 import epg.file.EPortfolioFileManager;
 import epg.model.Component;
 import epg.model.EPortfolioModel;
 import epg.model.ListModel;
 import epg.model.Page;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -162,68 +135,9 @@ public class EPortfolioGeneratorView {
     Label siteNameLabel;
     String siteName;
 
-    //For the main pane for the site pages
-    BorderPane contentPane;
-
-    //For the top of the contentPane(Page Title, Student Name, Banner Image)
-    VBox ptsnbiPane;
-    Label pageTitleLabel;
-    Label studentNameLabel;
-    Label bannerImageLabel;
-    Label footerLabel;
-    TextField pageTitleTextField;
-    TextField studentNameTextField;
-    TextField footerTextField;
-    Button selectBIButton;
-
-    //For selecting layout, color, and font
-    HBox layoutPane;
-    HBox colorPane;
-    HBox fontPane;
-    ToggleGroup layoutGroup;
-    ToggleGroup colorGroup;
-    ToggleGroup fontGroup;
-    RadioButton layout1Button;
-    RadioButton layout2Button;
-    RadioButton layout3Button;
-    RadioButton layout4Button;
-    RadioButton layout5Button;
-    RadioButton color1Button;
-    RadioButton color2Button;
-    RadioButton color3Button;
-    RadioButton color4Button;
-    RadioButton color5Button;
-    RadioButton font1Button;
-    RadioButton font2Button;
-    RadioButton font3Button;
-    RadioButton font4Button;
-    RadioButton font5Button;
-
-    Label layoutLabel;
-    Label colorLabel;
-    Label fontLabel;
-
-    //CompoentPane
-    FlowPane componentFlowPane;
-    Button addTextButton;
-    Button addImageButton;
-    Button addSlideShowButton;
-    Button addVideoButton;
-    Button addTextHLButton;
-
-    // For placing the components
-    ScrollPane componentScrollPane;
-    VBox componentVBox;
-
     FileController fileController;
     EPortfolioFileManager fileManager;
     PageEditController pageEditController;
-    BannerImageController bannerImageController;
-    TextController textController;
-    ImageController imageController;
-    VideoController videoController;
-    SlideShowController slideShowController;
-    HyperLinkController hyperLinkController;
 
     // THIS WILL GO IN THE LEFT SIDE OF THE SCREEN
     VBox slideEditToolbar;
@@ -253,12 +167,13 @@ public class EPortfolioGeneratorView {
     Page page;
     EPortfolioModel portfolioModel;
     ListModel listModel;
+    PageEditView pageEditor;
 
     //Default Constructor
     public EPortfolioGeneratorView(EPortfolioFileManager initFileManager) {
         // FIRST HOLD ONTO THE FILE MANAGER
         fileManager = initFileManager;
-        portfolioModel = new EPortfolioModel();
+        portfolioModel = new EPortfolioModel(this);
         listModel = new ListModel();
     }
 
@@ -277,9 +192,8 @@ public class EPortfolioGeneratorView {
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
     }
 
-    public void reset() {
+    public void resetFileToolbarPane() {
         fileToolbarPane.getChildren().clear();
-        sitesTabPane.getTabs().clear();
         newPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_PORTFOLIO, TOOLTIP_NEW_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         loadPortfolioButton = initChildButton(fileToolbarPane, ICON_LOAD_PORTFOLIO, TOOLTIP_LOAD_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
@@ -288,17 +202,43 @@ public class EPortfolioGeneratorView {
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         ePortfolioTitleLabel = new Label("Student Name:");
         ePortfolioTitleTF = new TextField();
-        if(portfolioModel.getStudentName() != null){
-            ePortfolioTitleTF.setText(portfolioModel.getStudentName());
-        }
-        else{
-            ePortfolioTitleTF.setText("ENTER STUDENT NAME");
-        }
         ePortfolioTitleTF.setOnAction(e -> {
             portfolioModel.setStudentName(ePortfolioTitleTF.getText());
         });
+        ePortfolioTitleTF.setText(portfolioModel.getStudentName());
         fileToolbarPane.getChildren().addAll(ePortfolioTitleLabel, ePortfolioTitleTF);
         initEventHandlers();
+
+    }
+
+    public void resetSiteToolbarPane() {
+        siteToolbarPane.getChildren().clear();
+        siteToolbarPane.getStyleClass().add(CSS_CLASS_SITES_TOOL_BAR_PANE);
+        addSitePageButton = initChildButton(siteToolbarPane, ICON_ADD_SITE, TOOLTIP_ADD_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        removeSitePageButton = initChildButton(siteToolbarPane, ICON_REMOVE_SITE, TOOLTIP_REMOVE_SITE, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, false);
+        changeSiteNameButton = initChildButton(siteToolbarPane, ICON_CHANGE_SITE_NAME, TOOLTIP_CHANGE_SITE_NAME, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true);
+        initEventHandlers();
+    }
+
+    //USED TO RELOAD PORTFOLIO TO ADD PAGES DEPENDING ON PORTFOLIO SIZE
+    public void reloadPortfolio(EPortfolioModel portfolioToLoad) {
+        //MAKE SURE TAB IS EMPTY
+        sitesTabPane.getTabs().clear();
+
+        for (Page page : portfolioToLoad.getPages()) {
+            PageEditView pageEdit = new PageEditView(page, portfolioToLoad, this);
+            Tab t = new Tab();
+            if (page.getPagetitle() == null) {
+                t.setText("ENTER PAGE TITLE");
+            } else {
+                t.setText(page.getPagetitle());
+            }
+            t.setContent(pageEdit.getContentPane());
+            sitesTabPane.getTabs().add(t);
+
+            pageEdit.getRemoveComponentButton().setDisable(false);
+
+        }
 
     }
 
@@ -412,22 +352,26 @@ public class EPortfolioGeneratorView {
 
         });
 
+        loadPortfolioButton.setOnAction(e -> {
+            fileController.handleLoadPortfolioRequest();
+        });
+
         savePortfolioButton.setOnAction(e -> {
-            fileController.handleSavePortfolioRequest();
+            fileController.handleSavePortfolioRequest(pageEditor);
 
         });
 
         pageEditController = new PageEditController(this);
 
         addSitePageButton.setOnAction(e -> {
-            count++;
+            //  count++;
             pageEditController.processAddSiteRequest();
 
         });
 
         removeSitePageButton.setOnAction(e -> {
             pageEditController.processRemoveSiteRequest();
-            count--;
+            //  count--;
 
         });
 
@@ -448,246 +392,28 @@ public class EPortfolioGeneratorView {
             activateSVW();
         });
 
-        textController = new TextController(this);
-        addTextButton.setOnAction(e -> {
-            textController.displaySelectTypeTextDialog();
-        });
-
-        imageController = new ImageController(this);
-        addImageButton.setOnAction(e -> {
-            imageController.displayAddImageDialog();
-
-        });
-
-        videoController = new VideoController(this);
-        addVideoButton.setOnAction(e -> {
-            videoController.displayAddVideoDialog();
-        });
-
-        slideShowController = new SlideShowController(this);
-        addSlideShowButton.setOnAction(e -> {
-            slideShowController.displayAddSlideShowDialog();
-        });
-
-        hyperLinkController = new HyperLinkController(this);
-        addTextHLButton.setOnAction(e -> {
-            if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph")) {
-                hyperLinkController.displayAddHyperLinkDialog();
-            }
-        });
     }
 
     //Create site page
     public void createSitePage() {
         page = new Page();
-        Tab tab = new Tab();
-        if (sitesTabPane.getTabs().isEmpty()) {
-            count = 1;
-        }
-        tab.setText("New Page " + count);
-        tab.setContent(initContentPane());
-        sitesTabPane.getTabs().add(tab);
         removeSitePageButton.setDisable(false);
         changeSiteNameButton.setDisable(false);
         portfolioModel.getPages().add(page);
+        reloadPortfolio(portfolioModel);
 
-    }
-
-    //Pane for all the componeents of a sitepage
-    public Pane initContentPane() {
-        contentPane = new BorderPane();
-        contentPane.getStyleClass().add(CSS_CLASS_CONTENT_PANE);
-        initTopAreaPane();
-        initCenterAreaPane();
-        return contentPane;
-    }
-
-    //For the buttons of video,image,slideshow,text annd hyperlink
-    public void initComponentToolbar() {
-        componentFlowPane = new FlowPane();
-        addTextButton = initChildButton(componentFlowPane, ICON_ADD_TEXT, TOOLTIP_ADD_TEXT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        addImageButton = initChildButton(componentFlowPane, ICON_ADD_IMAGE, TOOLTIP_ADD_IMAGE, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        addSlideShowButton = initChildButton(componentFlowPane, ICON_ADD_SLIDESHOW, TOOLTIP_ADD_SLIDESHOW, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        addVideoButton = initChildButton(componentFlowPane, ICON_ADD_VIDEO, TOOLTIP_ADD_VIDEO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        addTextHLButton = initChildButton(componentFlowPane, ICON_ADD_TEXT_HYPERLINK, TOOLTIP_ADD_TEXT_HYPERLINK, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
-
-    }
-
-    //For the pageTitle, studentName, bannerImage, layout, color, and page font
-    public void initTopAreaPane() {
-        ptsnbiPane = new VBox();
-        ptsnbiPane.getStyleClass().add(CSS_CLASS_PTSNBI_PANE);
-        //   initPageTitle();
-        //  initStudentName();
-        initBannerImage();
-        initFooter();
-        initLayoutPane();
-        initColorPane();
-        initFontPane();
-        initComponentToolbar();
-        initEventHandlers();
-        ptsnbiPane.getChildren().add(componentFlowPane);
-        contentPane.setTop(ptsnbiPane);
-    }
-
-    public void initCenterAreaPane() {
-        componentListBorderPane = new BorderPane();
-        componentListVBox = new VBox();
-        componentListBorderPane.setCenter(componentListVBox);
-        componentRemoveToolbar = new VBox();
-        componentRemoveToolbar.getStyleClass().add(CSS_CLASS_ALIGN_CENTER);
-        removeComponentButton = initChildButton(componentRemoveToolbar, ICON_REMOVE_MAIN_LIST, TOOLTIP_REMOVE_MAIN_LIST, CSS_CLASS_VERTICAL_TOOLBAR_BUTTON, true);
-        componentListBorderPane.setLeft(componentRemoveToolbar);
-        componentlist = new ListView<>();
-        componentListData = FXCollections.observableArrayList();
-        componentlist.setItems(componentListData);
-        page.setComponents(componentListData);
-        componentListVBox.getChildren().add(componentlist);
-        initContentEventHandlers();
-        contentPane.setCenter(componentListBorderPane);
-    }
-
-    //For selecting layout
-    public void initLayoutPane() {
-        layoutPane = new HBox();
-        layoutPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
-        ptsnbiPane.getChildren().add(layoutPane);
-        layoutGroup = new ToggleGroup();
-        layoutLabel = new Label("Select Layout:");
-        layout1Button = new RadioButton("Layout 1");
-        layout1Button.setToggleGroup(layoutGroup);
-        layout2Button = new RadioButton("Layout 2");
-        layout2Button.setToggleGroup(layoutGroup);
-        layout3Button = new RadioButton("Layout 3");
-        layout3Button.setToggleGroup(layoutGroup);
-        layout4Button = new RadioButton("Layout 4");
-        layout4Button.setToggleGroup(layoutGroup);
-        layout5Button = new RadioButton("Layout 5");
-        layout5Button.setToggleGroup(layoutGroup);
-        if (layoutGroup.getSelectedToggle() == null) {
-            layoutGroup.selectToggle(layout1Button);
-            page.setLayout(layout1Button.toString());
-        }
-
-        layoutPane.getChildren().addAll(layoutLabel, layout1Button, layout2Button, layout3Button, layout4Button, layout5Button);
-
-    }
-
-    //For selecting layout
-    public void initColorPane() {
-        colorPane = new HBox();
-        colorPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
-        ptsnbiPane.getChildren().add(colorPane);
-        colorGroup = new ToggleGroup();
-        colorLabel = new Label("Select Color:");
-        color1Button = new RadioButton("Color 1");
-        color1Button.setToggleGroup(colorGroup);
-        color2Button = new RadioButton("Color 2");
-        color2Button.setToggleGroup(colorGroup);
-        color3Button = new RadioButton("Color 3");
-        color3Button.setToggleGroup(colorGroup);
-        color4Button = new RadioButton("Color 4");
-        color4Button.setToggleGroup(colorGroup);
-        color5Button = new RadioButton("Color 5");
-        color5Button.setToggleGroup(colorGroup);
-        if (colorGroup.getSelectedToggle() == null) {
-            colorGroup.selectToggle(color1Button);
-            page.setColor(color1Button.toString());
-        }
-        colorPane.getChildren().addAll(colorLabel, color1Button, color2Button, color3Button, color4Button, color5Button);
-
-    }
-
-    //For selecting layout
-    public void initFontPane() {
-        fontPane = new HBox();
-        fontPane.getStyleClass().add(CSS_CLASS_LAYOUT_PANE);
-        ptsnbiPane.getChildren().add(fontPane);
-        fontGroup = new ToggleGroup();
-        fontLabel = new Label("Select Font:");
-        font1Button = new RadioButton("Font 1");
-        font1Button.setToggleGroup(fontGroup);
-        font2Button = new RadioButton("Font 2");
-        font2Button.setToggleGroup(fontGroup);
-        font3Button = new RadioButton("Font 3");
-        font3Button.setToggleGroup(fontGroup);
-        font4Button = new RadioButton("Font 4");
-        font4Button.setToggleGroup(fontGroup);
-        font5Button = new RadioButton("Font 5");
-        font5Button.setToggleGroup(fontGroup);
-        if (fontGroup.getSelectedToggle() == null) {
-            fontGroup.selectToggle(font1Button);
-            page.setFont(font1Button.toString());
-        }
-        fontPane.getChildren().addAll(fontLabel, font1Button, font2Button, font3Button, font4Button, font5Button);
-
-    }
-
-    //For the navbar title
-    public void initPageTitle() {
-        pageTitleLabel = new Label("Enter a Page Title:");
-        pageTitleTextField = new TextField();
-        pageTitleTextField.setOnAction(e -> {
-            portfolioModel.setStudentName(pageTitleTextField.getText());
-            System.out.println(portfolioModel.getStudentName());
-        });
-        ptsnbiPane.getChildren().addAll(pageTitleLabel, pageTitleTextField);
-    }
-
-    //For the studentName
-    public void initStudentName() {
-        studentNameLabel = new Label("Enter a Student Name:");
-        studentNameTextField = new TextField();
-        studentNameTextField.setOnAction(e -> {
-            portfolioModel.setStudentName(studentNameTextField.getText());
-            System.out.println(portfolioModel.getStudentName());
-            System.out.println(studentNameTextField.getText());
-        });
-
-        ptsnbiPane.getChildren().addAll(studentNameLabel, studentNameTextField);
-    }
-
-    //For the bannerImage
-    public void initBannerImage() {
-
-        bannerImageLabel = new Label("Banner Image:");
-        selectBIButton = new Button("Select");
-        ptsnbiPane.getChildren().addAll(bannerImageLabel, selectBIButton);
-        bannerImageController = new BannerImageController(this);
-        selectBIButton.setOnAction(e -> {
-            bannerImageController.processSelectImage();
-        });
-    }
-
-    //For the footer
-    public void initFooter() {
-        footerLabel = new Label("Enter a Footer:");
-        footerTextField = new TextField();
-        if(page.getFooter() != null){
-            footerTextField.setText(page.getFooter());
-        }
-        else{
-            footerTextField.setText("ENTER FOOTER");
-        }
-        footerTextField.setOnAction(e -> {
-            page.setFooter(footerTextField.getText());
-        });
-        ptsnbiPane.getChildren().addAll(footerLabel, footerTextField);
     }
 
     //Remove site page
     public void removeSitePage() {
         Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
         int value = sitesTabPane.getTabs().indexOf(selectedTab);
-        sitesTabPane.getTabs().remove(selectedTab);
-
-        if (sitesTabPane.getTabs().isEmpty()) {
+        portfolioModel.getPages().remove(value);
+        reloadPortfolio(portfolioModel);
+        if (portfolioModel.getPages().isEmpty()) {
             changeSiteNameButton.setDisable(true);
             removeSitePageButton.setDisable(true);
         }
-        portfolioModel.getPages().remove(value);
-        System.out.println(portfolioModel.getPages().size());
-
     }
 
     //Change site name
@@ -698,12 +424,6 @@ public class EPortfolioGeneratorView {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         siteNameTextField = new TextField();
-         if(page.getPagetitle() != null){
-             siteNameTextField.setText(page.getPagetitle());
-         }
-         else{
-             siteNameTextField.setText("ENTER PAGE TITLE");
-         }
         siteNameStage = new Stage();
         setWindowIcon(ICON_FIRE, siteNameStage);
         siteNameScene = new Scene(siteNameGridPane, 400, 200);
@@ -715,6 +435,7 @@ public class EPortfolioGeneratorView {
         siteNameTextField.setOnAction(e -> {
             siteName = siteNameTextField.getText();
         });
+
         okButton.setOnAction(e -> {
             Tab selectedTab = sitesTabPane.getSelectionModel().getSelectedItem();
             selectedTab.setText(siteName);
@@ -722,6 +443,7 @@ public class EPortfolioGeneratorView {
 
             siteNameStage.close();
         });
+        siteNameTextField.setText(page.getPagetitle());
         cancelButton.setOnAction(e -> {
             siteNameStage.close();
         });
@@ -745,8 +467,6 @@ public class EPortfolioGeneratorView {
 
         // INIT THE WORKSPACE MODE TOOLBAR
         initWorkspaceModeToolbar();
-
-        initComponentToolbar();
 
         // INIT EVENT HANDLERS
         initEventHandlers();
@@ -789,99 +509,8 @@ public class EPortfolioGeneratorView {
         s.getIcons().add(icon);
     }
 
-    public ObservableList<Component> getListData() {
-        return componentListData;
-    }
-
-    public ListView<Component> getList() {
-        return componentlist;
-    }
-
-    public void initContentEventHandlers() {
-        componentlist.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Heading")) {
-                    textController.displayEditHeadingDialog();
-                }
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph")) {
-                    textController.displayEditParagraphDialog();
-                }
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Paragraph") && componentlist.getSelectionModel().getSelectedItem().toString().contains("HyperLink")) {
-                    textController.getEditParagraphStage().close();
-                    checkPH();
-                }
-
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("List")) {
-                    textController.displayEditListDialog();
-                }
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Image")) {
-                    imageController.displayEditImageDialog();
-                }
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Slide Show")) {
-                    slideShowController.displayEditSlideShowDialog();
-                }
-                if (componentlist.getSelectionModel().getSelectedItem().toString().contains("Video")) {
-                    videoController.displayEditVideoDialog();
-                }
-            }
-        });
-        removeComponentButton.setOnAction(e -> {
-            Component c = componentlist.getSelectionModel().getSelectedItem();
-            componentListData.remove(c);
-            if (componentListData.isEmpty()) {
-                removeComponentButton.setDisable(true);
-            }
-
-        });
-    }
-
-    public void checkPH() {
-        checkPHStage = new Stage();
-        checkPHStage.setTitle("Edit (Paragraph Or HyperLink)");
-        setWindowIcon(ICON_FIRE, checkPHStage);
-        checkPHVBox = new VBox();
-        checkPHVBox.getStyleClass().add(CSS_CLASS_SELECT_TEXT_TYPE);
-        checkPHScene = new Scene(checkPHVBox, 500, 150);
-        checkPHScene.getStylesheets().add(STYLE_SHEET_UI);
-        checkPHStage.setScene(checkPHScene);
-        checkPHList = FXCollections.observableArrayList("Paragraph", "HyperLink");
-        checkPHLabel = new Label("Edit (Paragraph Or HyperLink)");
-        okButton = new Button("Ok");
-        okButton.setDisable(true);
-        cancelButton = new Button("Cancel");
-        okCancelHBox = new HBox();
-        okCancelHBox.setAlignment(Pos.BOTTOM_RIGHT);
-        okCancelHBox.setSpacing(10);
-        okCancelHBox.getChildren().addAll(okButton, cancelButton);
-        checkPHComboBox = new ComboBox(checkPHList);
-        checkPHComboBox.setOnAction(e -> {
-            if (checkPHComboBox.getValue() != null) {
-                okButton.setDisable(false);
-            }
-        });
-        checkPHVBox.getChildren().addAll(checkPHLabel, checkPHComboBox, okCancelHBox);
-        okButton.setOnAction(e -> {
-            if (checkPHComboBox.getValue().equals("Paragraph")) {
-                checkPHStage.close();
-                textController.displayEditParagraphDialog();
-            }
-            if (checkPHComboBox.getValue().equals("HyperLink")) {
-                checkPHStage.close();
-                hyperLinkController.displayEditHyperLinkDialog();
-            }
-        });
-        cancelButton.setOnAction(e -> {
-            checkPHStage.close();
-        });
-        checkPHStage.show();
-    }
-
     public Stage getWindow() {
         return primaryStage;
-    }
-
-    public Button getRemoveComponentButton() {
-        return removeComponentButton;
     }
 
     public Page getPage() {
@@ -890,18 +519,6 @@ public class EPortfolioGeneratorView {
 
     public EPortfolioModel getPortfolioModel() {
         return portfolioModel;
-    }
-
-    public ToggleGroup getLayoutGroup() {
-        return layoutGroup;
-    }
-
-    public ToggleGroup getColorGroup() {
-        return colorGroup;
-    }
-
-    public ToggleGroup getFontGroup() {
-        return fontGroup;
     }
 
     public void setPageEditWorkspaceActivated(Boolean initPEW) {
@@ -914,6 +531,10 @@ public class EPortfolioGeneratorView {
 
     public ListModel getListModel() {
         return listModel;
+    }
+
+    public ObservableList<Tab> getTabs() {
+        return sitesTabPane.getTabs();
     }
 
 }

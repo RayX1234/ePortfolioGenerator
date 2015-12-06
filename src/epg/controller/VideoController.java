@@ -12,6 +12,7 @@ import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Video;
 import epg.view.EPortfolioGeneratorView;
+import epg.view.PageEditView;
 import java.io.File;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -57,9 +58,11 @@ public class VideoController {
     Label videoLabel;
     Video v;
     Component c;
+    PageEditView pageEditor;
 
-    public VideoController(EPortfolioGeneratorView initUI) {
+    public VideoController(EPortfolioGeneratorView initUI, PageEditView initPageEditor) {
         ui = initUI;
+        pageEditor = initPageEditor;
     }
 
     public void displayAddVideoDialog() {
@@ -88,12 +91,25 @@ public class VideoController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
-            ui.getRemoveComponentButton().setDisable(false);
+            pageEditor.getRemoveComponentButton().setDisable(false);
             v.setCaption(captionTextField.getText());
             v.setHeight(heightTextField.getText());
             v.setWidth(widthTextField.getText());
             c.setVideo(true);
-            ui.getListData().add(c);
+            pageEditor.getListData().add(c);
+            if (ui.getPage() != null) {
+                ui.getPage().getComponents().add(c);
+                ui.getPage().getVideos().add(v);
+                int value = ui.getPage().getComponents().indexOf(c);
+                v.setVideoIndex(Integer.toString(value));
+                ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
+            } else {
+                pageEditor.getPage().getComponents().add(c);
+                pageEditor.getPage().getVideos().add(v);
+                int value = pageEditor.getPage().getComponents().indexOf(c);
+                v.setVideoIndex(Integer.toString(value));
+                pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
+            }
             videoStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -130,7 +146,8 @@ public class VideoController {
     public void displayEditVideoDialog() {
         video1Stage = new Stage();
         video1VBox = new VBox();
-        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
+        initVideoStuff();
         captionTextField.setText(temp.getV().getCaption());
         heightTextField.setText(temp.getV().getHeight());
         widthTextField.setText(temp.getV().getWidth());
@@ -151,5 +168,23 @@ public class VideoController {
             video1Stage.close();
         });
         video1Stage.show();
+    }
+
+    public void initVideoStuff() {
+        if (captionTextField == null) {
+            captionLabel = new Label("Enter Caption");
+            captionTextField = new TextField();
+            widthLabel = new Label("Enter Width");
+            widthTextField = new TextField();
+            heightLabel = new Label("Enter Height");
+            heightTextField = new TextField();
+            okCancelHBox = new HBox(10);
+            okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
+            okButton = new Button("Ok");
+            cancelButton = new Button("Cancel");
+            selectVideoLabel = new Label("Select Video");
+            selectVideoButton = new Button("Choose");
+            okCancelHBox.getChildren().addAll(okButton, cancelButton);
+        }
     }
 }

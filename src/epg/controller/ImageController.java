@@ -14,6 +14,7 @@ import static epg.StartupConstants.STYLE_SHEET_UI;
 import epg.model.Component;
 import epg.model.Image;
 import epg.view.EPortfolioGeneratorView;
+import epg.view.PageEditView;
 import java.io.File;
 import java.net.URL;
 import javafx.geometry.Pos;
@@ -69,9 +70,11 @@ public class ImageController {
     Stage image1Stage;
     Scene image1Scene;
     VBox image1VBox;
+    PageEditView pageEditor;
 
-    public ImageController(EPortfolioGeneratorView initUI) {
+    public ImageController(EPortfolioGeneratorView initUI, PageEditView initPageEditor) {
         ui = initUI;
+        pageEditor = initPageEditor;
     }
 
     public void displayAddImageDialog() {
@@ -105,7 +108,7 @@ public class ImageController {
         okButton = new Button("Ok");
         cancelButton = new Button("Cancel");
         okButton.setOnAction(e -> {
-            ui.getRemoveComponentButton().setDisable(false);
+            pageEditor.getRemoveComponentButton().setDisable(false);
             if (rgroup.getSelectedToggle() == null) {
                 i.setImagePosition(rNeitherButton.toString());
             } else {
@@ -116,7 +119,21 @@ public class ImageController {
             i.setWidth(widthTextField.getText());
 
             c.setImage(true);
-            ui.getListData().add(c);
+            pageEditor.getListData().add(c);
+            if (ui.getPage() != null) {
+                ui.getPage().getComponents().add(c);
+                ui.getPage().getImages().add(i);
+                int value = ui.getPage().getComponents().indexOf(c);
+                i.setImageIndex(Integer.toString(value));
+                ui.getPage().setComponentsSize(Integer.toString(ui.getPage().getComponents().size()));
+            } else {
+                pageEditor.getPage().getComponents().add(c);
+                pageEditor.getPage().getImages().add(i);
+                int value = pageEditor.getPage().getComponents().indexOf(c);
+                i.setImageIndex(Integer.toString(value));
+                pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
+
+            }
             imageStage.close();
         });
         cancelButton.setOnAction(e -> {
@@ -151,16 +168,18 @@ public class ImageController {
         if (file != null) {
             String path = file.getPath().substring(0, file.getPath().indexOf(file.getName()));
             String fileName = file.getName();
-            i.setImageFileName(fileName);
-            i.setImagePath(path);
-            i.setImage(path, fileName);
-
+            if (i != null) {
+                i.setImageFileName(fileName);
+                i.setImagePath(path);
+                i.setImage(path, fileName);
+            }
         }
     }
 
     public void displayEditImageDialog() {
         image1Stage = new Stage();
-        Component temp = ui.getList().getSelectionModel().getSelectedItem();
+        Component temp = pageEditor.getList().getSelectionModel().getSelectedItem();
+        initEditImageStuff();
         if (temp.getI().getImagePosition().contains("Left")) {
             rgroup.selectToggle(rLeftButton);
         }
@@ -192,6 +211,35 @@ public class ImageController {
         image1Stage.setTitle("Edit Image");
         ui.setWindowIcon(ICON_FIRE, image1Stage);
         image1Stage.show();
+    }
+
+    public void initEditImageStuff() {
+        if (rgroup == null) {
+            okCancelHBox = new HBox(10);
+            okCancelHBox.setAlignment(Pos.CENTER_RIGHT);
+            captionLabel = new Label("Enter Caption:");
+            captionTextField = new TextField();
+            selectImageLabel = new Label("Select Image:");
+            selectImageButton = new Button("Choose");
+            widthLabel = new Label("Enter Width:");
+            widthTextField = new TextField();
+            heightLabel = new Label("Enter Height");
+            heightTextField = new TextField();
+            chooseFloat = new Label("Choose Float:");
+            rgroup = new ToggleGroup();
+            rLeftButton = new RadioButton("Left");
+            rRightButton = new RadioButton("Right");
+            rNeitherButton = new RadioButton("Neither");
+            rLeftButton.setToggleGroup(rgroup);
+            rRightButton.setToggleGroup(rgroup);
+            rNeitherButton.setToggleGroup(rgroup);
+            okButton = new Button("Ok");
+            cancelButton = new Button("Cancel");
+            okCancelHBox.getChildren().addAll(okButton, cancelButton);
+            selectImageButton.setOnAction(e -> {
+                processSelectImage();
+            });
+        }
     }
 
 }

@@ -16,10 +16,12 @@ public class Paragraph {
 
     private String paragraphText;
     private String font;
+    private String paragraphIndex;
 
     public Paragraph() {
 
     }
+    
 
     public void setParagraphText(String initParagraphText) {
         paragraphText = initParagraphText;
@@ -41,6 +43,20 @@ public class Paragraph {
     public String toString() {
 
         return "Paragraph Component";
+    }
+
+    /**
+     * @return the paragraphIndex
+     */
+    public String getParagraphIndex() {
+        return paragraphIndex;
+    }
+
+    /**
+     * @param paragraphIndex the paragraphIndex to set
+     */
+    public void setParagraphIndex(String paragraphIndex) {
+        this.paragraphIndex = paragraphIndex;
     }
 
 }

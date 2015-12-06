@@ -5,14 +5,18 @@
  */
 package epg.model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Toggle;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
  * @author Ray
  */
 public class Page {
+
     private String bannerImageFileName;
     private String bannerImageFilePath;
     private String font;
@@ -20,10 +24,40 @@ public class Page {
     private String footer;
     private String color;
     private ObservableList<Component> components;
+    private ObservableList<Heading> headings;
+    private ObservableList<Image> images;
+    private ObservableList<ListObject> lists;
+    private ObservableList<Paragraph> paragraphs;
+    private ObservableList<Slide> slides;
+    private ObservableList<Video> videos;
     private String pagetitle;
-    
-    public Page(){
-        
+    private BorderPane contentPane;
+    private String componentsSize;
+
+    public Page() {
+        components = FXCollections.observableArrayList();
+        headings = FXCollections.observableArrayList();
+        paragraphs = FXCollections.observableArrayList();
+        videos = FXCollections.observableArrayList();
+        images = FXCollections.observableArrayList();
+        lists = FXCollections.observableArrayList();
+        slides = FXCollections.observableArrayList();
+    }
+
+    public BorderPane getContentPane() {
+        return contentPane;
+    }
+
+    public void setContentPane(BorderPane initContentPane) {
+        contentPane = initContentPane;
+    }
+
+    public String getComponentsSize() {
+        return componentsSize;
+    }
+
+    public void setComponentsSize(String initComponentsSize) {
+        componentsSize = initComponentsSize;
     }
 
     /**
@@ -39,12 +73,12 @@ public class Page {
     public void setBannerImageFileName(String bannerImageFileName) {
         this.bannerImageFileName = bannerImageFileName;
     }
-    
-    public String getFooter(){
+
+    public String getFooter() {
         return footer;
     }
-    
-    public void setFooter(String initFooter){
+
+    public void setFooter(String initFooter) {
         footer = initFooter;
     }
 
@@ -112,13 +146,6 @@ public class Page {
     }
 
     /**
-     * @param components the components to set
-     */
-    public void setComponents(ObservableList<Component> components) {
-        this.components = components;
-    }
-
-    /**
      * @return the pagetitle
      */
     public String getPagetitle() {
@@ -130,5 +157,47 @@ public class Page {
      */
     public void setPagetitle(String pagetitle) {
         this.pagetitle = pagetitle;
+    }
+
+    /**
+     * @return the headings
+     */
+    public ObservableList<Heading> getHeadings() {
+        return headings;
+    }
+
+    /**
+     * @return the images
+     */
+    public ObservableList<Image> getImages() {
+        return images;
+    }
+
+    /**
+     * @return the paragraphs
+     */
+    public ObservableList<Paragraph> getParagraphs() {
+        return paragraphs;
+    }
+
+    /**
+     * @return the videos
+     */
+    public ObservableList<Video> getVideos() {
+        return videos;
+    }
+
+    /**
+     * @return the lists
+     */
+    public ObservableList<ListObject> getLists() {
+        return lists;
+    }
+
+    /**
+     * @return the slides
+     */
+    public ObservableList<Slide> getSlides() {
+        return slides;
     }
 }
