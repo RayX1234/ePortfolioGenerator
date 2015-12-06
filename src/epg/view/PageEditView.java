@@ -604,8 +604,8 @@ public class PageEditView extends BorderPane {
     public Page getPage() {
         return page;
     }
-    
-    public SlideShowController getSSC(){
+
+    public SlideShowController getSSC() {
         return slideShowController;
     }
 

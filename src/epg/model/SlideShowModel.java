@@ -26,9 +26,8 @@ public class SlideShowModel {
     //   SlideEditView slideEditor;
     int count;
 
-    public SlideShowModel(SlideShowController initUI, EPortfolioGeneratorView initUI2) {
+    public SlideShowModel(SlideShowController initUI) {
         ui = initUI;
-        ui2 = initUI2;
         slides = FXCollections.observableArrayList();
         reset();
     }

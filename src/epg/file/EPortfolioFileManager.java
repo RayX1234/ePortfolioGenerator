@@ -6,6 +6,7 @@
 package epg.file;
 
 import static epg.StartupConstants.PATH_EPORTFOLIOS;
+import epg.controller.SlideShowController;
 import epg.model.Component;
 import epg.model.EPortfolioModel;
 import epg.model.Heading;
@@ -19,6 +20,7 @@ import epg.model.Slide;
 import epg.model.SlideShowModel;
 import epg.model.Video;
 import epg.view.EPortfolioGeneratorView;
+import epg.view.PageEditView;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -247,28 +249,27 @@ public class EPortfolioFileManager {
 
             }
 
-//            JsonArray jsonSlideShowsArray = pageJso.getJsonArray(JSON_SLIDES);
-//            for (int z = 0; z < jsonSlideShowsArray.size(); z++) {
-//                JsonObject slideJso = jsonSlideShowsArray.getJsonObject(z);
-//                // System.out.println(slideJso.getString(JSON_SLIDE_INDEX));
-//                Component c = new Component();
-//
-//                SlideShowModel slideShow = new SlideShowModel(ssc, ui);
-//
-//                JsonArray jsonSlideDataArray = slideJso.getJsonArray(JSON_SLIDE);
-//                for (int y = 0; y < jsonSlideDataArray.size(); y++) {
-//                    JsonObject slideDataJso = jsonSlideDataArray.getJsonObject(y);
-//                    // System.out.println(slideDataJso.toString());
-//                    Slide slide = new Slide(slideDataJso.getString(JSON_SLIDE_IMAGE_FILE_NAME), slideDataJso.getString(JSON_SLIDE_IMAGE_PATH), slideDataJso.getString(JSON_SLIDE_CAPTION));
-//                    slideShow.getSlides().add(slide);
-//                }
-//                slideShow.setSlideShowIndex(slideJso.getString(JSON_SLIDE_INDEX));
-//                c.setSSM(slideShow);
-//                c.setSlideshow(true);
-//                page.getComponents().set(Integer.parseInt(slideShow.getSlideShowIndex()), c);
-//                page.getSlideShows().add(slideShow);
-//
-//            }
+            JsonArray jsonSlideShowsArray = pageJso.getJsonArray(JSON_SLIDES);
+            for (int z = 0; z < jsonSlideShowsArray.size(); z++) {
+                JsonObject slideJso = jsonSlideShowsArray.getJsonObject(z);
+                // System.out.println(slideJso.getString(JSON_SLIDE_INDEX));
+                Component c = new Component();
+                SlideShowController ssc = null;
+                SlideShowModel slideShow = new SlideShowModel(ssc);
+                JsonArray jsonSlideDataArray = slideJso.getJsonArray(JSON_SLIDE);
+                for (int y = 0; y < jsonSlideDataArray.size(); y++) {
+                    JsonObject slideDataJso = jsonSlideDataArray.getJsonObject(y);
+                    // System.out.println(slideDataJso.toString());
+                    Slide slide = new Slide(slideDataJso.getString(JSON_SLIDE_IMAGE_FILE_NAME), slideDataJso.getString(JSON_SLIDE_IMAGE_PATH), slideDataJso.getString(JSON_SLIDE_CAPTION));
+                    slideShow.getSlides().add(slide);
+                }
+                slideShow.setSlideShowIndex(slideJso.getString(JSON_SLIDE_INDEX));
+                c.setSSM(slideShow);
+                c.setSlideshow(true);
+                page.getComponents().set(Integer.parseInt(slideShow.getSlideShowIndex()), c);
+                page.getSlideShows().add(slideShow);
+
+            }
             portfolioToLoad.getPages().add(page);
         }
     }

@@ -88,12 +88,11 @@ public class SlideShowController {
     public SlideShowController(EPortfolioGeneratorView initUI, PageEditView initPageEditor) {
         ui = initUI;
         pageEditor = initPageEditor;
-
     }
 
     public void displayAddSlideShowDialog() {
         newSlideShow = true;
-        slideShow = new SlideShowModel(this, ui);
+        slideShow = new SlideShowModel(this);
         addSlideShowStage = new Stage();
         c = new Component();
         c.setSSM(slideShow);
