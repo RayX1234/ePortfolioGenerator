@@ -9,7 +9,6 @@ import static epg.StartupConstants.PATH_EPORTFOLIOS;
 import epg.file.EPortfolioFileManager;
 import epg.model.EPortfolioModel;
 import epg.view.EPortfolioGeneratorView;
-import epg.view.PageEditView;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

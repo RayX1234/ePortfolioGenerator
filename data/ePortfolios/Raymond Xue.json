@@ -1,0 +1,59 @@
+{
+    "student_name": "Raymond Xue",
+    "pages": [{
+            "banner_image_file_name": "Best-Hairstyles-for-Asian-Men_10.jpg",
+            "banner_image_path": "C:\\Users\\Ray\\Pictures\\",
+            "page_title": "Work",
+            "page_font": "RadioButton@c7137cb[styleClass=radio-button]'Font 4'",
+            "page_layout": "RadioButton@32c9bf5d[styleClass=radio-button]'Layout 2'",
+            "page_color": "RadioButton@26a9d53d[styleClass=radio-button]'Color 3'",
+            "page_footer": "qwklekqw",
+            "component_count": "6",
+            "headings": [{
+                    "heading_text": "A",
+                    "heading_index": "0"
+                }],
+            "paragraphs": [{
+                    "paragraph_text": "B\n",
+                    "paragraph_font": "RadioButton@114f92a4[styleClass=radio-button]'Font 5'",
+                    "paragraph_index": "1"
+                }],
+            "images": [{
+                    "image_file_name": "Best-Hairstyles-for-Asian-Men_10.jpg",
+                    "image_path": "C:\\Users\\Ray\\Pictures\\",
+                    "image_caption": "E",
+                    "image_height": "G",
+                    "image_width": "F",
+                    "image_position": "RadioButton@4993f720[styleClass=radio-button]'Left'",
+                    "image_index": "3"
+                }],
+            "videos": [{
+                    "video_file_name": "C:\\Users\\Ray\\Downloads\\FALL 2015 MATERIALS\\CSE 219\\ePortolioTester\\public_html\\videos\\",
+                    "video_file_path": "C:\\Users\\Ray\\Downloads\\FALL 2015 MATERIALS\\CSE 219\\ePortolioTester\\public_html\\videos\\",
+                    "video_caption": "Please work",
+                    "video_height": "height",
+                    "video_width": "width",
+                    "video_index": "5"
+                }],
+            "lists": [{
+                    "list_index": "2",
+                    "list": [{
+                            "list_string": "C"
+                        }, {
+                            "list_string": "D"
+                        }]
+                }],
+            "slides": [{
+                    "slide_index": "4",
+                    "slide": [{
+                            "slide_image_file_name": "ArchesUtah.jpg",
+                            "slide_image_path": "C:\\Users\\Ray\\Downloads\\FALL 2015 MATERIALS\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+                            "slide_caption": ""
+                        }, {
+                            "slide_image_file_name": "BadlandsSouthDakota.jpg",
+                            "slide_image_path": "C:\\Users\\Ray\\Downloads\\FALL 2015 MATERIALS\\CSE 219\\ePortfolioGenerator\\images\\slide_show_images\\",
+                            "slide_caption": ""
+                        }]
+                }]
+        }]
+}

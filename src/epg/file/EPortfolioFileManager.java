@@ -6,7 +6,6 @@
 package epg.file;
 
 import static epg.StartupConstants.PATH_EPORTFOLIOS;
-import epg.controller.SlideShowController;
 import epg.model.Component;
 import epg.model.EPortfolioModel;
 import epg.model.Heading;
