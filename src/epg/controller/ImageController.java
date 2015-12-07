@@ -120,6 +120,7 @@ public class ImageController {
 
             c.setImage(true);
             pageEditor.getListData().add(c);
+
             if (ui.getPage() != null) {
                 ui.getPage().getComponents().add(c);
                 ui.getPage().getImages().add(i);
@@ -135,6 +136,7 @@ public class ImageController {
 
             }
             imageStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             imageStage.close();
@@ -203,6 +205,7 @@ public class ImageController {
             temp.getI().setHeight(heightTextField.getText());
             temp.getI().setWidth(widthTextField.getText());
             image1Stage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             image1Stage.close();

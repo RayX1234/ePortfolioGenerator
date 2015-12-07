@@ -129,6 +129,7 @@ public class SlideShowController {
 
             }
             addSlideShowStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             addSlideShowStage.close();
@@ -290,6 +291,7 @@ public class SlideShowController {
         okButton.setOnAction(e -> {
 
             editSlideShowStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             editSlideShowStage.close();

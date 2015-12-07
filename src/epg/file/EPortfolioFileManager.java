@@ -103,7 +103,7 @@ public class EPortfolioFileManager {
         // BUILD THE FILE PATH
         String ePortfolioStudentName = "" + portfolioToSave.getStudentName();
         String jsonFilePath = PATH_EPORTFOLIOS + SLASH + ePortfolioStudentName + JSON_EXT;
-
+        
         // INIT THE WRITER
         OutputStream os = new FileOutputStream(jsonFilePath);
         JsonWriter jsonWriter = Json.createWriter(os);

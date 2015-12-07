@@ -111,6 +111,7 @@ public class VideoController {
                 pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
             }
             videoStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             videoStage.close();
@@ -163,6 +164,7 @@ public class VideoController {
             temp.getV().setHeight(heightTextField.getText());
             temp.getV().setWidth(widthTextField.getText());
             video1Stage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             video1Stage.close();

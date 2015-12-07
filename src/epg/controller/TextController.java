@@ -207,6 +207,7 @@ public class TextController {
                 pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
             }
             addHeadingStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             addHeadingStage.close();
@@ -232,6 +233,7 @@ public class TextController {
         okButton.setOnAction(e -> {
             temp.getH().setHeadingText(HeadingTextField.getText());
             editHeadingStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             editHeadingStage.close();
@@ -296,6 +298,7 @@ public class TextController {
                 pageEditor.getPage().setComponentsSize(Integer.toString(pageEditor.getPage().getComponents().size()));
             }
             addParagraphStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             addParagraphStage.close();
@@ -335,6 +338,7 @@ public class TextController {
             temp.getP().setFont(fontGroup.getSelectedToggle().toString());
             temp.getP().setParagraphText(ParagraphTextArea.getText());
             editParagraphStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             editParagraphStage.close();
@@ -397,6 +401,7 @@ public class TextController {
 
             }
             addListStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             addListStage.close();
@@ -441,6 +446,7 @@ public class TextController {
         okButton.setOnAction(e -> {
 
             editListStage.close();
+            ui.getSaveButton().setDisable(false);
         });
         cancelButton.setOnAction(e -> {
             editListStage.close();

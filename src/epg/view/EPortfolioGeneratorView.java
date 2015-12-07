@@ -185,9 +185,9 @@ public class EPortfolioGeneratorView {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         newPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_PORTFOLIO, TOOLTIP_NEW_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
         loadPortfolioButton = initChildButton(fileToolbarPane, ICON_LOAD_PORTFOLIO, TOOLTIP_LOAD_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_PORTFOLIO, TOOLTIP_SAVE_AS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
+        saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_PORTFOLIO, TOOLTIP_SAVE_AS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
+        exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, true);
         exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
     }
 
@@ -198,6 +198,7 @@ public class EPortfolioGeneratorView {
         ePortfolioTitleTF = new TextField();
         ePortfolioTitleTF.setOnAction(e -> {
             portfolioModel.setStudentName(ePortfolioTitleTF.getText());
+            savePortfolioButton.setDisable(false);
         });
         ePortfolioTitleTF.setText(portfolioModel.getStudentName());
         fileToolbarPane.getChildren().addAll(ePortfolioTitleLabel, ePortfolioTitleTF);
@@ -271,7 +272,7 @@ public class EPortfolioGeneratorView {
         //TTEMP FOR HW 6 oNLY HVE TO DELETE LATER
         WebView browser = new WebView();
         WebEngine webEngine = browser.getEngine();
-        webEngine.load("http://yahoo.com");
+        webEngine.load("http://google.com");
         siteViewerWorkspace.setCenter(browser);
         siteViewerScene = new Scene(siteViewerWorkspace);
         siteViewerScene.getStylesheets().add(STYLE_SHEET_UI);
@@ -342,19 +343,23 @@ public class EPortfolioGeneratorView {
 
         newPortfolioButton.setOnAction(e -> {
             fileController.handleNewPortfolioRequest();
+            savePortfolioButton.setDisable(false);
 
         });
 
         loadPortfolioButton.setOnAction(e -> {
             fileController.handleLoadPortfolioRequest();
+            savePortfolioButton.setDisable(false);
+
         });
 
         savePortfolioButton.setOnAction(e -> {
             fileController.handleSavePortfolioRequest();
+            savePortfolioButton.setDisable(true);
 
         });
-        
-        saveAsPortfolioButton.setOnAction(e ->{
+
+        saveAsPortfolioButton.setOnAction(e -> {
             fileController.handleSaveAsPortfolioRequest();
         });
 
@@ -367,17 +372,20 @@ public class EPortfolioGeneratorView {
         addSitePageButton.setOnAction(e -> {
             //  count++;
             pageEditController.processAddSiteRequest();
+            savePortfolioButton.setDisable(false);
 
         });
 
         removeSitePageButton.setOnAction(e -> {
             pageEditController.processRemoveSiteRequest();
+            savePortfolioButton.setDisable(false);
             //  count--;
 
         });
 
         changeSiteNameButton.setOnAction(e -> {
             pageEditController.processChangeNameSiteRequest();
+            savePortfolioButton.setDisable(false);
         });
 
         ///For the workspace mode toolbar
@@ -537,11 +545,9 @@ public class EPortfolioGeneratorView {
     public ObservableList<Tab> getTabs() {
         return sitesTabPane.getTabs();
     }
-
-    public void updateToolbarControls(boolean saved) {
-
-        // NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
-        savePortfolioButton.setDisable(saved);
+    
+    public Button getSaveButton(){
+        return savePortfolioButton;
     }
 
 }

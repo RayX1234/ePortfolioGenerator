@@ -40,7 +40,7 @@ public class BannerImageController {
             String fileName = file.getName();
             ui.getPage().setBannerImageFileName(fileName);
             ui.getPage().setBannerImageFilePath(path);
-
+            ui.getSaveButton().setDisable(false);
         }
     }
 }

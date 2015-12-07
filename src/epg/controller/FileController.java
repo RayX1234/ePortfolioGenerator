@@ -6,7 +6,6 @@
 package epg.controller;
 
 import static epg.StartupConstants.PATH_EPORTFOLIOS;
-import epg.dialog.SaveAsDialog;
 import epg.dialog.SaveDialog;
 import epg.file.EPortfolioFileManager;
 import epg.model.EPortfolioModel;
@@ -63,7 +62,7 @@ public class FileController {
                 ui.getRemoveSitePageButton().setDisable(true);
                 ui.resetFileToolbarPane();
                 saved = false;
-                ui.updateToolbarControls(saved);
+             //   ui.updateToolbarControls(saved);
             }
 
         } catch (IOException ioe) {
@@ -99,7 +98,7 @@ public class FileController {
 
             portfolioIO.saveEPortfolio(portfolioModel, ui);
             saved = true;
-            ui.updateToolbarControls(saved);
+        //    ui.updateToolbarControls(saved);
             return true;
         } catch (IOException ex) {
             Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,8 +109,7 @@ public class FileController {
 
     //Save as ePortfolio
     public void handleSaveAsPortfolioRequest() {
-       SaveAsDialog saD = new SaveAsDialog(ui);
-       saD.showDialog();
+      
     }
 
     //Export ePortfolio
