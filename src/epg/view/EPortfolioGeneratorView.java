@@ -192,13 +192,8 @@ public class EPortfolioGeneratorView {
     }
 
     public void resetFileToolbarPane() {
-        fileToolbarPane.getChildren().clear();
-        newPortfolioButton = initChildButton(fileToolbarPane, ICON_NEW_PORTFOLIO, TOOLTIP_NEW_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        loadPortfolioButton = initChildButton(fileToolbarPane, ICON_LOAD_PORTFOLIO, TOOLTIP_LOAD_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        savePortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_PORTFOLIO, TOOLTIP_SAVE_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        saveAsPortfolioButton = initChildButton(fileToolbarPane, ICON_SAVE_AS_PORTFOLIO, TOOLTIP_SAVE_AS_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        exportPortfolioButton = initChildButton(fileToolbarPane, ICON_EXPORT_PORTFOLIO, TOOLTIP_EXPORT_PORTFOLIO, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
-        exitButton = initChildButton(fileToolbarPane, ICON_EXIT, TOOLTIP_EXIT, CSS_CLASS_HORIZONTAL_TOOLBAR_BUTTON, false);
+        fileToolbarPane.getChildren().remove(ePortfolioTitleLabel);
+        fileToolbarPane.getChildren().remove(ePortfolioTitleTF);
         ePortfolioTitleLabel = new Label("Student Name:");
         ePortfolioTitleTF = new TextField();
         ePortfolioTitleTF.setOnAction(e -> {
@@ -206,7 +201,6 @@ public class EPortfolioGeneratorView {
         });
         ePortfolioTitleTF.setText(portfolioModel.getStudentName());
         fileToolbarPane.getChildren().addAll(ePortfolioTitleLabel, ePortfolioTitleTF);
-        initEventHandlers();
 
     }
 
@@ -277,7 +271,7 @@ public class EPortfolioGeneratorView {
         //TTEMP FOR HW 6 oNLY HVE TO DELETE LATER
         WebView browser = new WebView();
         WebEngine webEngine = browser.getEngine();
-        webEngine.load("http://google.com");
+        webEngine.load("http://yahoo.com");
         siteViewerWorkspace.setCenter(browser);
         siteViewerScene = new Scene(siteViewerWorkspace);
         siteViewerScene.getStylesheets().add(STYLE_SHEET_UI);
@@ -358,6 +352,14 @@ public class EPortfolioGeneratorView {
         savePortfolioButton.setOnAction(e -> {
             fileController.handleSavePortfolioRequest();
 
+        });
+        
+        saveAsPortfolioButton.setOnAction(e ->{
+            fileController.handleSaveAsPortfolioRequest();
+        });
+
+        exitButton.setOnAction(e -> {
+            fileController.handleExitRequest();
         });
 
         pageEditController = new PageEditController(this);
@@ -534,6 +536,12 @@ public class EPortfolioGeneratorView {
 
     public ObservableList<Tab> getTabs() {
         return sitesTabPane.getTabs();
+    }
+
+    public void updateToolbarControls(boolean saved) {
+
+        // NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
+        savePortfolioButton.setDisable(saved);
     }
 
 }

@@ -6,6 +6,8 @@
 package epg.controller;
 
 import static epg.StartupConstants.PATH_EPORTFOLIOS;
+import epg.dialog.SaveAsDialog;
+import epg.dialog.SaveDialog;
 import epg.file.EPortfolioFileManager;
 import epg.model.EPortfolioModel;
 import epg.view.EPortfolioGeneratorView;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
@@ -54,12 +57,13 @@ public class FileController {
                 EPortfolioModel portfolioModel = ui.getPortfolioModel();
                 portfolioModel.reset();
                 ui.getTabs().clear();
-                saved = false;
                 ui.activatePEW();
                 ui.setPageEditWorkspaceActivated(true);
                 ui.isPEWActivated();
                 ui.getRemoveSitePageButton().setDisable(true);
                 ui.resetFileToolbarPane();
+                saved = false;
+                ui.updateToolbarControls(saved);
             }
 
         } catch (IOException ioe) {
@@ -95,6 +99,7 @@ public class FileController {
 
             portfolioIO.saveEPortfolio(portfolioModel, ui);
             saved = true;
+            ui.updateToolbarControls(saved);
             return true;
         } catch (IOException ex) {
             Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,7 +110,8 @@ public class FileController {
 
     //Save as ePortfolio
     public void handleSaveAsPortfolioRequest() {
-
+       SaveAsDialog saD = new SaveAsDialog(ui);
+       saD.showDialog();
     }
 
     //Export ePortfolio
@@ -115,7 +121,22 @@ public class FileController {
 
     //Exit ePortfolio
     public void handleExitRequest() {
+        try {
+            // WE MAY HAVE TO SAVE CURRENT WORK
+            boolean continueToExit = true;
+            if (!saved) {
+                // THE USER CAN OPT OUT HERE
+                continueToExit = promptToSave();
+            }
 
+            // IF THE USER REALLY WANTS TO EXIT THE APP
+            if (continueToExit) {
+                // EXIT THE APPLICATION
+                System.exit(0);
+            }
+        } catch (IOException ioe) {
+           
+        }
     }
 
     /**
@@ -134,16 +155,23 @@ public class FileController {
      * option to not continue.
      */
     private boolean promptToSave() throws IOException {
+
         // PROMPT THE USER TO SAVE UNSAVED WORK
-        boolean saveWork = true; // @todo change this to prompt
+        // @todo change this to prompt
+        Stage s = new Stage();
+        SaveDialog saveDialog = new SaveDialog(s);
+        saveDialog.show("Would You Like To Save?");
+
+        String selection = saveDialog.getSelection();
 
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
-        if (saveWork) {
-            EPortfolioModel portfolioModel = ui.getPortfolioModel();
+        if (selection.equals(saveDialog.YES)) {
+            handleSavePortfolioRequest();
             saved = true;
+
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE
-        else if (!true) {
+        else if (selection.equals(saveDialog.CANCEL)) {
             return false;
         }
 

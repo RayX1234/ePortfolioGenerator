@@ -143,7 +143,7 @@ public class SlideShowModel {
 
     @Override
     public String toString() {
-        return "Slide Show Component";
+        return "(Slide Show Component) " + slides.get(0).imageFileName + " " + slides.get(0).caption;
     }
 
     /**

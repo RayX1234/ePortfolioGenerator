@@ -72,7 +72,7 @@ public class Video {
     @Override
     public String toString() {
 
-        return "Video Component";
+        return "(Video Component) " + videoFileName + " " + caption;
     }
 
     /**

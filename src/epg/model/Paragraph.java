@@ -42,7 +42,7 @@ public class Paragraph {
     @Override
     public String toString() {
 
-        return "Paragraph Component";
+        return "(Paragraph Component) " + paragraphText;
     }
 
     /**

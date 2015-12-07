@@ -31,7 +31,7 @@ public class Heading {
     @Override
     public String toString() {
 
-        return "Heading Component";
+        return "(Heading Component) " + headingText;
     }
     
     public void setIndex(String initIndex){

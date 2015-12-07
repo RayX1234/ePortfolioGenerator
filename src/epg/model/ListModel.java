@@ -31,7 +31,7 @@ public class ListModel {
     }
     
     public String toString(){
-        return "List Component";
+        return "(List Component) " + listData.toString();
     }
 
     /**

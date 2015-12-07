@@ -20,7 +20,6 @@ public class Image {
     private String width;
     private String imagePosition;
     private String imageIndex;
-    
 
     public Image() {
 
@@ -54,34 +53,34 @@ public class Image {
     public String getCaption() {
         return caption;
     }
-    
-    public void setHeight(String initHeight){
+
+    public void setHeight(String initHeight) {
         height = initHeight;
     }
-    
-    public String getHeight(){
+
+    public String getHeight() {
         return height;
     }
-    
-    public void setWidth(String initWidth){
+
+    public void setWidth(String initWidth) {
         width = initWidth;
     }
-    
-    public String getWidth(){
+
+    public String getWidth() {
         return width;
     }
-    
-    public void setImagePosition(String initImagePosition){
+
+    public void setImagePosition(String initImagePosition) {
         imagePosition = initImagePosition;
     }
-    
-    public String getImagePosition(){
+
+    public String getImagePosition() {
         return imagePosition;
     }
-    
+
     @Override
-    public String toString(){
-        return "Image Component";
+    public String toString() {
+        return "(Image Component) " + imageFileName + " " +  caption;
     }
 
     /**

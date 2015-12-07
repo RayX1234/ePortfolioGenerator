@@ -340,11 +340,17 @@ public class PageEditView extends BorderPane {
             if (c.getP() != null) {
                 page.getParagraphs().remove(c.getP());
             }
+            if(c.getL() != null) {
+                page.getLists().remove(c.getL());
+            }
             if (c.getI() != null) {
                 page.getImages().remove(c.getI());
             }
             if (c.getV() != null) {
                 page.getVideos().remove(c.getV());
+            }
+            if (c.getSS() != null) {
+                page.getSlideShows().remove(c.getSS());
             }
 //            if(page.getComponents().isEmpty()){
 //                removeComponentButton.setDisable(true);
