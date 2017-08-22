@@ -269,11 +269,13 @@ public class EPortfolioGeneratorView {
 
     private void initSiteViewerWorkspace() {
         siteViewerWorkspace = new BorderPane();
-        //TTEMP FOR HW 6 oNLY HVE TO DELETE LATER
+//        TTEMP FOR HW 6 oNLY HVE TO DELETE LATER
         WebView browser = new WebView();
         WebEngine webEngine = browser.getEngine();
-        webEngine.load("http://google.com");
-        siteViewerWorkspace.setCenter(browser);
+        String s = "http://google.com";
+        webEngine.load(s);
+        
+          siteViewerWorkspace.setCenter(browser);
         siteViewerScene = new Scene(siteViewerWorkspace);
         siteViewerScene.getStylesheets().add(STYLE_SHEET_UI);
         siteViewerWorkspace.getStyleClass().add(CSS_CLASS_SITE_VIEWER_WORKSPACE_PANE);
@@ -394,11 +396,12 @@ public class EPortfolioGeneratorView {
             isPEWActivated();
             activatePEW();
         });
-
+               
         siteViewerWorkspaceButton.setOnAction(e -> {
             siteViewerWorkspaceActivated = true;
             isSVWActivated();
             activateSVW();
+          
         });
 
     }
@@ -412,6 +415,8 @@ public class EPortfolioGeneratorView {
         reloadPortfolio(portfolioModel);
 
     }
+    
+    
 
     //Remove site page
     public void removeSitePage() {
@@ -545,8 +550,8 @@ public class EPortfolioGeneratorView {
     public ObservableList<Tab> getTabs() {
         return sitesTabPane.getTabs();
     }
-    
-    public Button getSaveButton(){
+
+    public Button getSaveButton() {
         return savePortfolioButton;
     }
 

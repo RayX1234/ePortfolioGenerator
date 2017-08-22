@@ -1,0 +1,100 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 12, 2015, 3:15:56 PM
+    Author     : Ray
+*/
+
+.file_toolbar_pane {
+    -fx-hgap: 10px;
+}
+
+.horizontal_toolbar_button {
+    -fx-padding: 20px 20px 20px 20px;
+    -fx-background-color: transparent;
+
+}
+
+.vertical_toolbar_button {
+    -fx-background-color: transparent;
+    -fx-padding: 20px 20px 20px 20px;
+}
+
+.sites_toolbar_pane{
+    -fx-alignment: center;
+    -fx-spacing: 100px;
+}
+
+.epg_pane {
+    -fx-background-color: azure;
+
+}
+
+.page_edit_workspace_pane{
+    -fx-background-color: aliceblue;
+}
+
+.tab-pane .tab-header-area .tab-header-background{
+    -fx-background-color:transparent;
+}
+
+.csn_grid_pane{
+    -fx-alignment: center;
+    -fx-vgap: 10px;
+    -fx-hgap: 10px;
+    -fx-background-color: aquamarine;
+}
+
+.workspace_mode_toolbar_pane{
+    -fx-alignment:center;
+    -fx-hgap: 80px;
+}
+
+.site_viewer_workspace_pane{
+    -fx-background-color: snow;
+}
+
+.content_pane{
+    -fx-background-color: #e5e5ff;
+}
+
+.ptsnbi_pane{
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.layout_pane{
+    -fx-spacing: 10px;
+}
+
+.select_text_type{
+    -fx-alignment:center;
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+    -fx-background-color: #cccccc;
+}
+
+.align_center{
+    -fx-alignment:center;
+}
+
+.highlight_slide {
+    -fx-background-color: rgb(178, 209, 255);
+}
+
+.deselect_slide {
+    -fx-background-color: rgb(255, 224, 178);
+}
+
+.image_vbox{
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-background-color: #cccccc;
+}
+
+
+
+
